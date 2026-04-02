@@ -1,0 +1,1897 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Safezone Counselling</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@600;700&family=Nunito:wght@400;600;700;800&family=Playfair+Display:ital,wght@0,700;1,600&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Nunito', sans-serif;
+            color: #374151;
+            overflow-x: hidden;
+            background-color: #f9fafb;
+        }
+        .font-handwriting { font-family: 'Caveat', cursive; }
+        .font-serif { font-family: 'Playfair Display', serif; }
+        
+        .text-brand-teal { color: #0f766e; }
+        .text-brand-pink { color: #db2777; }
+        .bg-brand-teal { background-color: #0f766e; }
+        .bg-brand-teal:hover { background-color: #115e59; }
+        .bg-brand-pink { background-color: #db2777; }
+        .bg-brand-pink:hover { background-color: #be185d; }
+        
+        html { scroll-behavior: smooth; }
+        input[type=range] { accent-color: #db2777; }
+
+        .bg-certificate {
+            background-color: #fff;
+            background-image: radial-gradient(#0f766e 0.5px, transparent 0.5px), radial-gradient(#0f766e 0.5px, #fff 0.5px);
+            background-size: 20px 20px;
+            background-position: 0 0, 10px 10px;
+            opacity: 0.95;
+        }
+        
+        /* Utility to hide scrollbar but allow scrolling */
+        .no-scrollbar::-webkit-scrollbar { display: none; }
+        .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+    </style>
+</head>
+<body class="min-h-screen flex flex-col relative">
+
+    <div class="h-2 w-full bg-brand-pink relative z-50"></div>
+
+    <!-- Navigation -->
+    <nav id="main-nav" class="hidden bg-white shadow-sm container mx-auto px-4 py-4 flex flex-col md:flex-row justify-between items-center text-sm font-bold tracking-wider text-teal-700 relative z-40 gap-4 md:gap-0">
+        <div class="flex flex-wrap justify-center gap-3 sm:gap-4 md:gap-6 mb-2 md:mb-0 w-full md:w-auto">
+            <a href="javascript:void(0)" onclick="window.switchTab('beranda')" class="hover:text-pink-500 transition px-3 py-2 bg-teal-50 md:bg-transparent rounded-lg md:rounded-none text-center">BERANDA</a>
+            <a href="javascript:void(0)" onclick="window.switchTab('asesmen')" class="hover:text-pink-500 transition px-3 py-2 bg-teal-50 md:bg-transparent rounded-lg md:rounded-none text-center">ASESMEN</a>
+            
+            <div class="relative group text-center">
+                <button onclick="window.goToMateri()" class="w-full md:w-auto justify-center hover:text-pink-500 transition px-3 py-2 bg-teal-50 md:bg-transparent rounded-lg md:rounded-none flex items-center gap-1 font-bold uppercase tracking-wider">
+                    MATERI
+                    <svg class="w-4 h-4 transition-transform duration-300 group-hover:rotate-180" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+                </button>
+                <div class="absolute left-1/2 -translate-x-1/2 md:left-0 md:translate-x-0 mt-2 w-56 bg-white border border-teal-100 rounded-xl shadow-2xl opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 z-[100] flex flex-col overflow-hidden">
+                    <a href="javascript:void(0)" onclick="window.bukaMateri('pemahaman-diri')" class="px-5 py-3 text-sm text-teal-700 hover:bg-pink-50 hover:text-brand-pink border-b border-gray-50 text-left transition-colors" id="nav-pemahaman-diri">1. Pemahaman Diri</a>
+                    <a href="javascript:void(0)" onclick="window.bukaMateri('penerimaan-diri')" class="px-5 py-3 text-sm text-teal-700 hover:bg-pink-50 hover:text-brand-pink border-b border-gray-50 text-left transition-colors" id="nav-penerimaan-diri">2. Penerimaan Diri</a>
+                    <a href="javascript:void(0)" onclick="window.bukaMateri('harga-diri')" class="px-5 py-3 text-sm text-teal-700 hover:bg-pink-50 hover:text-brand-pink border-b border-gray-50 text-left transition-colors" id="nav-harga-diri">3. Harga Diri</a>
+                    <a href="javascript:void(0)" onclick="window.bukaMateri('diri-ideal')" class="px-5 py-3 text-sm text-teal-700 hover:bg-pink-50 hover:text-brand-pink text-left transition-colors" id="nav-diri-ideal">4. Diri Ideal</a>
+                </div>
+            </div>
+            <a href="javascript:void(0)" onclick="window.lihatSertifikat()" id="nav-sertifikat" class="hidden text-center justify-center text-orange-500 hover:text-orange-600 transition px-3 py-2 bg-orange-50 md:bg-transparent rounded-lg md:rounded-none flex items-center gap-1">🏆 SERTIFIKAT</a>
+        </div>
+        <div class="flex items-center justify-center gap-4 w-full md:w-auto mt-2 md:mt-0">
+            <div class="bg-teal-50 px-4 py-1.5 rounded-full border border-teal-100 flex items-center gap-2">
+                <span class="text-xl">🎓</span>
+                <span id="user-display-name" class="font-extrabold text-teal-800">Siswa</span>
+            </div>
+            <button onclick="window.logout()" class="text-xs text-gray-500 bg-gray-100 px-4 py-2 rounded-full hover:bg-red-100 hover:text-red-600 transition">Keluar</button>
+        </div>
+    </nav>
+
+    <header id="main-header" class="hidden bg-white container mx-auto px-4 py-6 md:py-10 flex flex-col items-center text-center">
+        <div class="flex items-center justify-center gap-2 md:gap-4 flex-wrap">
+            <div class="w-10 h-10 md:w-14 md:h-14 bg-teal-200 rounded-full border-2 border-gray-700 flex items-center justify-center relative shadow-[2px_2px_0px_0px_rgba(55,65,81,1)] shrink-0">
+                <span class="text-lg md:text-xl">🌱</span>
+            </div>
+            <h1 class="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-extrabold tracking-tight text-brand-teal flex items-baseline flex-wrap justify-center gap-1 md:gap-2">
+                <span>SAFEZONE</span>
+                <span class="font-handwriting text-brand-pink text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-normal lowercase relative top-1">counselling</span>
+            </h1>
+        </div>
+    </header>
+
+    <!-- CUSTOM MODAL (Pengganti Alert/Confirm) -->
+    <div id="custom-modal" class="hidden fixed inset-0 bg-black/60 z-[300] flex items-center justify-center p-4">
+        <div class="bg-white rounded-3xl shadow-2xl max-w-sm w-full p-6 md:p-8 text-center transform transition-all scale-95 opacity-0" id="custom-modal-content">
+            <div class="text-4xl md:text-5xl mb-4" id="custom-modal-icon">⚠️</div>
+            <h3 class="text-xl md:text-2xl font-extrabold text-gray-800 mb-2" id="custom-modal-title">Perhatian</h3>
+            <p class="text-gray-600 mb-6 text-sm md:text-base leading-relaxed" id="custom-modal-message">Pesan akan tampil di sini.</p>
+            <div class="flex justify-center gap-3" id="custom-modal-actions">
+                <button id="custom-modal-btn-cancel" class="hidden px-5 py-2.5 bg-gray-100 text-gray-600 rounded-xl font-bold hover:bg-gray-200 transition text-sm md:text-base">Batal</button>
+                <button id="custom-modal-btn-ok" class="px-8 py-2.5 bg-teal-600 text-white rounded-xl font-bold hover:bg-teal-700 transition text-sm md:text-base shadow-md">OK Mengerti</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- HALAMAN 0: REGISTRASI SISWA -->
+    <div id="view-register" class="hidden w-full flex-1 flex flex-col justify-center items-center p-4 md:p-8">
+        <div class="max-w-md w-full bg-white rounded-[2rem] shadow-2xl border-4 border-teal-100 p-6 md:p-10 relative overflow-hidden">
+            <div class="absolute -top-10 -right-10 w-32 h-32 bg-pink-100 rounded-full opacity-50 blur-2xl"></div>
+            <div class="absolute -bottom-10 -left-10 w-32 h-32 bg-teal-100 rounded-full opacity-50 blur-2xl"></div>
+            
+            <div class="text-center relative z-10 mb-8">
+                <div class="w-16 h-16 md:w-20 md:h-20 bg-teal-50 rounded-full border-2 border-teal-200 flex items-center justify-center mx-auto mb-4 shadow-sm">
+                    <span class="text-3xl md:text-4xl">👋</span>
+                </div>
+                <h1 class="text-2xl md:text-3xl font-extrabold text-brand-teal mb-2">Mulai Perjalananmu!</h1>
+                <p class="text-gray-500 text-xs md:text-sm">Silakan daftar terlebih dahulu untuk menyimpan progres belajarmu di e-Safezone.</p>
+            </div>
+
+            <form id="form-register" onsubmit="window.prosesRegister(event)" class="relative z-10 space-y-4">
+                <div>
+                    <label class="block text-xs md:text-sm font-bold text-teal-800 mb-1">Nama Lengkap / Panggilan</label>
+                    <input type="text" id="regNama" class="w-full px-4 py-3 rounded-xl border border-gray-200 focus:outline-none focus:ring-2 focus:ring-teal-400 bg-gray-50 focus:bg-white transition text-sm md:text-base" placeholder="Misal: Aisyah Fitri" required>
+                </div>
+                <div>
+                    <label class="block text-xs md:text-sm font-bold text-teal-800 mb-1">Alamat Email</label>
+                    <input type="email" id="regEmail" class="w-full px-4 py-3 rounded-xl border border-gray-200 focus:outline-none focus:ring-2 focus:ring-teal-400 bg-gray-50 focus:bg-white transition text-sm md:text-base" placeholder="siswa@email.com" required>
+                </div>
+                <div>
+                    <label class="block text-xs md:text-sm font-bold text-teal-800 mb-1">Kelas</label>
+                    <input type="text" id="regKelas" class="w-full px-4 py-3 rounded-xl border border-gray-200 focus:outline-none focus:ring-2 focus:ring-teal-400 bg-gray-50 focus:bg-white transition text-sm md:text-base" placeholder="Misal: VIII-A" required>
+                </div>
+                <div>
+                    <label class="block text-xs md:text-sm font-bold text-teal-800 mb-1">Sekolah Asal</label>
+                    <input type="text" id="regSekolah" class="w-full px-4 py-3 rounded-xl border border-gray-200 focus:outline-none focus:ring-2 focus:ring-teal-400 bg-gray-50 focus:bg-white transition text-sm md:text-base" placeholder="Misal: MTsN 1 Pekanbaru" required>
+                </div>
+                <button type="submit" class="w-full bg-brand-pink text-white font-extrabold text-base md:text-lg py-3 md:py-4 rounded-xl shadow-lg hover:bg-pink-700 transition transform hover:-translate-y-1 mt-4">
+                    Masuk ke e-Safezone &rarr;
+                </button>
+            </form>
+        </div>
+    </div>
+
+    <!-- BAGIAN 1: HALAMAN BERANDA -->
+    <div id="view-beranda" class="hidden w-full bg-white pb-12">
+        <section class="container mx-auto px-4 py-6 md:py-8 max-w-5xl">
+            <div class="bg-teal-50/50 rounded-[2rem] p-6 md:p-10 lg:p-12 border-2 border-teal-100 relative shadow-sm overflow-hidden">
+                <h2 class="text-3xl md:text-4xl lg:text-5xl font-extrabold text-brand-teal lowercase mb-6 md:mb-8 text-center lg:text-left break-words">
+                    selamat datang <br class="hidden lg:block"><span class="font-handwriting text-brand-pink text-4xl sm:text-5xl md:text-6xl tracking-wide capitalize" id="welcome-name">Sahabat!</span>
+                </h2>
+                
+                <!-- FLEX COLUMN DI HP, FLEX ROW DI IPAD/LAPTOP -->
+                <div class="flex flex-col lg:flex-row gap-8 lg:gap-10 items-center lg:items-start">
+                    <div class="flex-1 text-gray-700 leading-relaxed space-y-5 md:space-y-6 text-sm sm:text-base lg:text-lg text-justify lg:text-left w-full">
+                        <p>
+                            Ini bukan sekadar web biasa, lho! e-Safezone adalah layanan <em>cyber counselling</em> asyik yang siap jadi "zona aman" kamu buat bercerita, mengeksplorasi diri, dan bertumbuh menjadi versi terbaik dari dirimu melalui pengembangan <strong>Konsep Diri</strong>.
+                        </p>
+                        
+                        <div class="bg-white p-5 md:p-6 lg:p-8 rounded-3xl border border-pink-100 shadow-sm border-l-4 border-l-brand-pink relative">
+                            <h3 class="font-bold text-teal-800 mb-2 lg:mb-3 text-lg lg:text-xl flex items-center gap-2"><span>🔍</span> Apa itu Konsep Diri?</h3>
+                            <p class="text-gray-600 mb-2 lg:mb-4">Secara sederhana, konsep diri adalah <strong>cara kamu memandang dan menilai dirimu sendiri</strong>. Ini mencakup bagaimana kamu melihat fisikmu, menyadari bakatmu, hingga menilai seberapa berharga dirimu di mata lingkunganmu.</p>
+                        </div>
+
+                        <div class="bg-blue-50/50 p-5 md:p-6 lg:p-8 rounded-3xl border border-blue-100 shadow-sm relative">
+                            <h3 class="font-bold text-blue-800 mb-2 lg:mb-3 text-lg lg:text-xl flex items-center gap-2"><span>💡</span> Kenapa Konsep Diri yang Tinggi Itu Penting?</h3>
+                            <p class="text-gray-600 mb-2 lg:mb-4">Memiliki konsep diri yang positif membuat mentalmu jauh lebih tangguh. Kamu <strong>tidak akan mudah goyah atau depresi</strong> hanya karena kritikan atau standar <em>glowing</em> di internet.</p>
+                        </div>
+
+                        <div class="bg-brand-teal p-6 md:p-8 rounded-3xl shadow-lg text-white mt-6 md:mt-8 text-center relative overflow-hidden">
+                            <div class="absolute -right-4 -bottom-4 text-7xl opacity-10">🚀</div>
+                            <h3 class="font-extrabold text-xl md:text-2xl mb-3 text-pink-300 font-handwriting tracking-wide relative z-10">Yuk, Mulai Perjalananmu!</h3>
+                            <p class="mb-5 md:mb-6 opacity-90 leading-relaxed text-sm md:text-base relative z-10">Langkah pertama yang harus kamu lakukan adalah mengukur diri di ruang <strong>Asesmen</strong>.</p>
+                            <button onclick="window.switchTab('asesmen')" class="bg-white text-teal-800 px-6 md:px-8 py-3 md:py-4 rounded-full font-bold hover:bg-teal-50 transition shadow-lg w-full sm:w-auto transform hover:-translate-y-1 text-base md:text-lg relative z-20">
+                                Ukur Konsep Diriku Sekarang &rarr;
+                            </button>
+                        </div>
+                    </div>
+                    
+                    <!-- GAMBAR HERO RESPONSIVE DENGAN FALLBACK SVG -->
+                    <div class="w-full sm:w-72 md:w-64 lg:w-80 shrink-0 relative aspect-[3/4] md:h-[24rem] lg:h-[28rem] mx-auto mt-4 md:mt-8 lg:mt-0 md:sticky md:top-8 bg-teal-100 rounded-[2rem] border-4 border-white shadow-lg rotate-0 md:rotate-3 flex items-center justify-center overflow-hidden z-10">
+                        <img src="https://images.unsplash.com/photo-1599050751795-6cdaafbc2319?q=80&w=800&auto=format&fit=crop" 
+                             alt="Siswa Muslimah" 
+                             class="absolute inset-0 w-full h-full object-cover transition duration-300 hover:scale-105"
+                             onerror="this.onerror=null; this.src='data:image/svg+xml;charset=UTF-8,%3Csvg xmlns=\'http://www.w3.org/2000/svg\' width=\'800\' height=\'600\'%3E%3Crect width=\'100%25\' height=\'100%25\' fill=\'%230f766e\'/%3E%3Ctext x=\'50%25\' y=\'50%25\' font-size=\'40\' fill=\'white\' font-family=\'sans-serif\' text-anchor=\'middle\' dominant-baseline=\'middle\'%3E%E2%9C%A8 Safezone Hero%3C/text%3E%3C/svg%3E';">
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <!-- BAGIAN 2: HALAMAN DAFTAR MATERI -->
+    <div id="view-daftar-materi" class="hidden w-full bg-white pb-12">
+        <main class="container mx-auto px-4 py-8 flex-1">
+            <div class="text-center mb-8 md:mb-12">
+                <p class="text-xs md:text-sm font-bold tracking-widest text-pink-500 uppercase mb-2">Modul Pembelajaran</p>
+                <h2 class="text-3xl md:text-4xl lg:text-5xl font-extrabold text-brand-teal lowercase font-handwriting tracking-wide mb-4">Materi e-Safezone (Alur ARKA)</h2>
+                <div class="w-16 md:w-24 h-1 bg-pink-400 mx-auto rounded-full mb-4 md:mb-6"></div>
+                <p class="text-gray-500 mt-2 max-w-2xl mx-auto text-sm md:text-base">Pelajari materi di bawah ini dan selesaikan semua refleksinya untuk mendapatkan <strong>Centang Hijau ✅</strong>. Selesaikan semua modul untuk mendapatkan Sertifikat Penghargaanmu!</p>
+            </div>
+            
+            <div id="banner-completion" class="hidden max-w-5xl mx-auto mb-8 md:mb-10 bg-gradient-to-r from-orange-400 to-pink-500 rounded-[2rem] p-6 md:p-8 text-white text-center shadow-xl transform transition hover:scale-[1.02]">
+                <div class="text-5xl md:text-6xl mb-4">🎉</div>
+                <h3 class="text-2xl md:text-3xl font-extrabold mb-2 uppercase tracking-widest">Luar Biasa, <span class="nama-siswa-dinamis">Sahabat</span>!</h3>
+                <p class="text-sm md:text-lg mb-6 font-medium">Kamu telah menguasai dan menyelesaikan seluruh modul e-Safezone dengan sangat baik. Kami sangat bangga padamu!</p>
+                <button onclick="window.lihatSertifikat()" class="bg-white text-brand-pink px-6 md:px-8 py-3 md:py-4 rounded-full font-extrabold shadow-md hover:bg-gray-50 transition text-base md:text-lg animate-bounce w-full sm:w-auto">
+                    Klaim Sertifikat Penghargaanmu 🏆
+                </button>
+            </div>
+
+            <div id="materi-container" class="max-w-5xl mx-auto space-y-6 md:space-y-8"></div>
+        </main>
+    </div>
+
+    <!-- BAGIAN 3: HALAMAN BACA MATERI DETAIL -->
+    <div id="view-baca-materi" class="hidden container mx-auto px-4 py-6 md:py-8 flex-1 max-w-4xl bg-white pb-12">
+        <button onclick="window.goToMateri()" class="mb-4 md:mb-6 inline-flex items-center text-teal-600 font-bold hover:text-teal-800 transition bg-teal-50 px-4 md:px-6 py-2 md:py-3 rounded-full shadow-sm relative z-20 cursor-pointer text-sm md:text-base">
+            &larr; Kembali ke Daftar Materi
+        </button>
+        
+        <article class="bg-white rounded-[2rem] shadow-xl border border-gray-100 overflow-hidden">
+            <div class="relative w-full aspect-video md:h-80 bg-gray-100 flex items-center justify-center">
+                <img id="detail-gambar" src="" alt="Cover Materi" class="absolute inset-0 w-full h-full object-cover object-top"
+                     onerror="this.onerror=null; this.src='data:image/svg+xml;charset=UTF-8,%3Csvg xmlns=\'http://www.w3.org/2000/svg\' width=\'800\' height=\'600\'%3E%3Crect width=\'100%25\' height=\'100%25\' fill=\'%230f766e\'/%3E%3Ctext x=\'50%25\' y=\'50%25\' font-size=\'40\' fill=\'white\' font-family=\'sans-serif\' text-anchor=\'middle\' dominant-baseline=\'middle\'%3E%E2%9C%A8 Safezone Materi%3C/text%3E%3C/svg%3E';">
+            </div>
+            <div class="p-5 sm:p-8 md:p-10 lg:p-12">
+                <div class="flex flex-wrap justify-between items-center mb-3 gap-2">
+                    <p id="detail-kategori" class="text-xs md:text-sm font-bold tracking-widest text-pink-500 uppercase"></p>
+                    <span id="badge-selesai-detail" class="hidden bg-green-500 text-white text-[10px] md:text-xs px-2 md:px-3 py-1 rounded-full font-bold shadow-sm">✅ SELESAI</span>
+                </div>
+                <h2 id="detail-judul" class="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-extrabold text-brand-teal mb-4 md:mb-6 leading-tight break-words"></h2>
+                
+                <div class="bg-teal-50 p-4 md:p-6 rounded-2xl mb-6 md:mb-8 border border-teal-100">
+                    <h4 class="font-bold text-teal-800 mb-2 md:mb-3 font-handwriting text-xl md:text-2xl">Alur Pembelajaran ARKA:</h4>
+                    <ul class="grid grid-cols-2 sm:flex sm:flex-row gap-3 md:gap-4 font-bold text-xs md:text-sm mt-3 md:mt-4">
+                        <li class="flex items-center gap-2"><span class="bg-blue-500 text-white w-5 h-5 md:w-6 md:h-6 rounded-full flex justify-center items-center shrink-0">A</span> Aktivitas</li>
+                        <li class="flex items-center gap-2"><span class="bg-yellow-500 text-white w-5 h-5 md:w-6 md:h-6 rounded-full flex justify-center items-center shrink-0">R</span> Refleksi</li>
+                        <li class="flex items-center gap-2"><span class="bg-teal-500 text-white w-5 h-5 md:w-6 md:h-6 rounded-full flex justify-center items-center shrink-0">K</span> Konseptual</li>
+                        <li class="flex items-center gap-2"><span class="bg-pink-500 text-white w-5 h-5 md:w-6 md:h-6 rounded-full flex justify-center items-center shrink-0">A</span> Aplikasi</li>
+                    </ul>
+                </div>
+
+                <div id="detail-konten" class="text-gray-600 leading-relaxed text-sm sm:text-base md:text-lg space-y-6 md:space-y-8"></div>
+            </div>
+        </article>
+    </div>
+
+    <!-- BAGIAN 4: HALAMAN ASESMEN (ANGKET) -->
+    <div id="view-asesmen" class="hidden container mx-auto px-4 py-6 md:py-8 flex-1 max-w-4xl bg-white pb-12">
+        <div class="bg-white rounded-[2rem] shadow-xl border-4 border-teal-100 p-5 sm:p-8 md:p-12 mb-8 md:mb-12 relative overflow-hidden">
+            <div class="absolute -top-10 -right-10 w-20 h-20 md:w-40 md:h-40 bg-teal-50 rounded-full opacity-50 blur-3xl"></div>
+            
+            <div class="text-center mb-8 md:mb-10 relative z-10">
+                <p class="text-xs md:text-sm font-bold tracking-widest text-pink-500 uppercase mb-2">Angket Kebutuhan Siswa</p>
+                <h2 class="text-2xl sm:text-3xl md:text-4xl font-extrabold text-brand-teal lowercase font-handwriting tracking-wide mb-3 md:mb-4">Identifikasi Konsep Diri Islami</h2>
+                <div class="w-16 md:w-24 h-1 bg-pink-400 mx-auto rounded-full mb-4 md:mb-6"></div>
+                <p class="text-gray-600 text-sm md:text-base leading-relaxed text-justify md:text-center max-w-2xl mx-auto">
+                    Assalamualaikum Warahmatullahi Wabarakatuh.<br>
+                    <strong><span class="nama-siswa-dinamis">Sahabat</span></strong> yang hebat, Angket ini bertujuan untuk mengukur tingkat konsep diri yang kamu miliki saat ini. Jawablah sejujur-jujurnya sesuai dengan kata hatimu, kerahasiaanmu dijamin 100%.
+                </p>
+            </div>
+
+            <div id="asesmen-form-section" class="relative z-10">
+                <form id="form-angket" onsubmit="window.prosesAngket(event)">
+                    <div class="bg-teal-50 rounded-2xl p-4 md:p-6 mb-6 md:mb-8 border border-teal-100 flex items-center justify-between">
+                        <div>
+                            <p class="text-[10px] md:text-xs text-teal-600 font-bold uppercase tracking-widest">Identitas Tersimpan</p>
+                            <p class="font-extrabold text-teal-900 text-base md:text-lg"><span class="nama-siswa-dinamis">Siswa</span> (<span id="kelas-siswa-display">Kelas</span>)</p>
+                            <p class="text-xs md:text-sm text-teal-700" id="sekolah-siswa-display">Sekolah</p>
+                        </div>
+                        <div class="w-10 h-10 md:w-12 md:h-12 bg-white rounded-full flex items-center justify-center shadow-sm text-xl md:text-2xl shrink-0">📝</div>
+                    </div>
+
+                    <div class="mb-4 md:mb-6 px-1 md:px-2">
+                        <p class="font-bold text-gray-700 text-sm md:text-base">Petunjuk Pengisian:</p>
+                        <p class="text-xs md:text-sm text-gray-500">Pilih salah satu jawaban yang paling sesuai dengan kondisimu saat ini.</p>
+                    </div>
+
+                    <!-- WADAH PERTANYAAN ANGKET -->
+                    <div id="angket-form-container"></div>
+
+                    <div class="text-center mt-8 md:mt-10 bg-gray-50 p-5 md:p-6 rounded-3xl border border-gray-200">
+                        <p class="text-gray-600 font-medium mb-3 md:mb-4 text-sm md:text-base">Sudah yakin dengan semua jawabanmu?</p>
+                        <button type="submit" class="bg-brand-pink text-white font-bold text-base md:text-lg px-8 md:px-12 py-3 md:py-4 rounded-full hover:bg-pink-700 transition shadow-lg transform hover:-translate-y-1 w-full sm:w-auto relative z-20 cursor-pointer">
+                            Kirim & Lihat Hasil Analisis
+                        </button>
+                    </div>
+                </form>
+            </div>
+
+            <div id="hasil-asesmen" class="hidden relative z-10">
+                <div class="bg-teal-50/50 rounded-2xl p-5 sm:p-8 md:p-10 border-2 border-teal-200 text-center">
+                    <div class="inline-block bg-white p-3 md:p-4 rounded-full shadow-md mb-3 md:mb-4 border border-teal-100">
+                        <span class="text-4xl md:text-5xl">✨</span>
+                    </div>
+                    <h3 class="text-xl md:text-2xl font-extrabold text-teal-800 mb-2">Hasil Analisis Konsep Diri</h3>
+                    <p class="text-sm md:text-base text-gray-600 mb-6 md:mb-8" id="pesan-terima-kasih">Terima kasih telah mengisi angket dengan jujur.</p>
+
+                    <div class="bg-white rounded-xl p-5 md:p-6 shadow-sm border border-gray-100 mb-5 md:mb-6 max-w-lg mx-auto w-full">
+                        <p id="skor-total" class="text-lg md:text-xl mb-1 md:mb-2"></p>
+                        <p class="text-xs md:text-sm text-gray-500 mt-2">Semakin tinggi kategorimu, semakin positif pemahaman konsep diri islami yang kamu miliki.</p>
+                    </div>
+
+                    <div class="bg-white rounded-xl p-5 md:p-6 shadow-sm border border-pink-100 mb-6 md:mb-8 max-w-lg mx-auto w-full border-t-4 border-t-brand-pink text-left relative overflow-hidden">
+                        <div class="absolute -right-4 -top-4 text-5xl md:text-6xl opacity-10">🎯</div>
+                        <h4 class="font-bold text-gray-700 mb-2 text-center relative z-10 text-sm md:text-base">Fokus Pengembangan Utama:</h4>
+                        <p class="text-center text-2xl md:text-3xl font-handwriting text-brand-pink mb-3 md:mb-4 relative z-10" id="dimensi-terendah"></p>
+                        <p class="text-xs md:text-sm text-gray-600 text-center relative z-10">Dimensi ini mencatat persentase pemahaman paling rendah. Ini adalah area pertama yang perlu kita perkuat bersama.</p>
+                    </div>
+
+                    <div class="text-left max-w-lg mx-auto w-full bg-white p-5 md:p-6 rounded-xl border border-gray-100 shadow-sm mb-6 md:mb-8">
+                        <h4 class="font-bold text-gray-700 mb-3 md:mb-4 text-center text-sm md:text-base">Rincian Persentase Per Dimensi</h4>
+                        <div id="detail-dimensi" class="space-y-3 md:space-y-4"></div>
+                    </div>
+
+                    <div class="bg-brand-teal text-white rounded-3xl p-5 sm:p-6 md:p-8 max-w-lg mx-auto w-full shadow-lg relative overflow-hidden">
+                        <div class="absolute -right-4 -bottom-4 text-6xl md:text-7xl opacity-10 font-handwriting">Yuk!</div>
+                        <h4 class="font-bold text-lg md:text-xl mb-2 md:mb-3 relative z-10 text-pink-300">Langkah Selanjutnya</h4>
+                        <p class="font-medium text-xs sm:text-sm md:text-base leading-relaxed relative z-10 mb-5 md:mb-6 opacity-90 text-left">
+                            Silakan pelajari <strong>Modul Materi</strong> (terutama fokus pada dimensimu yang terendah) dan selesaikan semua refleksinya ya!
+                        </p>
+                        <button type="button" onclick="window.goToMateri()" class="bg-white text-teal-800 px-6 md:px-8 py-3 rounded-full font-bold hover:bg-teal-50 transition shadow-md w-full relative z-20 cursor-pointer transform hover:-translate-y-1 text-sm md:text-base">
+                            Buka Daftar Modul Materi &rarr;
+                        </button>
+                    </div>
+
+                    <button type="button" onclick="window.ukurUlang()" class="mt-6 md:mt-8 bg-transparent text-gray-400 px-4 md:px-6 py-2 rounded-full text-xs md:text-sm hover:text-gray-600 transition underline">
+                        Isi Ulang Angket
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- BAGIAN 5: HALAMAN SERTIFIKAT -->
+    <div id="view-sertifikat" class="hidden w-full flex-1 flex flex-col justify-center items-center p-4 md:p-8 bg-gray-50 pb-12">
+        <button onclick="window.goToMateri()" class="mb-4 md:mb-6 inline-flex items-center text-teal-600 font-bold hover:text-teal-800 transition bg-white px-5 md:px-6 py-2 md:py-3 rounded-full shadow-sm relative z-20 text-sm md:text-base w-full sm:w-auto justify-center">
+            &larr; Kembali ke Daftar Materi
+        </button>
+
+        <!-- SERTIFIKAT UI -->
+        <div class="max-w-4xl w-full bg-certificate p-3 sm:p-4 md:p-8 rounded-[2rem] shadow-2xl relative mb-8 md:mb-10 overflow-x-auto">
+            <div class="border-4 md:border-8 border-double border-teal-700 p-6 sm:p-8 md:p-14 bg-white/95 rounded-2xl text-center relative overflow-hidden backdrop-blur-sm min-w-[300px]">
+                <div class="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 text-7xl md:text-9xl opacity-5">🏆</div>
+                <h3 class="text-sm sm:text-base md:text-xl font-bold tracking-[0.1em] md:tracking-[0.2em] text-gray-500 uppercase mb-2 md:mb-4">Sertifikat Penghargaan</h3>
+                <h1 class="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-serif font-extrabold text-brand-teal mb-4 md:mb-8 leading-tight">E-Safezone <br><span class="text-brand-pink font-handwriting font-normal text-4xl sm:text-5xl md:text-6xl lg:text-7xl capitalize">Achievement</span></h1>
+                
+                <p class="text-gray-600 text-sm sm:text-base md:text-lg mb-2 md:mb-4 italic">Dengan bangga diberikan kepada:</p>
+                <h2 class="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-extrabold text-gray-800 mb-2 border-b-2 border-gray-300 pb-2 md:pb-4 inline-block px-4 md:px-8 border-dashed w-full break-words whitespace-normal"><span class="nama-siswa-dinamis">Nama Siswa</span></h2>
+                <p class="text-gray-500 font-bold mb-6 md:mb-8 uppercase tracking-widest text-xs md:text-sm" id="cert-sekolah-kelas">Kelas - Sekolah</p>
+
+                <p class="max-w-2xl mx-auto text-gray-600 leading-relaxed mb-8 md:mb-12 text-xs sm:text-sm md:text-base lg:text-lg px-2">
+                    Telah sukses dan penuh dedikasi menyelesaikan seluruh modul pembelajaran, refleksi, dan aplikasi nyata pada program <strong>E-Safezone Counselling (Peningkatan Konsep Diri Islami)</strong>. Semoga ilmu dan komitmen yang telah diukir menjadi langkah awal menuju pribadi berakhlakul karimah yang sukses dunia & akhirat.
+                </p>
+
+                <div class="flex flex-col sm:flex-row justify-around items-center sm:items-end mt-6 md:mt-8 border-t border-gray-200 pt-6 md:pt-8 relative z-10 gap-6 sm:gap-0">
+                    <div class="text-center order-2 sm:order-1">
+                        <p class="font-handwriting text-2xl md:text-3xl text-teal-800 mb-1 md:mb-2">E-Safezone</p>
+                        <div class="w-24 md:w-32 h-px bg-gray-400 mx-auto mb-1 md:mb-2"></div>
+                        <p class="text-[10px] md:text-xs font-bold text-gray-500 uppercase">Sistem Konseling</p>
+                    </div>
+                    <div class="w-20 h-20 md:w-24 md:h-24 bg-brand-pink rounded-full flex items-center justify-center text-white font-bold shadow-lg border-4 border-white transform rotate-12 order-1 sm:order-2 shrink-0">
+                        <span class="text-center leading-tight text-[10px] md:text-xs">LULUS<br>100%</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- UKUR ULANG SECTION -->
+        <div class="text-center max-w-xl mx-auto bg-white p-5 md:p-8 rounded-3xl shadow-md border border-teal-100 mb-6 w-full">
+            <h4 class="font-bold text-teal-800 text-lg md:text-xl mb-2 md:mb-3">Apa Selanjutnya? 🚀</h4>
+            <p class="text-gray-600 mb-5 md:mb-6 text-sm md:text-base">Sahabat Safezone, yuk kita lihat seberapa jauh perkembangan konsep dirimu sekarang! Mari isi kembali angket asesmen untuk melihat peningkatannya.</p>
+            <button onclick="window.ukurUlang()" class="bg-gradient-to-r from-teal-500 to-blue-500 text-white px-6 md:px-8 py-3 md:py-4 rounded-full font-extrabold shadow-lg hover:from-teal-600 hover:to-blue-600 transition transform hover:-translate-y-1 w-full md:w-auto text-sm md:text-lg">
+                Ukur Ulang Konsep Diriku 📈
+            </button>
+        </div>
+
+        <!-- KONSELING INDIVIDUAL CTA -->
+        <div class="text-center max-w-xl mx-auto bg-pink-50 p-5 md:p-8 rounded-3xl shadow-md border border-pink-200 w-full">
+            <h4 class="font-bold text-pink-800 text-lg md:text-xl mb-2 md:mb-3">Masih Butuh Teman Bercerita? 🫂</h4>
+            <p class="text-gray-700 mb-5 md:mb-6 text-sm md:text-base">Jika kamu masih merasa bingung, punya beban pikiran yang belum terurai, atau membutuhkan layanan <strong>Konseling Individual</strong> yang lebih intensif, jangan ragu untuk menghubungi Guru BK/Konselor. Kami siap mendengarkanmu tanpa menghakimi!</p>
+            <button onclick="window.hubungiKonselor()" class="bg-brand-pink text-white px-5 md:px-8 py-3 md:py-4 rounded-full font-extrabold shadow-lg hover:bg-pink-700 transition transform hover:-translate-y-1 w-full sm:w-auto text-sm md:text-base flex flex-row items-center justify-center gap-2 mx-auto">
+                <svg class="w-5 h-5 md:w-6 md:h-6 shrink-0" fill="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M12.031 21c-1.353 0-2.671-.34-3.83-.984l-4.242 1.111 1.127-4.13A8.955 8.955 0 0 1 3.031 12c0-4.962 4.04-9 9-9s9 4.038 9 9-4.038 9-9 9zm4.846-6.428c-.266-.134-1.573-.775-1.817-.864-.244-.089-.422-.134-.6.134-.178.268-.684.864-.84 1.042-.155.178-.311.2-.578.066-.266-.134-1.123-.414-2.14-1.168-.79-.586-1.322-1.309-1.478-1.577-.155-.268-.016-.413.117-.547.12-.12.266-.312.4-.468.133-.156.178-.268.267-.446.089-.178.044-.334-.022-.468-.067-.134-.6-1.446-.822-1.98-.216-.52-.435-.45-.6-.458l-.512-.008c-.178 0-.466.067-.71.334-.245.268-.934.912-.934 2.224 0 1.312.955 2.582 1.089 2.76.133.178 1.882 2.87 4.555 4.022 2.673 1.152 2.673.768 3.162.723.489-.044 1.573-.642 1.795-1.263.222-.622.222-1.152.155-1.263-.067-.111-.244-.178-.511-.312z"/></svg>
+                <span>Hubungi Konselor</span>
+            </button>
+        </div>
+    </div>
+
+    <!-- BAGIAN ADMIN -->
+    <div id="view-admin-login" class="hidden w-full flex-1 flex flex-col justify-center items-center p-4">
+        <div class="max-w-sm w-full bg-white rounded-2xl shadow-xl border-t-8 border-teal-800 p-6 md:p-8 text-center">
+            <span class="text-4xl block mb-4">🔐</span>
+            <h2 class="text-xl md:text-2xl font-bold text-teal-800 mb-4 md:mb-6">Login Administrator</h2>
+            <input type="password" id="adminPassword" class="w-full px-4 py-3 rounded-xl border border-gray-300 focus:ring-2 focus:ring-teal-500 text-center mb-4 text-sm md:text-base" placeholder="Masukkan PIN Rahasia">
+            <button onclick="window.loginAdmin()" class="w-full bg-teal-800 text-white font-bold py-3 rounded-xl hover:bg-teal-900 transition text-sm md:text-base">Masuk Panel Admin</button>
+            <button onclick="window.switchTab('beranda')" class="mt-4 text-xs md:text-sm text-gray-500 hover:underline">Batal</button>
+        </div>
+    </div>
+
+    <div id="view-admin-dashboard" class="hidden w-full bg-gray-100 pb-12 flex-1">
+        <div class="bg-teal-800 text-white py-4 md:py-6 shadow-md mb-6 md:mb-8">
+            <div class="container mx-auto px-4 flex flex-col sm:flex-row justify-between items-center gap-4">
+                <div class="text-center sm:text-left">
+                    <h1 class="text-xl md:text-2xl font-bold font-handwriting tracking-widest">e-Safezone Admin Panel</h1>
+                    <p class="text-teal-200 text-xs md:text-sm">Dashboard Pemantauan Siswa</p>
+                </div>
+                <button onclick="window.tutupAdmin()" class="bg-red-500 hover:bg-red-600 text-white px-4 py-2 rounded-lg text-xs md:text-sm font-bold transition w-full sm:w-auto">Tutup Admin</button>
+            </div>
+        </div>
+
+        <div class="container mx-auto px-4 max-w-6xl">
+            <!-- Scrollable Tabs for Mobile -->
+            <div class="flex overflow-x-auto gap-2 mb-6 border-b border-gray-300 pb-2 no-scrollbar">
+                <button onclick="window.switchAdminTab('angket')" id="btn-tab-angket" class="px-4 md:px-6 py-2 bg-teal-600 text-white font-bold rounded-t-lg whitespace-nowrap text-sm md:text-base">Data Angket Konsep Diri</button>
+                <button onclick="window.switchAdminTab('aktivitas')" id="btn-tab-aktivitas" class="px-4 md:px-6 py-2 bg-gray-200 text-gray-600 font-bold rounded-t-lg hover:bg-gray-300 whitespace-nowrap text-sm md:text-base">Log Aktivitas & Refleksi Siswa</button>
+            </div>
+
+            <!-- TABEL ANGKET -->
+            <div id="admin-tab-angket" class="bg-white rounded-xl shadow-md border border-gray-200 overflow-hidden">
+                <div class="p-4 bg-gray-50 border-b border-gray-200 flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
+                    <div class="flex flex-wrap items-center gap-2 md:gap-4 w-full sm:w-auto">
+                        <h3 class="font-bold text-gray-700 text-sm md:text-base">Rekapitulasi Angket Siswa</h3>
+                        <span id="admin-angket-count" class="bg-teal-100 text-teal-800 text-[10px] md:text-xs font-bold px-2 md:px-3 py-1 rounded-full">0 Siswa</span>
+                    </div>
+                    <button onclick="window.exportAngketToCSV()" class="bg-green-600 hover:bg-green-700 text-white text-xs md:text-sm font-bold px-3 md:px-4 py-2 rounded-lg flex items-center justify-center gap-2 transition shadow-sm w-full sm:w-auto">
+                        <svg class="w-4 h-4 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"></path></svg>
+                        <span>Unduh Data (CSV)</span>
+                    </button>
+                </div>
+                <!-- Wraper tabel agar bisa geser kanan-kiri di HP -->
+                <div class="overflow-x-auto w-full">
+                    <table class="w-full text-left border-collapse text-xs md:text-sm min-w-[700px]">
+                        <thead>
+                            <tr class="bg-gray-100 text-gray-600">
+                                <th class="p-2 md:p-3 border-b">Waktu</th>
+                                <th class="p-2 md:p-3 border-b">Nama Siswa</th>
+                                <th class="p-2 md:p-3 border-b">Kelas/Sekolah</th>
+                                <th class="p-2 md:p-3 border-b text-center">Skor Total</th>
+                                <th class="p-2 md:p-3 border-b text-center">Status</th>
+                                <th class="p-2 md:p-3 border-b">Fokus (Terendah)</th>
+                                <th class="p-2 md:p-3 border-b text-center">Aksi</th>
+                            </tr>
+                        </thead>
+                        <tbody id="admin-table-angket" class="text-gray-700">
+                            <tr><td colspan="7" class="p-4 md:p-6 text-center text-gray-400">Memuat data dari database...</td></tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            
+            <div id="modal-detail-skor" class="hidden fixed inset-0 bg-black/60 z-[200] flex items-center justify-center p-2 sm:p-4">
+                <div class="bg-white rounded-2xl shadow-2xl max-w-2xl w-full max-h-[95vh] overflow-hidden flex flex-col">
+                    <div class="p-3 md:p-4 border-b border-gray-200 flex justify-between items-center bg-teal-50">
+                        <h3 class="font-bold text-teal-800 text-base md:text-lg">Detail Skor Per Item Soal</h3>
+                        <button onclick="document.getElementById('modal-detail-skor').classList.add('hidden')" class="text-gray-500 hover:text-red-500 font-bold text-xl px-2">&times;</button>
+                    </div>
+                    <div class="p-3 md:p-6 overflow-y-auto" id="modal-content-skor"></div>
+                    <div class="p-3 md:p-4 border-t border-gray-200 text-center bg-gray-50">
+                        <p class="text-[10px] md:text-xs text-gray-500">Anda dapat menyalin data di atas untuk keperluan analisis statistik (SPSS/Excel).</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- TABEL AKTIVITAS -->
+            <div id="admin-tab-aktivitas" class="hidden bg-white rounded-xl shadow-md border border-gray-200 overflow-hidden">
+                <div class="p-4 bg-gray-50 border-b border-gray-200 flex flex-col sm:flex-row justify-between items-start sm:items-center gap-2">
+                    <h3 class="font-bold text-gray-700 text-sm md:text-base">Jurnal Refleksi & Jawaban Latihan Siswa</h3>
+                    <span id="admin-activity-count" class="bg-pink-100 text-pink-800 text-[10px] md:text-xs font-bold px-2 md:px-3 py-1 rounded-full">0 Aktivitas</span>
+                </div>
+                <div class="overflow-x-auto w-full">
+                    <table class="w-full text-left border-collapse text-xs md:text-sm min-w-[700px]">
+                        <thead>
+                            <tr class="bg-gray-100 text-gray-600">
+                                <th class="p-2 md:p-3 border-b w-24 md:w-32">Waktu</th>
+                                <th class="p-2 md:p-3 border-b w-32 md:w-40">Nama Siswa</th>
+                                <th class="p-2 md:p-3 border-b w-40 md:w-48">Modul & Latihan</th>
+                                <th class="p-2 md:p-3 border-b">Jawaban / Refleksi Siswa</th>
+                            </tr>
+                        </thead>
+                        <tbody id="admin-table-aktivitas" class="text-gray-700">
+                            <tr><td colspan="4" class="p-4 md:p-6 text-center text-gray-400">Memuat data dari database...</td></tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer id="main-footer" class="hidden bg-white border-t border-gray-200 mt-auto py-6 text-center text-xs md:text-sm text-gray-500 w-full">
+        &copy; <span id="current-year"></span> Safezone Counselling. All rights reserved. 
+        <a href="javascript:void(0)" onclick="window.bukaAdmin()" class="text-gray-300 ml-2 hover:text-teal-600 transition block sm:inline mt-2 sm:mt-0">Admin Panel 🔒</a>
+    </footer>
+
+    <!-- ========================================== -->
+    <!-- KODE JAVASCRIPT: LOGIKA & TAMPILAN UTAMA   -->
+    <!-- ========================================== -->
+    <script>
+        // --- VARIABEL GLOBAL ---
+        let currentUser = null;
+        let userProgress = { 'pemahaman-diri': false, 'penerimaan-diri': false, 'harga-diri': false, 'diri-ideal': false };
+        let dataAngketTersimpan = []; 
+        let dataAktivitasTersimpan = [];
+
+        // Placeholder fungsi Firebase
+        window.dbSaveAngket = function(data) { console.log("Mode Firebase tidak aktif."); };
+        window.dbSaveAktivitas = function(data) { console.log("Mode Firebase tidak aktif."); };
+
+        document.getElementById('current-year').textContent = new Date().getFullYear();
+
+        // --- FUNGSI CUSTOM MODAL ---
+        window.showModal = function(title, message, icon, isConfirm, onConfirmCallback) {
+            const titleEl = document.getElementById('custom-modal-title');
+            const messageEl = document.getElementById('custom-modal-message');
+            const iconEl = document.getElementById('custom-modal-icon');
+            
+            if (titleEl) titleEl.innerText = title;
+            if (messageEl) messageEl.innerText = message;
+            if (iconEl) iconEl.innerText = icon || 'ℹ️';
+            
+            const modal = document.getElementById('custom-modal');
+            const modalContent = document.getElementById('custom-modal-content');
+            const btnCancel = document.getElementById('custom-modal-btn-cancel');
+            const btnOk = document.getElementById('custom-modal-btn-ok');
+
+            if (!modal || !modalContent || !btnCancel || !btnOk) return;
+
+            modal.classList.remove('hidden');
+            setTimeout(() => {
+                modalContent.classList.remove('scale-95', 'opacity-0');
+                modalContent.classList.add('scale-100', 'opacity-100');
+            }, 10);
+
+            // Clean old event listeners
+            btnOk.replaceWith(btnOk.cloneNode(true));
+            btnCancel.replaceWith(btnCancel.cloneNode(true));
+            const newBtnOk = document.getElementById('custom-modal-btn-ok');
+            const newBtnCancel = document.getElementById('custom-modal-btn-cancel');
+
+            if (isConfirm) {
+                newBtnCancel.classList.remove('hidden');
+                newBtnOk.innerText = "Ya, Lanjutkan";
+                newBtnOk.onclick = () => { window.closeModal(); if(onConfirmCallback) onConfirmCallback(); };
+                newBtnCancel.onclick = () => { window.closeModal(); };
+            } else {
+                newBtnCancel.classList.add('hidden');
+                newBtnOk.innerText = "OK Mengerti";
+                newBtnOk.onclick = () => { window.closeModal(); if(onConfirmCallback) onConfirmCallback(); };
+            }
+        };
+
+        window.closeModal = function() {
+            const modal = document.getElementById('custom-modal');
+            const modalContent = document.getElementById('custom-modal-content');
+            if (modalContent) {
+                modalContent.classList.remove('scale-100', 'opacity-100');
+                modalContent.classList.add('scale-95', 'opacity-0');
+            }
+            setTimeout(() => {
+                if (modal) modal.classList.add('hidden');
+            }, 200);
+        };
+
+
+        // --- FUNGSI NAVIGASI ---
+        window.switchTab = function(tab) {
+            const views = [
+                'view-register', 'view-loading', 'view-beranda', 'view-asesmen', 
+                'view-daftar-materi', 'view-baca-materi', 'view-sertifikat', 
+                'view-admin-login', 'view-admin-dashboard'
+            ];
+            views.forEach(v => {
+                const el = document.getElementById(v);
+                if (el) el.classList.add('hidden');
+            });
+            
+            const activeView = document.getElementById('view-' + tab);
+            if (activeView) activeView.classList.remove('hidden');
+            window.scrollTo(0, 0); 
+        };
+
+        function switchTab(tab) { window.switchTab(tab); }
+
+        function goToMateri() { window.switchTab('daftar-materi'); }
+        window.goToMateri = goToMateri;
+
+        function bukaMateri(idMateri) {
+            if (!window.daftarMateri) return;
+            const materi = window.daftarMateri.find(m => m.id === idMateri);
+            if(materi) {
+                window.switchTab('baca-materi'); 
+                const imgEl = document.getElementById('detail-gambar');
+                const catEl = document.getElementById('detail-kategori');
+                const titleEl = document.getElementById('detail-judul');
+                const contentEl = document.getElementById('detail-konten');
+                
+                if (imgEl) imgEl.src = materi.gambar;
+                if (catEl) catEl.innerText = materi.kategori;
+                if (titleEl) titleEl.innerText = materi.judul;
+                if (contentEl) contentEl.innerHTML = materi.konten;
+            }
+        }
+        window.bukaMateri = bukaMateri;
+
+        // --- FUNGSI INTERAKSI MATERI ---
+        function interaksiSelesai(btn, pesan, customAlertMsg, activityName) {
+            if (!btn) return;
+            const wadah = btn.parentElement;
+            if (!wadah) return;
+            const inputs = wadah.querySelectorAll('input, textarea, select');
+            let studentAnswer = "";
+
+            inputs.forEach(input => {
+                if(input.type === 'checkbox' || input.type === 'radio') {
+                    if(input.checked) studentAnswer += "[V] " + (input.parentElement.innerText.trim() || input.value) + " | ";
+                } else {
+                    if(input.value) studentAnswer += input.value + " | ";
+                }
+                input.disabled = true;
+                if(input.tagName === 'TEXTAREA' || input.tagName === 'INPUT' || input.tagName === 'SELECT') {
+                    input.classList.add('bg-gray-100', 'text-gray-500');
+                }
+            });
+            
+            btn.innerText = pesan;
+            btn.className = 'mt-3 md:mt-4 bg-green-500 text-white px-6 md:px-8 py-2 md:py-3 rounded-full font-bold cursor-default w-full sm:w-auto transition shadow-md relative z-20 text-xs md:text-base';
+            btn.disabled = true;
+
+            if (currentUser && studentAnswer !== "") {
+                const titleEl = document.getElementById('detail-judul');
+                const activityTitle = activityName || (btn.previousElementSibling && btn.previousElementSibling.tagName === 'TEXTAREA' ? 'Refleksi / Jurnal' : 'Latihan Aktivitas');
+                const dataActivity = {
+                    nama: currentUser.nama, kelas: currentUser.kelas, sekolah: currentUser.sekolah,
+                    modul: titleEl ? titleEl.innerText : "Materi", 
+                    latihan: activityTitle, 
+                    jawaban: studentAnswer, 
+                    timestamp: Date.now()
+                };
+                
+                let localActivities = JSON.parse(localStorage.getItem('admin_local_activities') || '[]');
+                localActivities.push(dataActivity);
+                localStorage.setItem('admin_local_activities', JSON.stringify(localActivities));
+
+                if(window.firebaseSaveAktivitas) window.firebaseSaveAktivitas(dataActivity);
+            }
+            
+            if(customAlertMsg) {
+                window.showModal('Info Analisis', customAlertMsg, '💡', false);
+            } else {
+                window.showModal('Berhasil!', 'Kerja bagus Sahabat Safezone! Jawaban kamu sudah tersimpan di Safezone.', '🛡️', false);
+            }
+        }
+        window.interaksiSelesai = interaksiSelesai;
+
+        function updateRansel(el) {
+            if (!el) return;
+            let grid = el.closest('.grid');
+            if (!grid) return;
+            let checkedCount = grid.querySelectorAll('input:checked').length;
+            let msgBox = document.getElementById('msg-ransel');
+            if (!msgBox) return;
+            if(checkedCount > 0) {
+                msgBox.classList.remove('hidden');
+                msgBox.innerText = 'Bebanmu bertambah ' + (checkedCount * 10) + 'kg! Waduh, berat sekali ranselmu! Pantas saja kamu merasa lelah dan cemas. Mari kita bongkar isinya.';
+            } else {
+                msgBox.classList.add('hidden');
+            }
+        }
+        window.updateRansel = updateRansel;
+
+        function simpanHarapan(btn) {
+            const slider = document.getElementById('sliderHarapan');
+            if (!slider) return;
+            let val = parseInt(slider.value);
+            let msg = '';
+            if(val < 50) msg = 'Terindikasi Hopelessness (Putus Asa). Jangan menyerah, yuk kita cari jalan keluarnya!';
+            else if (val > 90) msg = 'Keyakinanmu hebat! Tapi ingat, sisakan ruang untuk Tawakkal agar tidak rentan stres/perfeksionis ya.';
+            else msg = 'Harapan yang cukup seimbang! Mari kita kuatkan dengan strategi Ikhtiar yang benar.';
+            window.interaksiSelesai(btn, 'Harapan Tersimpan 🎯', msg, 'Skala Harapan');
+        }
+        window.simpanHarapan = simpanHarapan;
+
+        function simpanHargaDiri(btn) {
+            const slider = document.getElementById('sliderHargaDiri');
+            if (!slider) return;
+            let val = parseInt(slider.value);
+            let msg = val < 50 ? 'Warning! Baterai Harga Dirimu sedang bocor. Yuk kita tambal di materi selanjutnya!' : 'Kerja bagus! Harga dirimu sudah cukup terisi, mari kita pertahankan supaya tidak mudah bocor!';
+            window.interaksiSelesai(btn, 'Skala Tersimpan ✅', msg, 'Skala Harga Diri');
+        }
+        window.simpanHargaDiri = simpanHargaDiri;
+
+        function selesaikanModul(idMateri) {
+            window.showModal('Selamat!', 'Modul ini telah ditandai Selesai. Lanjutkan perjuanganmu Sahabat!', '🎓', false, () => {
+                userProgress[idMateri] = true;
+                localStorage.setItem('safezone_progress', JSON.stringify(userProgress));
+                const badge = document.getElementById('badge-selesai-detail');
+                if (badge) badge.classList.remove('hidden');
+                if(window.renderDaftarMateri) window.renderDaftarMateri();
+                window.goToMateri();
+            });
+        }
+        window.selesaikanModul = selesaikanModul;
+
+        function lihatSertifikat() { window.switchTab('sertifikat'); }
+        window.lihatSertifikat = lihatSertifikat;
+
+        function ukurUlang() {
+            window.showModal('Ukur Ulang', 'Angket sebelumnya akan dikosongkan agar kamu bisa mengukur perkembangan terbarumu. Lanjutkan?', '❓', true, () => {
+                if(window.ulangAsesmen) window.ulangAsesmen();
+                window.switchTab('asesmen');
+            });
+        }
+        window.ukurUlang = ukurUlang;
+
+        function hubungiKonselor() {
+            const nomorAdminWA = "628126794286"; 
+            
+            let namaSiswa = currentUser ? currentUser.nama : "Siswa";
+            let kelasSiswa = currentUser ? currentUser.kelas : "Safezone";
+            let pesan = encodeURIComponent(`Halo Bapak/Ibu Konselor e-Safezone. Saya ${namaSiswa} dari kelas ${kelasSiswa}. Saya telah menyelesaikan pembelajaran mandiri di e-Safezone dan ingin mengajukan sesi Konseling Individual lebih lanjut. Boleh saya bercerita?`);
+            
+            if(currentUser) {
+                 const dataActivity = {
+                    nama: currentUser.nama, kelas: currentUser.kelas, sekolah: currentUser.sekolah,
+                    modul: "Sertifikat Kelulusan", latihan: "Request Konseling Individu (WA)", jawaban: "Mengklik tombol Hubungi Konselor", timestamp: Date.now()
+                };
+                
+                let localActivities = JSON.parse(localStorage.getItem('admin_local_activities') || '[]');
+                localActivities.push(dataActivity);
+                localStorage.setItem('admin_local_activities', JSON.stringify(localActivities));
+
+                if(window.firebaseSaveAktivitas) window.firebaseSaveAktivitas(dataActivity);
+            }
+
+            window.open(`https://wa.me/${nomorAdminWA}?text=${pesan}`, '_blank');
+        }
+        window.hubungiKonselor = hubungiKonselor;
+
+        // --- SISTEM LOGIN/LOGOUT SISWA ---
+        function prosesRegister(event) {
+            event.preventDefault();
+            
+            const nameEl = document.getElementById('regNama');
+            const emailEl = document.getElementById('regEmail');
+            const kelasEl = document.getElementById('regKelas');
+            const sekolahEl = document.getElementById('regSekolah');
+            
+            if (!nameEl || !emailEl || !kelasEl || !sekolahEl) return;
+
+            currentUser = {
+                nama: nameEl.value,
+                email: emailEl.value,
+                kelas: kelasEl.value,
+                sekolah: sekolahEl.value
+            };
+            userProgress = { 'pemahaman-diri': false, 'penerimaan-diri': false, 'harga-diri': false, 'diri-ideal': false };
+            
+            localStorage.setItem('safezone_user', JSON.stringify(currentUser));
+            localStorage.setItem('safezone_progress', JSON.stringify(userProgress));
+            
+            if(window.updateUIWithUser) window.updateUIWithUser();
+            window.switchTab('beranda');
+        }
+        window.prosesRegister = prosesRegister;
+
+        function logout() {
+            window.showModal('Keluar Akun', 'Yakin ingin keluar? Semua data belajarmu di perangkat ini akan dihapus.', '⚠️', true, () => {
+                localStorage.removeItem('safezone_user');
+                localStorage.removeItem('safezone_progress');
+                currentUser = null;
+                
+                ['main-nav', 'main-header', 'main-footer'].forEach(id => {
+                    const el = document.getElementById(id);
+                    if (el) el.classList.add('hidden');
+                });
+
+                window.switchTab('register');
+            });
+        }
+        window.logout = logout;
+
+        // --- SISTEM PANEL ADMIN ---
+        function bukaAdmin() { window.switchTab('admin-login'); }
+        window.bukaAdmin = bukaAdmin;
+        
+        function tutupAdmin() { window.switchTab('beranda'); }
+        window.tutupAdmin = tutupAdmin;
+
+        function loginAdmin() {
+            const passEl = document.getElementById('adminPassword');
+            if (!passEl) return;
+            const pass = passEl.value;
+            if(pass === 'admin123') { 
+                window.switchTab('admin-dashboard');
+                if(typeof window.loadAdminData === 'function') window.loadAdminData(); 
+            } else {
+                window.showModal('Gagal', 'PIN Administrator Salah!', '❌', false);
+            }
+        }
+        window.loginAdmin = loginAdmin;
+
+        function switchAdminTab(tabName) {
+            const tabAngket = document.getElementById('admin-tab-angket');
+            const tabAktivitas = document.getElementById('admin-tab-aktivitas');
+            const btnAngket = document.getElementById('btn-tab-angket');
+            const btnAktivitas = document.getElementById('btn-tab-aktivitas');
+
+            if (tabAngket) tabAngket.classList.add('hidden');
+            if (tabAktivitas) tabAktivitas.classList.add('hidden');
+            
+            if (btnAngket) btnAngket.className = "px-4 md:px-6 py-2 bg-gray-200 text-gray-600 font-bold rounded-t-lg hover:bg-gray-300 whitespace-nowrap text-sm md:text-base";
+            if (btnAktivitas) btnAktivitas.className = "px-4 md:px-6 py-2 bg-gray-200 text-gray-600 font-bold rounded-t-lg hover:bg-gray-300 whitespace-nowrap text-sm md:text-base";
+            
+            const targetTab = document.getElementById('admin-tab-' + tabName);
+            const targetBtn = document.getElementById('btn-tab-' + tabName);
+            
+            if (targetTab) targetTab.classList.remove('hidden');
+            if (targetBtn) targetBtn.className = "px-4 md:px-6 py-2 bg-teal-600 text-white font-bold rounded-t-lg whitespace-nowrap text-sm md:text-base";
+        }
+        window.switchAdminTab = switchAdminTab;
+
+        // --- SISTEM RENDER ANGKET ---
+        function ulangAsesmen() {
+            const form = document.getElementById('form-angket');
+            const hasil = document.getElementById('hasil-asesmen');
+            const section = document.getElementById('asesmen-form-section');
+            
+            if (form) form.reset();
+            if (hasil) hasil.classList.add('hidden');
+            if (section) section.classList.remove('hidden');
+            window.scrollTo(0, 0);
+        }
+        window.ulangAsesmen = ulangAsesmen;
+
+        const angketData = [
+            { id: 1, dim: 'Pemahaman Diri', type: '+', text: 'Saya mengetahui apa saja kelebihan dan bakat yang saya miliki.' },
+            { id: 2, dim: 'Penerimaan Diri', type: '+', text: 'Saya bersyukur (qana\'ah) dengan penampilan fisik yang telah Allah berikan kepada saya.' },
+            { id: 3, dim: 'Pemahaman Diri', type: '-', text: 'Saya merasa bingung dan tidak yakin apa sebenarnya kelemahan dalam diri saya.' },
+            { id: 4, dim: 'Penerimaan Diri', type: '-', text: 'Saya sering merasa iri (hasad) dan membandingkan diri dengan teman yang terlihat lebih hebat.' },
+            { id: 5, dim: 'Pemahaman Diri', type: '+', text: 'Saya sadar bahwa selain kekurangan, saya juga memiliki potensi untuk berbuat baik.' },
+            { id: 6, dim: 'Pemahaman Diri', type: '+', text: 'Saya bisa menjelaskan apa saja sifat-sifat baik yang saya miliki.' },
+            { id: 7, dim: 'Pemahaman Diri', type: '-', text: 'Saya sering merasa tidak punya kelebihan apapun yang bisa dibanggakan.' },
+            { id: 8, dim: 'Pemahaman Diri', type: '-', text: 'Saya sering merasa tidak mengenal siapa diri saya sebenarnya.' },
+            { id: 9, dim: 'Penerimaan Diri', type: '+', text: 'Saya menerima kekurangan yang ada pada diri saya sebagai bagian dari takdir Allah yang harus saya sikapi dengan sabar.' },
+            { id: 10, dim: 'Penerimaan Diri', type: '-', text: 'Saya sering insecure (minder) dengan kondisi fisik saya (misal: warna kulit, bentuk hidung, berat badan).' },
+            { id: 11, dim: 'Penerimaan Diri', type: '+', text: 'Saya tidak terlalu memikirkan apa kata orang lain tentang kekurangan saya.' },
+            { id: 12, dim: 'Penerimaan Diri', type: '+', text: 'Saya memaafkan diri saya sendiri ketika saya melakukan kesalahan, dan berusaha memperbaikinya (taubat).' },
+            { id: 13, dim: 'Penerimaan Diri', type: '+', text: 'Saya fokus mengembangkan kelebihan saya daripada meratapi kekurangan saya.' },
+            { id: 14, dim: 'Penerimaan Diri', type: '-', text: 'Saya berharap saya dilahirkan sebagai orang lain.' },
+            { id: 15, dim: 'Harga Diri', type: '+', text: 'Saya merasa diri saya berharga di mata Allah, terlepas dari penilaian orang lain.' },
+            { id: 16, dim: 'Harga Diri', type: '-', text: 'Saya merasa tidak berguna jika saya gagal atau mendapat nilai jelek di sekolah.' },
+            { id: 17, dim: 'Harga Diri', type: '-', text: 'Saya hanya merasa berharga jika saya mendapat pujian atau likes di media sosial.' },
+            { id: 18, dim: 'Harga Diri', type: '+', text: 'Saya yakin bahwa saya diciptakan Allah untuk tujuan yang mulia (beribadah dan berbuat baik).' },
+            { id: 19, dim: 'Harga Diri', type: '-', text: 'Saya merasa malu berteman dengan siswa yang alim/sholeh karena merasa diri saya kotor dan penuh dosa.' },
+            { id: 20, dim: 'Harga Diri', type: '+', text: 'Saya tetap menghargai diri saya sendiri meskipun ada teman yang meremehkan saya.' },
+            { id: 21, dim: 'Harga Diri', type: '-', text: 'Saya sering merasa hina dan tidak pantas mendapatkan rahmat Allah.' },
+            { id: 22, dim: 'Harga Diri', type: '+', text: 'Saya percaya bahwa setiap perbuatan baik (ibadah) yang saya lakukan menambah nilai diri saya di hadapan Allah.' },
+            { id: 23, dim: 'Diri Ideal', type: '+', text: 'Cita-cita saya di masa depan adalah menjadi pribadi yang memiliki akhlak mulia (akhlakul karimah).' },
+            { id: 24, dim: 'Diri Ideal', type: '-', text: 'Bagi saya, menjadi populer atau "viral" di media sosial lebih penting daripada menjadi anak yang sholeh/sholehah.' },
+            { id: 25, dim: 'Diri Ideal', type: '-', text: 'Saya tidak terlalu peduli dengan nilai-nilai agama, yang penting saya sukses (kaya/terkenal) di masa depan.' },
+            { id: 26, dim: 'Diri Ideal', type: '+', text: 'Saya ingin dikenal sebagai siswa yang jujur (siddiq) dan dapat dipercaya (amanah).' },
+            { id: 27, dim: 'Diri Ideal', type: '-', text: 'Saya lebih mengagumi influencer atau artis di media sosial daripada mengagumi tokoh-tokoh Islam (seperti Nabi Muhammad SAW atau Sahabat).' },
+            { id: 28, dim: 'Diri Ideal', type: '-', text: 'Saya sering ragu untuk melakukan sesuatu yang baik karena takut dibilang "sok alim" oleh teman-teman.' },
+            { id: 29, dim: 'Diri Ideal', type: '+', text: 'Saya berusaha keras untuk meneladani akhlak Rasulullah SAW dalam kehidupan sehari-hari.' },
+            { id: 30, dim: 'Diri Ideal', type: '-', text: 'Saya pikir, menjadi orang yang taat beragama itu kuno dan tidak keren.' }
+        ];
+
+        function renderAngket() {
+            const formContainerBox = document.getElementById('angket-form-container');
+            if(!formContainerBox) return;
+            let formHTML = '';
+            angketData.forEach((q, idx) => {
+                formHTML += `
+                    <div class="mb-4 md:mb-5 p-3 md:p-5 border border-teal-100 rounded-xl bg-teal-50/40 hover:bg-teal-50/80 transition duration-300">
+                        <p class="font-bold text-gray-700 mb-3 md:mb-4 leading-relaxed text-sm md:text-base"><span class="text-teal-600 mr-2">${idx + 1}.</span> ${q.text}</p>
+                        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-2 md:gap-4 text-xs md:text-sm text-gray-600">
+                            <label class="flex items-center gap-2 cursor-pointer hover:text-teal-700 bg-white px-3 py-3 md:px-4 md:py-3 rounded-lg md:rounded-xl border border-gray-200 shadow-sm"><input type="radio" name="q${q.id}" value="SS" required class="accent-teal-600 w-4 h-4 relative z-20"> <span>Sangat Sesuai</span></label>
+                            <label class="flex items-center gap-2 cursor-pointer hover:text-teal-700 bg-white px-3 py-3 md:px-4 md:py-3 rounded-lg md:rounded-xl border border-gray-200 shadow-sm"><input type="radio" name="q${q.id}" value="S" class="accent-teal-600 w-4 h-4 relative z-20"> <span>Sesuai</span></label>
+                            <label class="flex items-center gap-2 cursor-pointer hover:text-teal-700 bg-white px-3 py-3 md:px-4 md:py-3 rounded-lg md:rounded-xl border border-gray-200 shadow-sm"><input type="radio" name="q${q.id}" value="TS" class="accent-teal-600 w-4 h-4 relative z-20"> <span>Tidak Sesuai</span></label>
+                            <label class="flex items-center gap-2 cursor-pointer hover:text-teal-700 bg-white px-3 py-3 md:px-4 md:py-3 rounded-lg md:rounded-xl border border-gray-200 shadow-sm"><input type="radio" name="q${q.id}" value="STS" class="accent-teal-600 w-4 h-4 relative z-20"> <span>Sangat Tdk Sesuai</span></label>
+                        </div>
+                    </div>
+                `;
+            });
+            formContainerBox.innerHTML = formHTML;
+        }
+        window.renderAngket = renderAngket;
+
+        function prosesAngket(event) {
+            event.preventDefault(); 
+            const formData = new FormData(event.target);
+            let totalScore = 0;
+            let dimScores = { 'Pemahaman Diri': 0, 'Penerimaan Diri': 0, 'Harga Diri': 0, 'Diri Ideal': 0 };
+            let itemDetails = {};
+
+            for(let i=1; i<=30; i++) {
+                const answer = formData.get('q' + i);
+                if(!answer) return;
+                
+                let score = 0;
+                const type = [3,4,7,8,10,14,16,17,19,21,24,25,27,28,30].includes(i) ? '-' : '+';
+                const dim = (i<=8) ? 'Pemahaman Diri' : (i<=14) ? 'Penerimaan Diri' : (i<=22) ? 'Harga Diri' : 'Diri Ideal';
+
+                if(type === '+') { 
+                    if(answer === 'SS') score = 4; if(answer === 'S') score = 3; if(answer === 'TS') score = 2; if(answer === 'STS') score = 1;
+                } else { 
+                    if(answer === 'SS') score = 1; if(answer === 'S') score = 2; if(answer === 'TS') score = 3; if(answer === 'STS') score = 4;
+                }
+                totalScore += score;
+                dimScores[dim] += score;
+                
+                itemDetails[`q${i}`] = { jawaban: answer, skor: score, tipe: type };
+            }
+
+            let status = totalScore >= 96 ? 'Tinggi' : totalScore >= 72 ? 'Sedang' : 'Rendah';
+            let color = totalScore >= 96 ? 'text-green-600' : totalScore >= 72 ? 'text-yellow-500' : 'text-red-500';
+
+            if (currentUser) {
+                const dataAngket = {
+                    nama: currentUser.nama, email: currentUser.email, kelas: currentUser.kelas, sekolah: currentUser.sekolah,
+                    totalScore: totalScore, status: status,
+                    dimensi1: dimScores['Pemahaman Diri'], dimensi2: dimScores['Penerimaan Diri'], dimensi3: dimScores['Harga Diri'], dimensi4: dimScores['Diri Ideal'],
+                    itemDetails: itemDetails, timestamp: Date.now()
+                };
+                
+                // BACKUP LOKAL (Dual-Save)
+                let localAngkets = JSON.parse(localStorage.getItem('admin_local_angkets') || '[]');
+                localAngkets.push(dataAngket);
+                localStorage.setItem('admin_local_angkets', JSON.stringify(localAngkets));
+
+                // SIMPAN CLOUD
+                if(window.firebaseSaveAngket) window.firebaseSaveAngket(dataAngket);
+            }
+
+            const hasilAsesmen = document.getElementById('hasil-asesmen');
+            const asesmenFormSection = document.getElementById('asesmen-form-section');
+            const skorTotal = document.getElementById('skor-total');
+            
+            if(hasilAsesmen) hasilAsesmen.classList.remove('hidden');
+            if(asesmenFormSection) asesmenFormSection.classList.add('hidden');
+            if(skorTotal) skorTotal.innerHTML = `Kategori Konsep Diri Anda:<br><strong class="text-2xl md:text-3xl ${color} block mt-2 font-extrabold">${status.toUpperCase()}</strong>`;
+            
+            const maxScores = { 'Pemahaman Diri': 32, 'Penerimaan Diri': 24, 'Harga Diri': 32, 'Diri Ideal': 32 };
+            let htmlDim = ''; let minDim = ''; let minPct = 101;
+            
+            for (const [d, s] of Object.entries(dimScores)) {
+                let p = (s / maxScores[d]) * 100;
+                let bg = p < 60 ? 'bg-red-400' : p < 80 ? 'bg-yellow-400' : 'bg-green-400';
+                htmlDim += `<div class="mb-3 md:mb-4"><div class="flex justify-between text-xs md:text-sm font-bold text-gray-700 mb-1"><span>${d}</span><span>${Math.round(p)}%</span></div><div class="w-full bg-gray-200 rounded-full h-2 md:h-3"><div class="${bg} h-2 md:h-3 rounded-full" style="width: ${p}%"></div></div></div>`;
+                if(p < minPct) { minPct = p; minDim = d; }
+            }
+            
+            const dimTerendahEl = document.getElementById('dimensi-terendah');
+            const detailDimensiEl = document.getElementById('detail-dimensi');
+            
+            if(dimTerendahEl) dimTerendahEl.innerText = minDim;
+            if(detailDimensiEl) detailDimensiEl.innerHTML = htmlDim;
+            window.scrollTo(0, 0);
+        }
+        window.prosesAngket = prosesAngket;
+
+        // --- DATA MATERI LENGKAP MENGGUNAKAN GAMBAR PEXELS YANG STABIL ---
+        const daftarMateri = [
+            {
+                id: "pemahaman-diri",
+                kategori: "DIMENSI 1",
+                judul: "Pemahaman Diri (Self-Image)",
+                kutipan: "Mengenali siapa diri kita sebenarnya, mulai dari kelebihan, hingga potensi yang Allah titipkan kepada kita. Kenali dirimu, maka kamu akan mengenali Tuhanmu.",
+                gambar: "https://images.unsplash.com/photo-1594955745484-eb20436d9326?q=80&w=800&auto=format&fit=crop",
+                konten: `
+                    <!-- AKTIVITAS -->
+                    <div class="bg-blue-50 p-5 md:p-8 rounded-3xl border border-blue-100 relative shadow-sm">
+                        <div class="absolute -top-4 -left-3 md:-top-5 md:-left-4 text-4xl md:text-5xl">🪞</div>
+                        <h3 class="text-xl md:text-2xl font-bold text-blue-800 mb-4 ml-6 uppercase tracking-wider">Aktivitas: Cermin Mental</h3>
+                        <p class="mb-4 text-blue-900">Pernah dengar analogi <strong>"Kucing ngaca, tapi pantulannya Singa"</strong>? Sama seperti gambar ilustrasi di atas, apa yang kamu lihat di cermin mental sangat bergantung pada <em>mindset</em>-mu. Yuk pemanasan! Centang pernyataan yang paling sesuai dengan kondisimu saat ini:</p>
+                        <div class="space-y-3 mb-6 bg-white p-5 rounded-xl border border-blue-100 text-sm md:text-base">
+                            <label class="flex items-start gap-3 cursor-pointer"><input type="checkbox" class="w-4 h-4 md:w-5 md:h-5 accent-blue-600 mt-1 shrink-0"> <span>Aku tahu persis apa bakatku.</span></label>
+                            <label class="flex items-start gap-3 cursor-pointer"><input type="checkbox" class="w-4 h-4 md:w-5 md:h-5 accent-blue-600 mt-1 shrink-0"> <span>Aku sering bingung kalau ditanya "Apa kelebihanmu?".</span></label>
+                            <label class="flex items-start gap-3 cursor-pointer"><input type="checkbox" class="w-4 h-4 md:w-5 md:h-5 accent-blue-600 mt-1 shrink-0"> <span>Aku merasa orang lain lebih pintar dari aku.</span></label>
+                            <label class="flex items-start gap-3 cursor-pointer"><input type="checkbox" class="w-4 h-4 md:w-5 md:h-5 accent-blue-600 mt-1 shrink-0"> <span>Aku sadar, selain kekurangan, aku pasti punya potensi untuk berbuat baik.</span></label>
+                        </div>
+                        <button onclick="window.interaksiSelesai(this, 'Aktivitas Selesai ✅', null, 'Ceklis Cermin Diri')" class="bg-blue-600 text-white px-8 py-3 rounded-full font-bold hover:bg-blue-700 transition w-full md:w-auto shadow-md relative z-20">Kunci Jawaban</button>
+                    </div>
+
+                    <!-- REFLEKSI -->
+                    <div class="bg-yellow-50 p-5 md:p-8 rounded-3xl border border-yellow-200 relative shadow-sm mt-8">
+                        <div class="absolute -top-4 -left-3 md:-top-5 md:-left-4 text-4xl md:text-5xl">🤔</div>
+                        <h3 class="text-xl md:text-2xl font-bold text-yellow-800 mb-4 ml-6 uppercase tracking-wider">Refleksi</h3>
+                        <p class="mb-4 text-yellow-900 font-medium">Dari ceklis di atas, kamu lebih banyak mencentang bagian positif atau yang bingung? Apa perasaanmu waktu menyadari hal itu?</p>
+                        <textarea class="w-full p-4 rounded-xl border border-yellow-300 focus:outline-none focus:ring-2 focus:ring-yellow-500 mb-4" rows="3" placeholder="Tuliskan perasaan atau kebingunganmu di sini..."></textarea>
+                        <button onclick="window.interaksiSelesai(this, 'Refleksi Terkirim ✨', null, 'Jurnal Refleksi')" class="bg-yellow-500 text-white px-8 py-3 rounded-full font-bold hover:bg-yellow-600 transition w-full md:w-auto shadow-md relative z-20">Kirim Refleksi</button>
+                    </div>
+
+                    <!-- KONSEPTUAL -->
+                    <div class="bg-teal-50 p-5 md:p-8 rounded-3xl border border-teal-200 relative shadow-sm mt-8">
+                        <div class="absolute -top-4 -left-3 md:-top-5 md:-left-4 text-4xl md:text-5xl">📚</div>
+                        <h3 class="text-xl md:text-2xl font-bold text-teal-800 mb-4 ml-6 uppercase tracking-wider">Konseptual: Memahami Diri Seutuhnya</h3>
+                        
+                        <h4 class="font-bold text-teal-900 mt-8 mb-4 flex items-center gap-2 text-xl border-b border-teal-100 pb-2"><span class="text-2xl">🧠</span> A. Sudut Pandang Sains: Otak & Realita</h4>
+                        <div class="space-y-4">
+                            <div class="bg-white p-5 rounded-2xl border border-teal-100 shadow-sm">
+                                <h5 class="font-bold text-teal-800 mb-2 text-lg">1. The Spotlight Effect (Kamu Bukan Pusat Semesta)</h5>
+                                <p class="text-gray-600 mb-3">Kamu takut kekuranganmu terlihat? Riset membuktikan adanya <strong>Efek Sorotan (Spotlight Effect)</strong>. Kita merasa semua orang memperhatikan jerawat atau kesalahan kita, padahal faktanya: Orang lain sibuk memikirkan diri mereka sendiri.</p>
+                                <p class="text-sm font-bold text-pink-600 bg-pink-50 p-3 rounded-xl border border-pink-100">🔑 Poin Kunci: Jangan siksa dirimu memikirkan pendapat orang lain yang sebenarnya tidak peduli.</p>
+                            </div>
+                            <div class="bg-white p-5 rounded-2xl border border-teal-100 shadow-sm">
+                                <h5 class="font-bold text-teal-800 mb-2 text-lg">2. Neurosains: Otak Belajar dari Kesalahan</h5>
+                                <p class="text-gray-600 mb-3">Ketika kamu berkata <em>"Aku bodoh"</em>, otakmu stres. Tapi saat kamu jujur berkata <em>"Aku belum bisa, tapi aku mau belajar"</em>, otakmu membentuk jalur baru (<strong>Neuroplasticity</strong>).</p>
+                                <p class="text-sm font-bold text-pink-600 bg-pink-50 p-3 rounded-xl border border-pink-100">🔑 Poin Kunci: Mengakui kekurangan (Real Self) adalah cara otak untuk mulai menjadi cerdas. Kekurangan adalah Data, bukan Vonis Mati.</p>
+                            </div>
+                        </div>
+
+                        <h4 class="font-bold text-teal-900 mt-10 mb-4 flex items-center gap-2 text-xl border-b border-teal-100 pb-2"><span class="text-2xl">🕌</span> B. Sudut Pandang Akhlak: Manusia Tanah vs Iblis Api</h4>
+                        <div class="space-y-4">
+                            <div class="bg-white p-5 rounded-2xl border border-teal-100 shadow-sm">
+                                <h5 class="font-bold text-teal-800 mb-2 text-lg">1. Kita Diciptakan dari Tanah (Tin)</h5>
+                                <p class="text-gray-600 mb-4">Dalam Al-Qur'an (QS. Al-Mu’minun: 12), manusia diciptakan dari tanah. Sifat tanah itu bisa kotor, bisa retak, tapi bisa ditanami.</p>
+                                <div class="bg-teal-50 p-5 rounded-xl border border-teal-200 mb-4 text-center shadow-inner">
+                                    <p class="text-2xl md:text-3xl font-serif leading-loose mb-3 text-gray-800" dir="rtl">وَلَقَدْ خَلَقْنَا الْإِنسَانَ مِن سُلَالَةٍ مِّن طِينٍ</p>
+                                    <p class="text-gray-600 italic text-sm md:text-base">"Sungguh, Kami telah menciptakan manusia dari sari pati (yang berasal) dari tanah."</p>
+                                </div>
+                                <p class="text-gray-700 font-medium">Punya kekurangan dan pernah berbuat salah itu Manusiawi. Kamu bukan Malaikat. Jangan menuntut dirimu sempurna tanpa celah.</p>
+                            </div>
+                            <div class="bg-white p-5 rounded-2xl border border-teal-100 shadow-sm">
+                                <h5 class="font-bold text-teal-800 mb-2 text-lg">2. Belajar dari Adam vs Iblis</h5>
+                                <p class="text-gray-600 mb-3">Keduanya sama-sama salah. Tapi responnya beda:</p>
+                                <ul class="list-disc pl-5 text-gray-600 space-y-2 mb-4">
+                                    <li><strong>Iblis:</strong> Denial (Menolak fakta), sombong, merasa diri paling baik (Ana Khairun Minhu) &rarr; Hina.</li>
+                                    <li><strong>Adam:</strong> Acceptance (Menerima fakta), jujur mengakui kesalahan (Rabbana zhalamna anfusana) &rarr; Mulia.</li>
+                                </ul>
+                                <p class="text-sm font-bold text-pink-600 bg-pink-50 p-3 rounded-xl border border-pink-100">🔑 Poin Kunci (Muhasabah): Jujur mengakui kekurangan adalah pintu gerbang kemuliaan. Inilah inti Taubat.</p>
+                            </div>
+                            <div class="bg-white p-5 rounded-2xl border border-teal-100 shadow-sm">
+                                <h5 class="font-bold text-teal-800 mb-2 text-lg">3. Resep Jiwa: Muhasabah</h5>
+                                <p class="text-gray-600 mb-4">Dalam Islam, jujur mengenali diri sendiri—baik kelebihan maupun dosa/kekurangan—disebut Muhasabah. Allah menyukai hamba yang jujur mengakui kelemahannya, bukan yang sombong merasa sempurna.</p>
+                                <div class="bg-teal-50 p-5 rounded-xl border border-teal-200 mb-4 text-center shadow-inner">
+                                    <p class="text-2xl md:text-3xl font-serif leading-loose mb-3 text-gray-800" dir="rtl">يَا أَيُّهَا الَّذِينَ آمَنُوا اتَّقُوا اللَّهَ وَلْتَنظُرْ نَفْسٌ مَّا قَدَّمَتْ لِغَدٍ</p>
+                                    <p class="text-gray-600 italic text-sm md:text-base">"Wahai orang-orang yang beriman! Bertakwalah kepada Allah dan hendaklah setiap diri memperhatikan apa yang telah diperbuatnya untuk hari esok (akhirat)..." (QS. Al-Hashr: 18)</p>
+                                </div>
+                                <p class="text-gray-700 font-medium">Ayat ini menyuruh kita untuk check-in ke dalam diri sendiri. Mengetahui kekurangan bukan aib, tapi langkah awal perbaikan.</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- APLIKASI -->
+                    <div class="bg-pink-50 p-5 md:p-8 rounded-3xl border border-pink-200 relative shadow-sm mt-8">
+                        <div class="absolute -top-4 -left-3 md:-top-5 md:-left-4 text-4xl md:text-5xl">🚀</div>
+                        <h3 class="text-xl md:text-2xl font-bold text-brand-pink mb-2 ml-6 uppercase tracking-wider">Aplikasi: Aksi Nyata</h3>
+                        
+                        <div class="mb-8">
+                            <h4 class="font-bold text-pink-800 text-xl mb-3 flex items-center gap-2"><span>👓</span> 1. Latihan "Ganti Kacamata"</h4>
+                            <p class="text-gray-700 mb-4">Mari ubah kalimat negatif menjadi kalimat yang Ilmiah & Islami!</p>
+                            <div class="space-y-4">
+                                <div class="bg-white rounded-2xl p-4 border border-pink-100 shadow-sm flex flex-col md:flex-row gap-4 items-center">
+                                    <div class="flex-1 bg-gray-50 p-4 rounded-xl text-center w-full"><span class="text-[10px] font-bold text-gray-400 block mb-1">Pikiran Negatif</span><span class="text-gray-700 font-medium">"Aku bodoh, percuma belajar."</span></div>
+                                    <div class="text-pink-300 font-bold hidden md:block">&rarr;</div>
+                                    <div class="flex-1 bg-pink-100/50 p-4 rounded-xl text-center w-full"><span class="text-[10px] font-bold text-pink-500 block mb-1">Kacamata Baru</span><span class="text-pink-900 font-bold">"Otakku punya neuroplastisitas. Kalau aku berusaha (Ikhtiar), aku pasti bisa paham pelan-pelan."</span></div>
+                                </div>
+                                <div class="bg-white rounded-2xl p-4 border border-pink-100 shadow-sm flex flex-col md:flex-row gap-4 items-center">
+                                    <div class="flex-1 bg-gray-50 p-4 rounded-xl text-center w-full"><span class="text-[10px] font-bold text-gray-400 block mb-1">Pikiran Negatif</span><span class="text-gray-700 font-medium">"Aku banyak dosa, aku orang jahat."</span></div>
+                                    <div class="text-pink-300 font-bold hidden md:block">&rarr;</div>
+                                    <div class="flex-1 bg-pink-100/50 p-4 rounded-xl text-center w-full"><span class="text-[10px] font-bold text-pink-500 block mb-1">Kacamata Baru</span><span class="text-pink-900 font-bold">"Aku manusia biasa (Basyar) yang bisa salah. Allah Maha Pengampun (Al-Ghaffar) bagi yang jujur bertaubat."</span></div>
+                                </div>
+                                <div class="bg-white rounded-2xl p-4 border border-pink-100 shadow-sm flex flex-col md:flex-row gap-4 items-center">
+                                    <div class="flex-1 bg-gray-50 p-4 rounded-xl text-center w-full"><span class="text-[10px] font-bold text-gray-400 block mb-1">Pikiran Negatif</span><span class="text-gray-700 font-medium">"Fisikku jelek, aku malu."</span></div>
+                                    <div class="text-pink-300 font-bold hidden md:block">&rarr;</div>
+                                    <div class="flex-1 bg-pink-100/50 p-4 rounded-xl text-center w-full"><span class="text-[10px] font-bold text-pink-500 block mb-1">Kacamata Baru</span><span class="text-pink-900 font-bold">"Tubuhku adalah Ahsanu Taqwim (Ciptaan Terbaik). Aku bersyukur atas amanah tubuh ini."</span></div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="mb-8">
+                            <h4 class="font-bold text-pink-800 text-xl mb-3 flex items-center gap-2"><span>🏺</span> 2. Komitmen "Kintsugi Diri"</h4>
+                            <p class="text-gray-700 mb-4 bg-white/60 p-4 rounded-xl border border-pink-100 text-sm">Metafora: Kintsugi adalah seni Jepang menyambung keramik retak dengan emas.</p>
+                            <div class="space-y-4 mb-6">
+                                <div>
+                                    <label class="block text-pink-900 font-bold mb-2">Satu hal yang ingin dirubah di dalam diri & alasannya:</label>
+                                    <textarea class="w-full p-4 rounded-xl border border-pink-300 focus:ring-2 focus:ring-pink-400" rows="2"></textarea>
+                                </div>
+                                <div>
+                                    <label class="block text-yellow-600 font-bold mb-2">Langkah Emasku minggu ini:</label>
+                                    <textarea class="w-full p-4 rounded-xl border border-yellow-400 bg-yellow-50 focus:ring-2 focus:ring-yellow-500" rows="2"></textarea>
+                                </div>
+                            </div>
+                            <button onclick="window.interaksiSelesai(this, 'Kintsugi Diri Tersimpan! ✨', null, 'Komitmen Kintsugi')" class="bg-brand-pink text-white px-8 py-3 rounded-full font-bold hover:bg-pink-700 transition shadow-md w-full md:w-auto relative z-20">Simpan Langkah Emasku</button>
+                        </div>
+                    </div>
+
+                    <!-- TOMBOL SELESAI MODUL -->
+                    <div class="mt-12 bg-green-50 rounded-3xl p-8 border-2 border-green-200 text-center shadow-sm relative z-20">
+                        <button onclick="window.selesaikanModul('pemahaman-diri')" class="bg-green-500 text-white px-8 py-4 rounded-full font-bold hover:bg-green-600 transition shadow-lg transform hover:-translate-y-1 text-lg w-full sm:w-auto cursor-pointer">
+                            ✅ Tandai Modul Selesai
+                        </button>
+                    </div>
+                `
+            },
+            {
+                id: "penerimaan-diri",
+                kategori: "DIMENSI 2",
+                judul: "Berdamai dengan Diri (Self-Acceptance)",
+                kutipan: "Fokus Diagnostik: Self-Acceptance. Integrasi Akhlak: Qana'ah (Rela) & Syukur.",
+                gambar: "https://images.unsplash.com/photo-1589156280159-27698a70f29e?q=80&w=800&auto=format&fit=crop",
+                konten: `
+                    <!-- AKTIVITAS -->
+                    <div class="bg-blue-50 p-5 md:p-8 rounded-3xl border border-blue-100 relative shadow-sm">
+                        <div class="absolute -top-4 -left-3 md:-top-5 md:-left-4 text-4xl md:text-5xl">🎬</div>
+                        <h3 class="text-xl md:text-2xl font-bold text-blue-800 mb-2 ml-6 uppercase tracking-wider">Aktivitas: Stimulus & Zona Insecure</h3>
+                        
+                        <div class="bg-white p-4 rounded-2xl border border-blue-100 shadow-sm mb-6 mt-6">
+                            <h4 class="font-bold text-blue-800 mb-3 flex items-center gap-2"><span>1️⃣</span> Tonton Video Pendek: "Are you lying on Insta?"</h4>
+                            
+                            <div class="aspect-video w-full rounded-xl overflow-hidden shadow-md mb-4 relative group bg-gray-900">
+                                <a href="https://youtu.be/0EFHbruKEmw" target="_blank" rel="noopener noreferrer" class="absolute inset-0 flex flex-col items-center justify-center text-white z-20 w-full h-full">
+                                    <img src="https://img.youtube.com/vi/0EFHbruKEmw/maxresdefault.jpg" alt="Thumbnail Video" class="w-full h-full object-cover opacity-70 group-hover:opacity-50 transition duration-300 absolute inset-0 -z-10">
+                                    <div class="bg-red-600 rounded-full w-16 h-16 flex items-center justify-center shadow-lg group-hover:scale-110 transition transform duration-300 mb-3">
+                                        <svg class="w-8 h-8 ml-1" fill="currentColor" viewBox="0 0 20 20"><path d="M4 4l12 6-12 6V4z"></path></svg>
+                                    </div>
+                                    <span class="font-bold text-sm md:text-lg tracking-wide drop-shadow-md bg-black/60 px-4 py-1.5 rounded-full backdrop-blur-sm border border-white/20">Tonton di Aplikasi YouTube</span>
+                                </a>
+                            </div>
+
+                            <p class="text-gray-600 text-sm md:text-base leading-relaxed text-justify mb-2">
+                                <strong>Visual:</strong> Mengisahkan perjalanan seorang remaja yang terjebak dalam lingkaran gaya hidup semu. Demi terlihat hebat di mata teman-temannya, ia terus memaksakan diri mengikuti tren, membeli barang mewah, dan membangun citra yang tidak pernah benar-benar ia miliki.
+                            </p>
+                            <p class="text-gray-600 text-sm md:text-base leading-relaxed text-justify">
+                                Ketika semuanya mulai runtuh, ia belajar bahwa kebahagiaan sejati tidak pernah lahir dari pengakuan orang lain, melainkan dari keberanian untuk <strong>menerima diri apa adanya</strong>.
+                            </p>
+                        </div>
+
+                        <div class="bg-white p-5 rounded-2xl border border-blue-100 shadow-sm mt-6">
+                            <h4 class="font-bold text-blue-800 mb-3 flex items-center gap-2"><span>2️⃣</span> Simulasi "Zona Insecure"</h4>
+                            <p class="text-gray-600 mb-4">Klik bagian mana yang <strong>paling sering</strong> membuatmu merasa rendah diri:</p>
+                            <div class="grid grid-cols-1 md:grid-cols-2 gap-3 mb-6 text-sm text-gray-700">
+                                <label class="flex items-center gap-3 cursor-pointer bg-blue-50/50 p-3 rounded-xl border border-blue-100 hover:bg-blue-100 transition"><input type="checkbox" class="w-5 h-5 accent-blue-600 shrink-0"> Fisik (Wajah/Tinggi/Berat badan)</label>
+                                <label class="flex items-center gap-3 cursor-pointer bg-blue-50/50 p-3 rounded-xl border border-blue-100 hover:bg-blue-100 transition"><input type="checkbox" class="w-5 h-5 accent-blue-600 shrink-0"> Skill/Bakat (Merasa "Aku gak bisa apa-apa")</label>
+                                <label class="flex items-center gap-3 cursor-pointer bg-blue-50/50 p-3 rounded-xl border border-blue-100 hover:bg-blue-100 transition"><input type="checkbox" class="w-5 h-5 accent-blue-600 shrink-0"> Circle Pertemanan (Merasa "Gak diajak/Dikucilkan")</label>
+                                <label class="flex items-center gap-3 cursor-pointer bg-blue-50/50 p-3 rounded-xl border border-blue-100 hover:bg-blue-100 transition"><input type="checkbox" class="w-5 h-5 accent-blue-600 shrink-0"> Harta/HP/Kendaraan</label>
+                                <label class="flex items-center gap-3 cursor-pointer bg-blue-50/50 p-3 rounded-xl border border-blue-100 hover:bg-blue-100 transition"><input type="checkbox" class="w-5 h-5 accent-blue-600 shrink-0"> Prestasi/Nilai Akademik</label>
+                                <label class="flex items-center gap-3 cursor-pointer bg-blue-50/50 p-3 rounded-xl border border-blue-100 hover:bg-blue-100 transition"><input type="checkbox" class="w-5 h-5 accent-blue-600 shrink-0"> Keharmonisan Keluarga ("Keluargaku berantakan")</label>
+                                <label class="flex items-center gap-3 cursor-pointer bg-blue-50/50 p-3 rounded-xl border border-blue-100 hover:bg-blue-100 transition"><input type="checkbox" class="w-5 h-5 accent-blue-600 shrink-0"> Jumlah Followers/Likes</label>
+                                <label class="flex items-center gap-3 cursor-pointer bg-blue-50/50 p-3 rounded-xl border border-blue-100 hover:bg-blue-100 transition"><input type="checkbox" class="w-5 h-5 accent-blue-600 shrink-0"> Gaya Bicara (Merasa "Gugup/Gak asik")</label>
+                            </div>
+                            <button onclick="window.interaksiSelesai(this, 'Simulasi Selesai ✅', 'Terima kasih sudah jujur! 80% temanmu merasakan hal yang sama. Yuk kita belajar mengatasinya!', 'Ceklis Zona Insecure')" class="bg-blue-600 text-white px-8 py-3 rounded-full font-bold hover:bg-blue-700 transition shadow-md w-full sm:w-auto relative z-20">Kirim Pilihanku</button>
+                        </div>
+                    </div>
+
+                    <!-- REFLEKSI -->
+                    <div class="bg-yellow-50 p-5 md:p-8 rounded-3xl border border-yellow-200 relative shadow-sm mt-8">
+                        <div class="absolute -top-4 -left-3 md:-top-5 md:-left-4 text-4xl md:text-5xl">🤔</div>
+                        <h3 class="text-xl md:text-2xl font-bold text-yellow-800 mb-2 ml-6 uppercase tracking-wider">Refleksi: Jurnal Digital</h3>
+                        <p class="mb-6 text-yellow-900 font-medium ml-6 text-sm md:text-base">Tujuan: Menyelami dampak emosional dari penolakan diri.</p>
+                        
+                        <div class="space-y-6 mb-6 mt-4">
+                            <div>
+                                <p class="text-gray-700 font-bold mb-2">1. Saat kamu melihat kelebihan orang lain di Instagram/TikTok, apa kalimat pertama yang muncul di kepalamu tentang dirimu sendiri?</p>
+                                <textarea class="w-full p-4 rounded-xl border border-yellow-300 focus:outline-none focus:ring-2 focus:ring-yellow-500 shadow-inner" rows="2" placeholder="Misal: Aku jelek, aku miskin, aku gagal..."></textarea>
+                            </div>
+                            <div>
+                                <p class="text-gray-700 font-bold mb-2">2. Bayangkan jika teman baikmu punya kekurangan yang sama denganmu. Apakah kamu akan mengejeknya? Jika tidak, kenapa kamu jahat pada dirimu sendiri?</p>
+                                <textarea class="w-full p-4 rounded-xl border border-yellow-300 focus:outline-none focus:ring-2 focus:ring-yellow-500 shadow-inner" rows="3" placeholder="Tuliskan renunganmu di sini..."></textarea>
+                            </div>
+                        </div>
+                        <button onclick="window.interaksiSelesai(this, 'Jurnal Refleksi Terkirim ✨', null, 'Jurnal Refleksi')" class="bg-yellow-500 text-white px-8 py-3 rounded-full font-bold hover:bg-yellow-600 transition shadow-md w-full sm:w-auto relative z-20 mb-8">Kirim Refleksi</button>
+
+                        <!-- Jembatan Konseling -->
+                        <div class="bg-white p-6 rounded-2xl border-l-4 border-l-yellow-400 shadow-sm relative overflow-hidden">
+                            <div class="absolute -right-2 -bottom-4 text-6xl opacity-10">🌉</div>
+                            <h4 class="font-bold text-yellow-800 mb-2 font-handwriting text-2xl">Jembatan Konseling:</h4>
+                            <p class="text-gray-600 italic font-medium leading-relaxed">
+                                "Video tadi mengajarkan kita: Apa yang kamu irikan dari orang lain, belum tentu senyata itu. Dan apa yang kamu benci dari dirimu, belum tentu seburuk itu. Yuk, kita belajar resep <strong>'Obat Insecure'</strong> di materi konseptual selanjutnya!"
+                            </p>
+                        </div>
+                    </div>
+
+                    <!-- KONSEPTUAL -->
+                    <div class="bg-teal-50 p-5 md:p-8 rounded-3xl border border-teal-200 relative shadow-sm mt-8">
+                        <div class="absolute -top-4 -left-3 md:-top-5 md:-left-4 text-4xl md:text-5xl">📚</div>
+                        <h3 class="text-xl md:text-2xl font-bold text-teal-800 mb-2 ml-6 uppercase tracking-wider">Konseptual: Jebakan Otak & Qana'ah</h3>
+                        
+                        <!-- SUDUT PANDANG SAINS -->
+                        <h4 class="font-bold text-teal-900 mt-8 mb-4 flex items-center gap-2 text-xl border-b border-teal-100 pb-2"><span class="text-2xl">🧠</span> A. Sudut Pandang Sains: "Jebakan Otak & Hormon Bahagia"</h4>
+                        <div class="space-y-4">
+                            <div class="bg-white p-5 rounded-2xl border border-teal-100 shadow-sm">
+                                <h5 class="font-bold text-teal-800 mb-2 text-lg">1. Teori Social Comparison (Perbandingan Sosial)</h5>
+                                <p class="text-gray-600 mb-3">Otak remaja sangat sensitif terhadap <em>"Upward Comparison"</em> (Membandingkan diri dengan yang dirasa lebih "atas"). Saat kamu <em>scrolling</em> medsos dan merasa iri, otak memicu rasa sakit yang identik dengan rasa sakit secara fisik. Ini sangat merusak <em>Self-Esteem</em>.</p>
+                            </div>
+                            <div class="bg-white p-5 rounded-2xl border border-teal-100 shadow-sm">
+                                <h5 class="font-bold text-teal-800 mb-2 text-lg">2. Efek Syukur pada Otak (The Neuroscience of Gratitude)</h5>
+                                <p class="text-gray-600 mb-3">Penelitian menunjukkan bahwa saat kita memikirkan satu hal yang kita syukuri, otak langsung melepaskan <strong>Dopamin</strong> dan <strong>Serotonin</strong> (hormon bahagia).</p>
+                                <p class="text-sm font-bold text-pink-600 bg-pink-50 p-4 rounded-xl border border-pink-100">
+                                    🔑 Reframing: Bersyukur bukan sekadar ajaran agama, tapi tombol aktivasi kebahagiaan biologis di otakmu!
+                                </p>
+                            </div>
+                        </div>
+
+                        <!-- SUDUT PANDANG AKHLAK -->
+                        <h4 class="font-bold text-teal-900 mt-10 mb-4 flex items-center gap-2 text-xl border-b border-teal-100 pb-2"><span class="text-2xl">🕌</span> B. Sudut Pandang Akhlak: "Qana'ah & Matematika Langit"</h4>
+                        <div class="space-y-4">
+                            <div class="bg-white p-5 rounded-2xl border border-teal-100 shadow-sm">
+                                <h5 class="font-bold text-teal-800 mb-2 text-lg">1. Qana'ah: Kaya Hati</h5>
+                                <p class="text-gray-600 mb-3"><em>Self-Acceptance</em> dalam bingkai Islam adalah <strong>Qana'ah</strong>. Qana'ah bukan berarti pasrah dan malas. Qana'ah adalah perasaan "Cukup" dan "Rela" terhadap apa yang Allah berikan saat ini.</p>
+                                <div class="bg-teal-50 p-5 rounded-xl border border-teal-200 mb-3 text-center shadow-inner">
+                                    <p class="text-gray-600 italic">"Ridholah dengan apa yang Allah bagikan untukmu, maka engkau akan menjadi manusia yang terkaya.” <br><strong class="not-italic text-teal-700 block mt-2">(HR. At-Tirmidzi, no. 2305)</strong></p>
+                                </div>
+                            </div>
+
+                            <div class="bg-white p-5 rounded-2xl border border-teal-100 shadow-sm">
+                                <h5 class="font-bold text-teal-800 mb-2 text-lg">2. Matematika Syukur</h5>
+                                <p class="text-gray-600 mb-4">Seringkali kita insecure karena terlalu fokus pada apa yang HILANG (Defisit). Islam mengajarkan kita untuk fokus pada apa yang ADA (Aset).</p>
+                                <div class="flex flex-col md:flex-row gap-4 mb-4">
+                                    <div class="flex-1 bg-red-50 p-4 rounded-xl border border-red-100">
+                                        <p class="text-sm font-bold text-red-800 mb-2 uppercase tracking-wider">Fokus Defisit (Salah)</p>
+                                        <ul class="text-sm text-red-700 space-y-1">
+                                            <li>"Hidungku kurang mancung."</li>
+                                            <li>"Followersku kurang banyak."</li>
+                                        </ul>
+                                    </div>
+                                    <div class="flex-1 bg-green-50 p-4 rounded-xl border border-green-100">
+                                        <p class="text-sm font-bold text-green-800 mb-2 uppercase tracking-wider">Fokus Aset (Benar)</p>
+                                        <ul class="text-sm text-green-700 space-y-1">
+                                            <li>"Mataku sehat untuk membaca."</li>
+                                            <li>"Temanku sedikit tapi sangat setia."</li>
+                                        </ul>
+                                    </div>
+                                </div>
+                                <div class="bg-teal-50 p-5 rounded-xl border border-teal-200 mb-4 text-center shadow-inner">
+                                    <p class="text-2xl md:text-3xl font-serif leading-loose mb-3 text-gray-800" dir="rtl">وَإِذْ تَأَذَّنَ رَبُّكُمْ لَئِنْ شَكَرْتُمْ لَأَزِيدَنَّكُمْ</p>
+                                    <p class="text-gray-600 italic text-sm md:text-base">"(Ingatlah) ketika Tuhanmu memaklumkan, 'Sesungguhnya jika kamu bersyukur, niscaya Aku akan menambah (nikmat) kepadamu..." <br><strong class="not-italic text-teal-700 block mt-2">(QS. Ibrahim: 7)</strong></p>
+                                </div>
+                            </div>
+
+                            <div class="bg-white p-5 rounded-2xl border border-teal-100 shadow-sm">
+                                <h5 class="font-bold text-teal-800 mb-2 text-lg flex items-center gap-2"><span>🪞</span> 3. Refleksi "Ahsanu Taqwim"</h5>
+                                <p class="text-gray-600 mb-3">Banyak dari kita benci melihat cermin. Merasa terlalu gemuk, kurus, atau gelap. Tahukah kamu? Allah mendesain tubuhmu secara <em>Custom</em> (Khusus), bukan produksi massal pabrikan!</p>
+                                <div class="bg-teal-50 p-5 rounded-xl border border-teal-200 mb-4 text-center shadow-inner">
+                                    <p class="text-2xl md:text-3xl font-serif leading-loose mb-3 text-gray-800" dir="rtl">لَقَدْ خَلَقْنَا الْإِنْسَانَ فِي أَحْسَنِ تَقْوِيمٍ</p>
+                                    <p class="text-gray-600 italic text-sm md:text-base">"Sungguh, Kami telah menciptakan manusia dalam bentuk yang sebaik-baiknya (Ahsanu Taqwim)." <br><strong class="not-italic text-teal-700 block mt-2">(QS. At-Tin: 4)</strong></p>
+                                </div>
+                                <p class="font-bold text-teal-800 bg-teal-50 p-3 rounded-lg inline-block">Mulai hari ini, ubah mindsetmu: Tubuhku adalah Amanah (Titipan) untuk beribadah dan berkarya, bukan Pajangan untuk dinilai orang lain.</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- APLIKASI -->
+                    <div class="bg-pink-50 p-5 md:p-8 rounded-3xl border border-pink-200 relative shadow-sm mt-8">
+                        <div class="absolute -top-4 -left-3 md:-top-5 md:-left-4 text-4xl md:text-5xl">🚀</div>
+                        <h3 class="text-xl md:text-2xl font-bold text-brand-pink mb-2 ml-6 uppercase tracking-wider">Aplikasi: Aksi Nyata</h3>
+                        
+                        <div class="mb-10 mt-6">
+                            <h4 class="font-bold text-pink-800 text-xl mb-3">1. Pindai Syukur Tubuh</h4>
+                            <div class="bg-pink-100/50 rounded-2xl p-5 border-2 border-dashed border-pink-300 flex flex-col sm:flex-row gap-4 items-center">
+                                <div class="flex-1 w-full">
+                                    <label class="text-[10px] text-pink-700 font-bold uppercase block mb-1">Bagian Tubuhmu (Yang Ingin Disyukuri)</label>
+                                    <input type="text" class="w-full p-3 rounded-lg border border-pink-200 focus:ring-2 focus:ring-pink-400" placeholder="Misal: Kakiku / Rambutku...">
+                                </div>
+                                <div class="flex-1 w-full">
+                                    <label class="text-[10px] text-teal-700 font-bold uppercase block mb-1">Ubah Menjadi Kalimat Syukur (Fungsi)</label>
+                                    <input type="text" class="w-full p-3 rounded-lg border border-teal-300 bg-teal-50 text-teal-900" placeholder="Alhamdulillah, fungsi tubuh ini... ">
+                                </div>
+                            </div>
+                            <button onclick="window.interaksiSelesai(this, 'Syukur Dipindai! 🌟', null, 'Latihan Syukur Tubuh')" class="mt-4 bg-brand-pink text-white px-8 py-3 rounded-full font-bold hover:bg-pink-700 transition shadow-md w-full sm:w-auto relative z-20">Simpan Rasa Syukur</button>
+                        </div>
+
+                        <div class="mb-8 bg-white p-6 rounded-3xl border border-pink-200 shadow-md text-center">
+                            <div class="inline-block bg-pink-100 p-4 rounded-full mb-4 text-4xl">🤐</div>
+                            <h4 class="font-bold text-pink-800 text-2xl mb-3">2. Tantangan "Puasa Mengeluh"</h4>
+                            <p class="text-gray-700 mb-6 italic text-lg max-w-xl mx-auto">
+                                "Saya berjanji, selama 24 jam ke depan, saya tidak akan mengucapkan kalimat negatif tentang diri saya sendiri atau orang lain."
+                            </p>
+                            <button onclick="window.interaksiSelesai(this, 'Tantangan Diterima! Semangat 24 Jam! 🔥', 'Luar biasa! Janjimu sudah dicatat oleh malaikat. Buktikan kamu bisa tahan tidak mengeluh selama 24 jam ya!', 'Tantangan Puasa Mengeluh')" class="bg-gradient-to-r from-pink-500 to-orange-400 text-white px-10 py-4 rounded-full font-extrabold text-lg hover:from-pink-600 hover:to-orange-500 transition shadow-xl transform hover:-translate-y-1 relative z-20 w-full sm:w-auto">
+                                SAYA TERIMA TANTANGAN INI! ✊
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- TOMBOL SELESAI -->
+                    <div class="mt-12 bg-green-50 rounded-3xl p-8 border-2 border-green-200 text-center shadow-sm relative z-20">
+                        <button onclick="window.selesaikanModul('penerimaan-diri')" class="bg-green-500 text-white px-8 py-4 rounded-full font-bold hover:bg-green-600 transition shadow-lg transform hover:-translate-y-1 text-lg w-full sm:w-auto cursor-pointer">
+                            ✅ Tandai Modul Selesai
+                        </button>
+                    </div>
+                `
+            },
+            {
+                id: "harga-diri",
+                kategori: "DIMENSI 3",
+                judul: "Aku Berharga Tanpa Tapi (Self-Worth)",
+                kutipan: "Fokus Diagnostik: Self-Worth. Integrasi Akhlak: Iffah (Kehormatan), Ikhlas, & Adab Bermedsos. Mari bangun harga dirimu dari dalam.",
+                gambar: "https://images.unsplash.com/photo-1580436541340-9a3b6320a9a4?q=80&w=800&auto=format&fit=crop",
+                konten: `
+                    <!-- AKTIVITAS -->
+                    <div class="bg-blue-50 p-5 md:p-8 rounded-3xl border border-blue-100 relative shadow-sm">
+                        <div class="absolute -top-4 -left-3 md:-top-5 md:-left-4 text-4xl md:text-5xl">📊</div>
+                        <h3 class="text-xl md:text-2xl font-bold text-blue-800 mb-2 ml-6 uppercase tracking-wider">Aktivitas: Skala Berharga</h3>
+                        <p class="mb-6 text-blue-900 font-medium ml-6 text-sm md:text-base">Tujuan: Menyadarkan betapa rapuhnya harga diri yang dibangun di atas "Likes".</p>
+                        
+                        <div class="bg-white p-6 rounded-2xl shadow-sm border border-blue-100 text-center mt-6">
+                            <p class="mb-6 text-gray-700 text-lg">Sahabat Safezone, geser titik di bawah ini. Seberapa <strong>"Berharga"</strong> dan <strong>"Percaya Diri"</strong> perasaanmu hari ini?<br><span class="text-sm text-gray-500">(0 = Minder Parah, 100 = Sangat Berharga)</span></p>
+                            <div class="flex items-center gap-4 mb-6 max-w-lg mx-auto">
+                                <span class="font-bold text-gray-500">0%</span>
+                                <input type="range" id="sliderHargaDiri" min="0" max="100" value="50" oninput="this.nextElementSibling.innerText = this.value + '%';" class="w-full h-2 bg-blue-200 rounded-lg appearance-none cursor-pointer relative z-20">
+                                <span class="font-bold text-gray-500">100%</span>
+                            </div>
+                            <p class="text-center text-5xl font-extrabold text-brand-pink mt-4 mb-8">50%</p>
+                            <button onclick="window.simpanHargaDiri(this);" class="bg-blue-600 text-white px-8 py-3 rounded-full font-bold hover:bg-blue-700 transition shadow-md w-full sm:w-auto relative z-20">Kunci Jawabanku</button>
+                        </div>
+                    </div>
+
+                    <!-- REFLEKSI -->
+                    <div class="bg-yellow-50 p-5 md:p-8 rounded-3xl border border-yellow-200 relative shadow-sm mt-8">
+                        <div class="absolute -top-4 -left-3 md:-top-5 md:-left-4 text-4xl md:text-5xl">💬</div>
+                        <h3 class="text-xl md:text-2xl font-bold text-yellow-800 mb-2 ml-6 uppercase tracking-wider">Refleksi: Jurnal Digital</h3>
+                        <p class="mb-6 text-yellow-900 font-medium ml-6 text-sm md:text-base">Tujuan: Menggali perasaanmu terkait "Syarat Berharga" (Conditions of Worth).</p>
+                        
+                        <div class="bg-white p-6 rounded-2xl shadow-sm border border-yellow-200 mb-6 mt-4">
+                            <p class="text-gray-700 font-bold mb-4">Kenapa kamu memilih angka tersebut di atas? Kejadian apa sih akhir-akhir ini yang sempat bikin harga dirimu anjlok (minder) gara-gara omongan atau penilaian orang lain?</p>
+                            <textarea class="w-full p-4 rounded-xl border border-yellow-300 focus:outline-none focus:ring-2 focus:ring-yellow-500 shadow-inner" rows="4" placeholder="Akhir-akhir ini aku merasa minder karena kejadian..."></textarea>
+                        </div>
+                        <button onclick="window.interaksiSelesai(this, 'Jurnal Terkirim ✨', null, 'Jurnal Refleksi')" class="bg-yellow-500 text-white px-8 py-3 rounded-full font-bold hover:bg-yellow-600 transition shadow-md w-full sm:w-auto relative z-20 mb-8">Kirim Refleksi</button>
+
+                        <!-- Jembatan Konseling -->
+                        <div class="bg-white p-6 rounded-2xl border-l-4 border-l-yellow-400 shadow-sm relative overflow-hidden">
+                            <div class="absolute -right-2 -bottom-4 text-6xl opacity-10">🌉</div>
+                            <h4 class="font-bold text-yellow-800 mb-2 font-handwriting text-2xl">Jembatan Konseling (Carl Rogers):</h4>
+                            <p class="text-gray-600 italic font-medium leading-relaxed">
+                                "Psikolog Carl Rogers bilang, banyak orang merasa berharga <strong>HANYA JIKA</strong> (Conditions of Worth) mereka dipuji atau diakui. Padahal, sejatinya kamu itu berharga <strong>TANPA SYARAT</strong>. Mari kita belajar menjadi pribadi yang 'Mahal' dengan cara Islam!"
+                            </p>
+                        </div>
+                    </div>
+
+                    <!-- KONSEPTUAL -->
+                    <div class="bg-teal-50 p-5 md:p-8 rounded-3xl border border-teal-200 relative shadow-sm mt-8">
+                        <div class="absolute -top-4 -left-3 md:-top-5 md:-left-4 text-4xl md:text-5xl">📚</div>
+                        <h3 class="text-xl md:text-2xl font-bold text-teal-800 mb-2 ml-6 uppercase tracking-wider">Konseptual: Berlian vs Batu Kali</h3>
+                        
+                        <!-- SUDUT PANDANG SAINS -->
+                        <h4 class="font-bold text-teal-900 mt-8 mb-4 flex items-center gap-2 text-xl border-b border-teal-100 pb-2"><span class="text-2xl">🧠</span> A. Sudut Pandang Sains: Jebakan Dopamin & FOMO</h4>
+                        <div class="space-y-4 mb-8">
+                            <div class="bg-white p-5 rounded-2xl border border-teal-100 shadow-sm">
+                                <h5 class="font-bold text-teal-800 mb-2 text-lg">1. Validasi itu Candu (Dopamin)</h5>
+                                <p class="text-gray-600 mb-3">Saat notifikasi HP-mu berbunyi "Ting!", otakmu melepaskan <strong>Dopamin</strong> (zat penenang dan kebahagiaan sesaat). Medsos memang sengaja didesain agar kamu kecanduan validasi ini. Jika <em>likes</em> sedikit, dopamin turun drastis, dan kamu jadi cemas berlebihan.</p>
+                                <ul class="list-disc pl-5 text-gray-600 space-y-2">
+                                    <li><strong>Fakta:</strong> Kamu sebenarnya tidak sedang mencari kebahagiaan, kamu hanya sedang "sakau" (kecanduan) hormon kimia otakmu sendiri.</li>
+                                    <li><strong>Solusi:</strong> Putus siklusnya! Harga dirimu bersumber dari <strong>Internal</strong> (apa yang kamu pikirkan tentang dirimu), bukan <strong>Eksternal</strong> (apa yang orang pikirkan/like).</li>
+                                </ul>
+                            </div>
+                            <div class="bg-white p-5 rounded-2xl border border-teal-100 shadow-sm">
+                                <h5 class="font-bold text-teal-800 mb-2 text-lg">2. Spotlight Effect (Lagi!)</h5>
+                                <p class="text-gray-600">Kamu sering rela melakukan hal aneh/memalukan demi perhatian karena merasa semua mata tertuju padamu. Padahal di dunia maya, orang akan lupa videomu dalam 3 detik karena mereka akan <em>scroll</em> lanjut ke video berikutnya. <strong>Mengorbankan harga diri abadi untuk 3 detik perhatian adalah investasi yang sangat bodoh.</strong></p>
+                            </div>
+                        </div>
+
+                        <!-- SUDUT PANDANG AKHLAK -->
+                        <h4 class="font-bold text-teal-900 mt-10 mb-4 flex items-center gap-2 text-xl border-b border-teal-100 pb-2"><span class="text-2xl">🕌</span> B. Sudut Pandang Akhlak: Menjadi Berlian</h4>
+                        <div class="space-y-4">
+                            <div class="bg-white p-5 rounded-2xl border border-teal-100 shadow-sm">
+                                <h5 class="font-bold text-teal-800 mb-2 text-lg">1. Iffah (Digital Dignity)</h5>
+                                <p class="text-gray-600 mb-3">Dalam Islam, harga diri dijaga dengan <strong>Iffah</strong> (Kehormatan dan Menahan Diri).</p>
+                                <ul class="list-disc pl-5 text-gray-600 space-y-2 mb-4">
+                                    <li><strong>Di Dunia Maya:</strong> Iffah berarti kamu bisa menahan diri untuk tidak mengemis perhatian (<em>begging for attention</em>), tidak mengumbar aib sendiri (<em>oversharing</em>), dan tidak membuka aurat demi <em>views</em>.</li>
+                                </ul>
+                                <p class="text-sm font-bold text-pink-600 bg-pink-50 p-4 rounded-xl border border-pink-100">
+                                    💎 Konsep Berlian: Barang murahan akan diobral terbuka di pinggir jalan agar disentuh siapa saja. Tapi Berlian mahal akan disimpan tertutup dan dijaga ketat di dalam brankas. Kamu pilih jadi Berlian atau Barang Obral?
+                                </p>
+                            </div>
+                            <div class="bg-white p-5 rounded-2xl border border-teal-100 shadow-sm">
+                                <h5 class="font-bold text-teal-800 mb-2 text-lg">2. Ikhlas vs Riya' (Mental Freedom)</h5>
+                                <ul class="list-disc pl-5 text-gray-600 space-y-2 mb-4">
+                                    <li><strong>Riya' (Pamer):</strong> Bikin kamu jadi budak netizen. Kamu lelah mengedit hidup palsumu demi tepuk tangan mereka.</li>
+                                    <li><strong>Ikhlas:</strong> Bikin kamu MERDEKA. Kamu memposting hal baik karena Allah. Mau di-<em>like</em> atau tidak, hatimu tidak masalah.</li>
+                                </ul>
+                                <div class="bg-teal-50 p-5 rounded-xl border border-teal-200 mb-4 text-center shadow-inner">
+                                    <p class="text-2xl md:text-3xl font-serif leading-loose mb-3 text-gray-800" dir="rtl">إِنَّ اللهَ لاَ يَنْظُرُ إِلَى صُوَرِكُمْ وَأَمْوَالِكُمْ، وَلَكِنْ يَنْظُرُ إِلَى قُلُوبِكُمْ وَأَعْمَالِكُمْ</p>
+                                    <p class="text-gray-600 italic text-sm md:text-base">"Sesungguhnya Allah tidak melihat kepada rupa dan harta kalian, tetapi Dia melihat kepada Hati dan Amal kalian." <br><strong class="not-italic text-teal-700 block mt-2">(HR. Muslim)</strong></p>
+                                </div>
+                                <p class="text-gray-700 font-medium"><strong>Reframing:</strong> <em>Followers</em> Allah (Malaikat Raqib & Atid) mencatat segalanya. Itulah satu-satunya validasi yang abadi.</p>
+                            </div>
+                            <div class="bg-white p-5 rounded-2xl border border-teal-100 shadow-sm">
+                                <h5 class="font-bold text-teal-800 mb-2 text-lg">3. Adab Bermedsos (Jari Surga/Neraka)</h5>
+                                <p class="text-gray-600 mb-3">Jejak digital itu abadi. Postinganmu hari ini adalah <strong>Catatan Amal</strong> yang kelak akan dibuka kembali di Yaumul Hisab (Hari Perhitungan).</p>
+                                <p class="text-sm font-bold text-blue-700 bg-blue-50 p-4 rounded-xl border border-blue-100">
+                                    ❓ Tanya Dirimu Sebelum Posting: "Apakah aku berani menunjukkan postingan / komentar ini langsung di hadapan Rasulullah nanti?"
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- APLIKASI -->
+                    <div class="bg-pink-50 p-5 md:p-8 rounded-3xl border border-pink-200 relative shadow-sm mt-8">
+                        <div class="absolute -top-4 -left-3 md:-top-5 md:-left-4 text-4xl md:text-5xl">🚀</div>
+                        <h3 class="text-xl md:text-2xl font-bold text-brand-pink mb-2 ml-6 uppercase tracking-wider">Aplikasi: Aksi Nyata</h3>
+                        
+                        <!-- Latihan 1: Audit Jejak Digital -->
+                        <div class="mb-10 mt-6">
+                            <h4 class="font-bold text-pink-800 text-xl mb-3 flex items-center gap-2"><span>🧹</span> 1. Aktivitas "Audit Jejak Digital" (The Iffah Filter)</h4>
+                            <p class="text-gray-700 mb-4">Buka profil medsos kamu (IG/TikTok) sekarang, lalu lakukan <strong>Audit Mandiri</strong> pada beberapa postingan terakhirmu!</p>
+                            <div class="overflow-x-auto bg-white rounded-2xl border border-pink-200 shadow-sm mb-4">
+                                <table class="w-full text-left border-collapse min-w-[500px]">
+                                    <thead>
+                                        <tr class="bg-pink-100 text-pink-900 text-sm tracking-wide">
+                                            <th class="p-4 font-bold border-b border-pink-200 w-1/2">Cek Postingan Terakhirmu</th>
+                                            <th class="p-4 font-bold border-b border-pink-200 w-1/4">Lulus Filter Iffah?</th>
+                                            <th class="p-4 font-bold border-b border-pink-200 w-1/4">Tindakan</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody class="text-gray-700 text-sm">
+                                        <tr class="border-b border-gray-100 hover:bg-gray-50 transition">
+                                            <td class="p-4">Apakah ini membuka aurat?</td>
+                                            <td class="p-4"><select class="p-2 w-full rounded-lg border border-gray-300 focus:ring-2 focus:ring-pink-300 outline-none"><option value="">-- Pilih --</option><option>Ya</option><option>Tidak</option></select></td>
+                                            <td class="p-4"><input type="text" placeholder="Hapus/Arsip/Keep" class="p-2 w-full rounded-lg border border-gray-300 focus:ring-2 focus:ring-pink-300 outline-none"></td>
+                                        </tr>
+                                        <tr class="border-b border-gray-100 hover:bg-gray-50 transition">
+                                            <td class="p-4">Apakah ini niatnya pamer/sombong?</td>
+                                            <td class="p-4"><select class="p-2 w-full rounded-lg border border-gray-300 focus:ring-2 focus:ring-pink-300 outline-none"><option value="">-- Pilih --</option><option>Ya</option><option>Tidak</option></select></td>
+                                            <td class="p-4"><input type="text" placeholder="Hapus/Arsip/Keep" class="p-2 w-full rounded-lg border border-gray-300 focus:ring-2 focus:ring-pink-300 outline-none"></td>
+                                        </tr>
+                                        <tr class="border-b border-gray-100 hover:bg-gray-50 transition">
+                                            <td class="p-4">Apakah ini konten yang memalukan (cringe)?</td>
+                                            <td class="p-4"><select class="p-2 w-full rounded-lg border border-gray-300 focus:ring-2 focus:ring-pink-300 outline-none"><option value="">-- Pilih --</option><option>Ya</option><option>Tidak</option></select></td>
+                                            <td class="p-4"><input type="text" placeholder="Hapus/Arsip/Keep" class="p-2 w-full rounded-lg border border-gray-300 focus:ring-2 focus:ring-pink-300 outline-none"></td>
+                                        </tr>
+                                        <tr class="hover:bg-gray-50 transition">
+                                            <td class="p-4 font-medium text-teal-700">Apakah ini bermanfaat bagi orang lain?</td>
+                                            <td class="p-4"><select class="p-2 w-full rounded-lg border border-teal-300 bg-teal-50 focus:ring-2 focus:ring-teal-400 outline-none"><option value="">-- Pilih --</option><option>Ya</option><option>Tidak</option></select></td>
+                                            <td class="p-4"><input type="text" placeholder="Hapus/Arsip/Keep" class="p-2 w-full rounded-lg border border-teal-300 bg-teal-50 focus:ring-2 focus:ring-teal-400 outline-none"></td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                            <button onclick="window.interaksiSelesai(this, 'Audit Medsos Selesai! 🛡️', null, 'Audit Jejak Digital')" class="bg-pink-600 text-white px-8 py-3 rounded-full font-bold hover:bg-pink-700 transition shadow-md relative z-20">Simpan Hasil Auditku</button>
+                        </div>
+
+                        <!-- Latihan 2: 3-Gate Check -->
+                        <div class="mb-10 bg-white p-6 rounded-3xl border border-pink-200 shadow-sm">
+                            <h4 class="font-bold text-pink-800 text-xl mb-3 flex items-center gap-2"><span>🛡️</span> 2. Tantangan "The 3-Gate Check"</h4>
+                            <p class="text-gray-700 mb-4">Mulai hari ini, sebelum memposting apapun, jadikan 3 Gerbang ini sebagai <em>Checklist</em> wajibmu!</p>
+                            <div class="space-y-3 mb-6 bg-pink-50 p-5 rounded-xl border border-pink-100">
+                                <label class="flex items-center gap-3 cursor-pointer text-pink-900 font-medium"><input type="checkbox" class="w-6 h-6 accent-pink-600 shrink-0"> Gerbang 1: Apakah konten ini Benar (bukan hoax)?</label>
+                                <label class="flex items-center gap-3 cursor-pointer text-pink-900 font-medium"><input type="checkbox" class="w-6 h-6 accent-pink-600 shrink-0"> Gerbang 2: Apakah konten ini Baik / Bermanfaat?</label>
+                                <label class="flex items-center gap-3 cursor-pointer text-pink-900 font-medium"><input type="checkbox" class="w-6 h-6 accent-pink-600 shrink-0"> Gerbang 3: Apakah ini diniatkan karena Allah (bukan pamer/sensasi)?</label>
+                            </div>
+                            <button onclick="window.interaksiSelesai(this, 'Janji Ksatria Digital Aktif! ⚔️', null, 'The 3-Gate Check')" class="bg-pink-600 text-white px-8 py-3 rounded-full font-bold hover:bg-pink-700 transition shadow-md w-full sm:w-auto relative z-20">Aku Berjanji Memakai Filter Ini</button>
+                        </div>
+
+                        <!-- Latihan 3: Afirmasi -->
+                        <div class="mb-6 mt-6">
+                            <h4 class="font-bold text-pink-800 text-xl mb-3 flex items-center gap-2"><span>✍️</span> 3. Afirmasi Diri (Self-Worth Statement)</h4>
+                            <p class="text-gray-700 mb-4 bg-yellow-50 p-4 rounded-xl shadow-inner border border-yellow-200 font-medium italic">
+                                "Saya berharga karena saya Hamba Allah ('Abdullah), bukan karena jumlah Likes. Kehormatan saya (Iffah) lebih mahal daripada viral."
+                            </p>
+                            <p class="text-gray-700 mb-2 font-bold">Tulis ulang kalimat magis di atas ke dalam kolom di bawah ini sebagai sumpahmu:</p>
+                            <textarea class="w-full p-4 rounded-xl border border-pink-300 focus:outline-none focus:ring-2 focus:ring-pink-400 shadow-inner mb-4" rows="3" placeholder="Ketik ulang kalimat afirmasi di sini..."></textarea>
+                            <button onclick="window.interaksiSelesai(this, 'Afirmasi Terukir di Hati! 💖', null, 'Afirmasi Diri')" class="bg-brand-pink text-white px-8 py-3 rounded-full font-extrabold hover:bg-pink-700 transition shadow-md w-full sm:w-auto relative z-20">Sahkan Afirmasiku</button>
+                        </div>
+                    </div>
+
+                    <!-- TOMBOL SELESAI -->
+                    <div class="mt-12 bg-green-50 rounded-3xl p-8 border-2 border-green-200 text-center shadow-sm relative z-20">
+                        <button onclick="window.selesaikanModul('harga-diri')" class="bg-green-500 text-white px-8 py-4 rounded-full font-bold hover:bg-green-600 transition shadow-lg transform hover:-translate-y-1 text-lg w-full sm:w-auto cursor-pointer">
+                            ✅ Tandai Modul Selesai
+                        </button>
+                    </div>
+                `
+            },
+            {
+                id: "diri-ideal",
+                kategori: "DIMENSI 4",
+                judul: "Meraih Mimpi Langit (Ideal-Self)",
+                kutipan: "Fokus Diagnostik: Ideal Self. Integrasi Akhlak: Ikhtiar, Tawakkal, & Husnuzhan. Bangun masa depanmu tanpa dihantui overthinking.",
+                gambar: "https://images.unsplash.com/photo-1523050854058-8df90110c9f1?q=80&w=800&auto=format&fit=crop",
+                konten: `
+                    <!-- AKTIVITAS -->
+                    <div class="bg-blue-50 p-5 md:p-8 rounded-3xl border border-blue-100 relative shadow-sm">
+                        <div class="absolute -top-4 -left-3 md:-top-5 md:-left-4 text-4xl md:text-5xl">🎒</div>
+                        <h3 class="text-xl md:text-2xl font-bold text-blue-800 mb-2 ml-6 uppercase tracking-wider">Aktivitas: Ransel Masa Depan</h3>
+                        
+                        <div class="bg-white p-6 rounded-2xl shadow-sm border border-blue-100 mb-8 mt-6">
+                            <h4 class="font-bold text-blue-800 text-lg mb-3 flex items-center gap-2"><span>🪨</span> 1. Simulasi "Ransel Masa Depan"</h4>
+                            <p class="text-gray-700 mb-4">Setiap hari kamu memikul ransel yang tak kasat mata. Masukkan "Batu Beban" ke dalam ranselmu dengan mencentang apa saja yang <strong>membuatmu takut akan masa depan</strong> (Pilih maksimal 3):</p>
+                            <div class="grid grid-cols-1 md:grid-cols-2 gap-3 mb-4 text-sm md:text-base text-gray-700">
+                                <label class="flex items-center gap-3 cursor-pointer bg-blue-50/50 p-3 rounded-xl border border-blue-100 hover:bg-blue-100 transition"><input type="checkbox" onchange="window.updateRansel(this)" class="w-4 h-4 md:w-5 md:h-5 accent-blue-600 mt-1 shrink-0"> <span>Takut tidak lulus ujian / Nilai jelek.</span></label>
+                                <label class="flex items-center gap-3 cursor-pointer bg-blue-50/50 p-3 rounded-xl border border-blue-100 hover:bg-blue-100 transition"><input type="checkbox" onchange="window.updateRansel(this)" class="w-4 h-4 md:w-5 md:h-5 accent-blue-600 mt-1 shrink-0"> <span>Takut mengecewakan orang tua.</span></label>
+                                <label class="flex items-center gap-3 cursor-pointer bg-blue-50/50 p-3 rounded-xl border border-blue-100 hover:bg-blue-100 transition"><input type="checkbox" onchange="window.updateRansel(this)" class="w-4 h-4 md:w-5 md:h-5 accent-blue-600 mt-1 shrink-0"> <span>Takut salah pilih sekolah/jurusan.</span></label>
+                                <label class="flex items-center gap-3 cursor-pointer bg-blue-50/50 p-3 rounded-xl border border-blue-100 hover:bg-blue-100 transition"><input type="checkbox" onchange="window.updateRansel(this)" class="w-4 h-4 md:w-5 md:h-5 accent-blue-600 mt-1 shrink-0"> <span>Takut tidak sukses/miskin.</span></label>
+                                <label class="flex items-center gap-3 cursor-pointer bg-blue-50/50 p-3 rounded-xl border border-blue-100 hover:bg-blue-100 transition"><input type="checkbox" onchange="window.updateRansel(this)" class="w-4 h-4 md:w-5 md:h-5 accent-blue-600 mt-1 shrink-0"> <span>Takut tidak punya teman/dikucilkan.</span></label>
+                            </div>
+                            <div id="msg-ransel" class="hidden bg-red-100 text-red-700 font-bold p-4 rounded-xl border border-red-200 animate-pulse text-center"></div>
+                        </div>
+
+                        <div class="bg-white p-6 rounded-2xl shadow-sm border border-blue-100 text-center">
+                            <h4 class="font-bold text-blue-800 text-lg mb-4 flex items-center justify-center gap-2"><span>📈</span> 2. Skala Harapan</h4>
+                            <p class="mb-6 text-gray-700"><strong>"Seberapa yakin kamu bisa mencapai cita-citamu?"</strong><br><span class="text-sm text-gray-500">(Geser slider dari 0% - 100%)</span></p>
+                            <div class="flex items-center gap-4 mb-6 max-w-lg mx-auto">
+                                <span class="font-bold text-gray-500">0%</span>
+                                <input type="range" id="sliderHarapan" min="0" max="100" value="50" oninput="this.nextElementSibling.innerText = this.value + '%';" class="w-full max-w-md h-2 bg-blue-200 rounded-lg cursor-pointer relative z-20">
+                                <span class="font-bold text-gray-500">100%</span>
+                            </div>
+                            <p class="text-center text-5xl font-extrabold text-brand-pink mt-4 mb-8">50%</p>
+                            <button onclick="window.simpanHarapan(this);" class="bg-blue-600 text-white px-8 py-3 rounded-full font-bold hover:bg-blue-700 transition shadow-md w-full sm:w-auto relative z-20">Kunci Keyakinanku</button>
+                        </div>
+                    </div>
+
+                    <!-- REFLEKSI -->
+                    <div class="bg-yellow-50 p-5 md:p-8 rounded-3xl border border-yellow-200 relative shadow-sm mt-8">
+                        <div class="absolute -top-4 -left-3 md:-top-5 md:-left-4 text-4xl md:text-5xl">💬</div>
+                        <h3 class="text-xl md:text-2xl font-bold text-yellow-800 mb-2 ml-6 uppercase tracking-wider">Refleksi: Jurnal Digital</h3>
+                        
+                        <div class="space-y-6 mb-6 mt-4">
+                            <div class="bg-white p-5 rounded-2xl shadow-sm border border-yellow-200">
+                                <p class="text-gray-700 font-bold mb-2">1. Tentang Kendali</p>
+                                <p class="text-gray-600 mb-3 text-sm">Dari semua ketakutan yang kamu pilih tadi (misal: takut nilai jelek), mana yang bisa kamu atur (kendali penuh) dan mana yang tidak bisa kamu atur?</p>
+                                <textarea class="w-full p-4 rounded-xl border border-yellow-300 focus:outline-none focus:ring-2 focus:ring-yellow-500 shadow-inner" rows="3" placeholder="Yang bisa aku atur: ... | Yang tidak bisa aku atur: ..."></textarea>
+                            </div>
+                            <div class="bg-white p-5 rounded-2xl shadow-sm border border-yellow-200">
+                                <p class="text-gray-700 font-bold mb-2">2. Skenario Terburuk</p>
+                                <p class="text-gray-600 mb-3 text-sm">Jika kamu gagal mencapai satu impianmu, apakah itu berarti hidupmu berakhir? Atau apakah ada jalan lain?</p>
+                                <textarea class="w-full p-4 rounded-xl border border-yellow-300 focus:outline-none focus:ring-2 focus:ring-yellow-500 shadow-inner" rows="3" placeholder="Jika aku gagal, sepertinya aku akan..."></textarea>
+                            </div>
+                        </div>
+                        <button onclick="window.interaksiSelesai(this, 'Jurnal Terkirim ✨', null, 'Jurnal Refleksi')" class="bg-yellow-500 text-white px-8 py-3 rounded-full font-bold hover:bg-yellow-600 transition shadow-md mb-8 w-full sm:w-auto relative z-20">Kirim Refleksi</button>
+
+                        <!-- Jembatan Konseling -->
+                        <div class="bg-white p-6 rounded-2xl border-l-4 border-l-yellow-400 shadow-sm relative overflow-hidden">
+                            <div class="absolute -right-2 -bottom-4 text-6xl opacity-10">🌉</div>
+                            <h4 class="font-bold text-yellow-800 mb-2 font-handwriting text-2xl">Jembatan Konseling:</h4>
+                            <p class="text-gray-600 italic font-medium leading-relaxed">
+                                "Memiliki Cita-cita (Ideal Self) itu bagus sebagai kompas hidup. Tapi jika cita-cita itu justru membuatmu stres, ketakutan, dan merasa tidak berharga saat ini, maka itu menjadi <strong>racun</strong>. Kita perlu mencari penawar racunnya di materi berikutnya!"
+                            </p>
+                        </div>
+                    </div>
+
+                    <!-- KONSEPTUAL -->
+                    <div class="bg-teal-50 p-5 md:p-8 rounded-3xl border border-teal-200 relative shadow-sm mt-8">
+                        <div class="absolute -top-4 -left-3 md:-top-5 md:-left-4 text-4xl md:text-5xl">📚</div>
+                        <h3 class="text-xl md:text-2xl font-bold text-teal-800 mb-2 ml-6 uppercase tracking-wider">Konseptual: Rumus Anti-Galau</h3>
+                        
+                        <!-- SUDUT PANDANG SAINS -->
+                        <h4 class="font-bold text-teal-900 mt-8 mb-4 flex items-center gap-2 text-xl border-b border-teal-100 pb-2"><span class="text-2xl">🧠</span> A. Sudut Pandang Sains: "Lingkaran Kendali"</h4>
+                        <div class="space-y-4 mb-8">
+                            <div class="bg-white p-5 rounded-2xl border border-teal-100 shadow-sm">
+                                <h5 class="font-bold text-teal-800 mb-2 text-lg">1. Mengapa Kita Cemas? (Circle of Control)</h5>
+                                <p class="text-gray-600 mb-3">Kecemasan (<em>Anxiety</em>) adalah respon otak terhadap ketidakpastian. Otakmu selalu mencoba memprediksi masa depan yang belum terjadi.</p>
+                                <ul class="list-disc pl-5 text-gray-600 space-y-2">
+                                    <li><strong>Penyebab Stres:</strong> Stres muncul ketika kamu mencoba mengendalikan hal yang DI LUAR KENDALIMU (Misalnya: Hasil Ujian, Perasaan Orang Tua, Masa Depan).</li>
+                                    <li><strong>Solusi Sains:</strong> Fokuskan energimu HANYA pada hal yang ADA DALAM KENDALIMU (Usahamu, Belajarmu, Doamu).</li>
+                                </ul>
+                            </div>
+                            <div class="bg-white p-5 rounded-2xl border border-teal-100 shadow-sm">
+                                <h5 class="font-bold text-teal-800 mb-2 text-lg">2. Growth Mindset (Pola Pikir Tumbuh)</h5>
+                                <p class="text-gray-600">Kegagalan bukanlah jalan buntu, melainkan sekadar "Polisi Tidur". Ia hanya memperlambat, tapi tidak menghentikan perjalananmu. Otak yang tangguh (<em>resilien</em>) melihat kegagalan sebagai <strong>data untuk meng-upgrade strategi</strong>, bukan sebagai vonis/bukti kebodohan.</p>
+                            </div>
+                        </div>
+
+                        <!-- SUDUT PANDANG AKHLAK -->
+                        <h4 class="font-bold text-teal-900 mt-10 mb-4 flex items-center gap-2 text-xl border-b border-teal-100 pb-2"><span class="text-2xl">🕌</span> B. Sudut Pandang Akhlak: "Rumus Anti-Galau"</h4>
+                        <div class="space-y-4">
+                            <div class="bg-white p-5 rounded-2xl border border-teal-100 shadow-sm">
+                                <h5 class="font-bold text-teal-800 mb-2 text-lg">1. Ikhtiar vs Hasil (Wilayah Hamba vs Wilayah Allah)</h5>
+                                <p class="text-gray-600 mb-3">Islam membagi kehidupan di dunia ini ke dalam dua wilayah yang sangat jelas:</p>
+                                <ul class="list-disc pl-5 text-gray-600 space-y-2 mb-4">
+                                    <li><strong>Wilayah Ikhtiar (Usaha):</strong> Ini adalah kewajibanmu. Tugasmu adalah belajar, berlatih, dan berdoa.</li>
+                                    <li><strong>Wilayah Takdir (Hasil):</strong> Ini adalah Hak Prerogatif Allah.</li>
+                                </ul>
+                                <p class="text-sm font-bold text-red-600 bg-red-50 p-3 rounded-xl border border-red-100 mb-4">
+                                    ⚠️ Penyakit Hati: Kita sering merasa stres dan galau parah karena kita sering "mencuri" pekerjaan Allah (terlalu memikirkan hasil dan masa depan).
+                                </p>
+                                <div class="bg-teal-50 p-5 rounded-xl border border-teal-200 mb-3 text-center shadow-inner">
+                                    <p class="text-2xl md:text-3xl font-serif leading-loose mb-3 text-gray-800" dir="rtl">وَأَن لَّيْسَ لِلْإِنسَانِ إِلَّا مَا سَعَىٰ</p>
+                                    <p class="text-gray-600 italic">"Dan bahwa manusia hanya memperoleh apa yang telah diusahakannya." <br><strong class="not-italic text-teal-700 block mt-2">(QS. An-Najm: 39)</strong></p>
+                                </div>
+                            </div>
+
+                            <div class="bg-white p-5 rounded-2xl border border-teal-100 shadow-sm">
+                                <h5 class="font-bold text-teal-800 mb-2 text-lg">2. Tawakkal: Seni Melepaskan Beban</h5>
+                                <p class="text-gray-600 mb-3">Setelah Ikhtiar maksimal, langkah pamungkasnya adalah <strong>Tawakkal</strong>.</p>
+                                <p class="text-gray-600 mb-3"><strong>🏹 Analogi Memanah:</strong> Ikhtiar adalah usahamu menarik busur sekuat tenaga dan membidik titik fokus. Setelah anak panah dilepas, itulah Tawakkal. Kamu tidak bisa mengendalikan ke mana angin bertiup. Biarkan Allah yang mengarahkan panah itu ke sasaran terbaik.</p>
+                                <p class="text-sm font-bold text-blue-700 bg-blue-50 p-3 rounded-xl border border-blue-100">
+                                    💡 Reframing: Tawakkal BUKAN pasrah diam, tapi "Menitipkan hasil akhir kepada Sebaik-baik Penjaga".
+                                </p>
+                            </div>
+
+                            <div class="bg-white p-5 rounded-2xl border border-teal-100 shadow-sm">
+                                <h5 class="font-bold text-teal-800 mb-2 text-lg">3. Husnuzhan: Bahan Bakar Harapan (Raja')</h5>
+                                <p class="text-gray-600 mb-3">Jangan mendahului takdir Allah dengan pikiran buruk (<em>Su'udzon/Overthinking</em>).</p>
+                                <p class="text-gray-600 mb-3 bg-gray-50 p-4 rounded-xl border-l-4 border-l-teal-500 font-medium">
+                                    Hadits Qudsi: "Aku (Allah) sesuai dengan persangkaan hamba-Ku pada-Ku."
+                                </p>
+                                <p class="text-gray-600">Jika kamu yakin (Husnuzhan) bahwa Allah menyiapkan takdir yang terbaik, maka hatimu akan tenang. Dan jika kamu gagal hari ini, itu berarti Allah punya <strong>Rencana B</strong> yang jauh lebih keren untukmu di masa depan.</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- APLIKASI -->
+                    <div class="bg-pink-50 p-5 md:p-8 rounded-3xl border border-pink-200 relative shadow-sm mt-8">
+                        <div class="absolute -top-4 -left-3 md:-top-5 md:-left-4 text-4xl md:text-5xl">🚀</div>
+                        <h3 class="text-xl md:text-2xl font-bold text-brand-pink mb-2 ml-6 uppercase tracking-wider">Aplikasi: Aksi Nyata</h3>
+                        
+                        <!-- Latihan 1: Sorting Task -->
+                        <div class="mb-10 mt-6">
+                            <h4 class="font-bold text-pink-800 text-xl mb-3 flex items-center gap-2"><span>🗂️</span> 1. Latihan "Pemisahan Tugas"</h4>
+                            <p class="text-gray-700 mb-4 bg-white p-4 rounded-xl shadow-sm">Mari belajar memisahkan mana yang "Tugasku" dan mana yang "Urusan Allah". Ubah kotak pilihan di bawah ini dengan jawaban yang benar!</p>
+                            
+                            <div class="overflow-x-auto bg-white rounded-2xl border border-pink-200 shadow-sm mb-4">
+                                <table class="w-full text-left border-collapse min-w-[400px]">
+                                    <thead>
+                                        <tr class="bg-pink-100 text-pink-900 text-sm tracking-wide">
+                                            <th class="p-4 font-bold border-b border-pink-200 w-1/2">Kartu Masalah (Kegiatan)</th>
+                                            <th class="p-4 font-bold border-b border-pink-200 w-1/2">Kotak yang Benar</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody class="text-gray-700 text-sm">
+                                        <tr class="border-b border-gray-100 hover:bg-gray-50 transition">
+                                            <td class="p-4 font-medium">Belajar tiap malam</td>
+                                            <td class="p-4"><select class="p-2 w-full rounded-lg border border-gray-300 focus:ring-2 focus:ring-pink-300 outline-none"><option value="">-- Tentukan --</option><option>Tugasku (Ikhtiar)</option><option>Urusan Allah (Tawakkal)</option></select></td>
+                                        </tr>
+                                        <tr class="border-b border-gray-100 hover:bg-gray-50 transition">
+                                            <td class="p-4 font-medium">Lulus dengan nilai 100</td>
+                                            <td class="p-4"><select class="p-2 w-full rounded-lg border border-gray-300 focus:ring-2 focus:ring-pink-300 outline-none"><option value="">-- Tentukan --</option><option>Tugasku (Ikhtiar)</option><option>Urusan Allah (Tawakkal)</option></select></td>
+                                        </tr>
+                                        <tr class="border-b border-gray-100 hover:bg-gray-50 transition">
+                                            <td class="p-4 font-medium">Berdoa sungguh-sungguh</td>
+                                            <td class="p-4"><select class="p-2 w-full rounded-lg border border-gray-300 focus:ring-2 focus:ring-pink-300 outline-none"><option value="">-- Tentukan --</option><option>Tugasku (Ikhtiar)</option><option>Urusan Allah (Tawakkal)</option></select></td>
+                                        </tr>
+                                        <tr class="border-b border-gray-100 hover:bg-gray-50 transition">
+                                            <td class="p-4 font-medium">Diterima di sekolah/jurusan favorit</td>
+                                            <td class="p-4"><select class="p-2 w-full rounded-lg border border-gray-300 focus:ring-2 focus:ring-pink-300 outline-none"><option value="">-- Tentukan --</option><option>Tugasku (Ikhtiar)</option><option>Urusan Allah (Tawakkal)</option></select></td>
+                                        </tr>
+                                        <tr class="hover:bg-gray-50 transition">
+                                            <td class="p-4 font-medium">Membahagiakan Orang Tua</td>
+                                            <td class="p-4"><select class="p-2 w-full rounded-lg border border-gray-300 focus:ring-2 focus:ring-pink-300 outline-none"><option value="">-- Tentukan --</option><option>Tugasku (Ikhtiar)</option><option>Urusan Allah (Tawakkal)</option></select></td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                            <button onclick="window.interaksiSelesai(this, 'Pemisahan Tugas Berhasil! 🛡️', null, 'Latihan Pemisahan Tugas')" class="bg-pink-600 text-white px-8 py-3 rounded-full font-bold hover:bg-pink-700 transition shadow-md w-full sm:w-auto relative z-20">Simpan Klasifikasi</button>
+                        </div>
+
+                        <!-- Latihan 2: Proposal Masa Depan -->
+                        <div class="mb-6">
+                            <h4 class="font-bold text-pink-800 text-xl mb-3 flex items-center gap-2"><span>📝</span> 2. "Proposal Masa Depan" (Dream Map)</h4>
+                            <p class="text-gray-700 mb-4">Buatlah rencana singkat untuk <strong>1 cita-citamu</strong> menggunakan format Islami di bawah ini:</p>
+                            
+                            <div class="space-y-4 bg-white p-6 rounded-2xl shadow-inner border border-pink-200 mb-4">
+                                <div>
+                                    <label class="block text-pink-900 font-bold mb-1 text-sm uppercase tracking-wider">🌟 Impianku (Ideal Self):</label>
+                                    <input type="text" class="w-full p-3 rounded-xl border border-gray-300 focus:outline-none focus:ring-2 focus:ring-pink-400" placeholder="Misal: Aku ingin menjadi dokter yang jujur...">
+                                </div>
+                                <div>
+                                    <label class="block text-blue-800 font-bold mb-1 text-sm uppercase tracking-wider">💪 Ikhtiar Maksimal Saya:</label>
+                                    <textarea class="w-full p-3 rounded-xl border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-400" rows="2" placeholder="Aku akan belajar materi A dan kurangi main game..."></textarea>
+                                </div>
+                                <div>
+                                    <label class="block text-yellow-700 font-bold mb-1 text-sm uppercase tracking-wider">🛡️ Rencana B (Jika Gagal):</label>
+                                    <textarea class="w-full p-3 rounded-xl border border-gray-300 focus:outline-none focus:ring-2 focus:ring-yellow-400" rows="2" placeholder="Jika tidak lolos, aku akan mendaftar ke sekolah..."></textarea>
+                                </div>
+                                <div class="bg-teal-50 p-4 rounded-xl border border-teal-200 mt-4">
+                                    <label class="block text-teal-900 font-bold mb-2 text-sm uppercase tracking-wider flex items-center gap-2"><span>🤲</span> Afirmasi Husnuzhan (Tulis Ulang Teks di Bawah):</label>
+                                    <p class="text-sm text-gray-500 italic mb-2">"Ya Allah, aku titipkan impian ini. Jika baik bagiku, dekatkanlah. Jika buruk, ganti dengan yang lebih baik."</p>
+                                    <input type="text" class="w-full p-3 rounded-xl border border-teal-300 focus:outline-none focus:ring-2 focus:ring-teal-500 font-medium" placeholder="Tulis ulang afirmasi Husnuzhan di sini...">
+                                </div>
+                            </div>
+                            <button onclick="window.interaksiSelesai(this, 'Proposal Diterima Langit! ☁️', null, 'Proposal Masa Depan')" class="bg-brand-pink text-white px-8 py-3 rounded-full font-extrabold hover:bg-pink-700 transition shadow-md w-full sm:w-auto relative z-20">Kirim Proposal Masa Depanku</button>
+                        </div>
+
+                        <!-- Closing Statement -->
+                        <div class="bg-gradient-to-r from-blue-900 to-indigo-900 p-6 md:p-10 rounded-3xl shadow-xl text-center relative overflow-hidden mt-12">
+                            <div class="absolute -right-4 -bottom-4 text-7xl opacity-20">🚀</div>
+                            <p class="text-lg md:text-xl font-serif text-blue-50 leading-relaxed mb-6 italic relative z-10">
+                                "Sobat e-Safezone, bermimpilah setinggi langit. Tapi ingat, kakimu harus tetap berpijak pada Ikhtiar, dan hatimu harus menggantung pada Tawakkal. Hasil akhir bukan penentu harga dirimu, tapi proses perjuanganmulah yang dicatat Malaikat."
+                            </p>
+                            <p class="font-extrabold text-yellow-400 text-2xl tracking-widest uppercase relative z-10">Semangat berjuang!</p>
+                        </div>
+                    </div>
+
+                    <!-- TOMBOL SELESAI MODUL -->
+                    <div class="mt-12 bg-green-50 rounded-3xl p-8 border-2 border-green-200 text-center shadow-sm relative z-20">
+                        <h4 class="text-xl font-bold text-green-800 mb-2">Sudah menyelesaikan semua aktivitas di atas?</h4>
+                        <p class="text-green-700 mb-6">Tandai modul ini sebagai selesai untuk mencatat progres belajarmu.</p>
+                        <button onclick="window.selesaikanModul('diri-ideal')" class="bg-green-500 text-white px-8 py-4 rounded-full font-bold hover:bg-green-600 transition shadow-lg transform hover:-translate-y-1 text-lg w-full sm:w-auto cursor-pointer">
+                            ✅ Tandai Modul Selesai
+                        </button>
+                    </div>
+                `
+            }
+        ];
+
+        window.daftarMateri = daftarMateri; 
+
+        function renderDaftarMateri() {
+            const materiContainer = document.getElementById('materi-container');
+            if(!materiContainer) return;
+            materiContainer.innerHTML = ''; 
+            let allCompleted = true;
+
+            window.daftarMateri.forEach(materi => {
+                const isDone = userProgress[materi.id];
+                if (!isDone) allCompleted = false;
+
+                const checkBadge = isDone ? `<span class="bg-green-500 text-white text-[10px] md:text-xs px-2 md:px-3 py-1 rounded-full font-bold shadow-sm inline-flex items-center gap-1 mt-2 md:mt-0">✅ SELESAI</span>` : '';
+                const btnText = isDone ? "Baca Ulang Modul &rarr;" : "Pelajari Modul Ini &rarr;";
+                const btnColor = isDone ? "bg-gray-200 text-gray-700" : "bg-brand-teal text-white";
+
+                const articleHTML = `
+                    <article class="flex flex-col md:flex-row gap-5 md:gap-8 lg:gap-10 items-stretch bg-white border ${isDone ? 'border-green-300 bg-green-50/10' : 'border-gray-100'} p-5 md:p-6 lg:p-8 rounded-[2rem] shadow-sm hover:shadow-xl transition-all duration-300 relative z-10">
+                        <div class="flex-1 w-full text-center md:text-left order-2 md:order-1 flex flex-col justify-center">
+                            <div class="flex flex-col sm:flex-row sm:items-center gap-2 mb-2 justify-center md:justify-start">
+                                <p class="text-[10px] md:text-xs font-bold tracking-widest text-pink-500 uppercase">in ${materi.kategori}</p>${checkBadge}
+                            </div>
+                            <h3 class="text-xl sm:text-2xl md:text-3xl font-extrabold text-brand-pink mb-3 md:mb-4">${materi.judul}</h3>
+                            <p class="text-gray-600 mb-4 md:mb-6 text-xs sm:text-sm md:text-base">${materi.kutipan}</p>
+                            <div>
+                                <button onclick="window.bukaMateri('${materi.id}')" class="inline-block ${btnColor} px-6 md:px-8 py-2 md:py-3 rounded-full font-bold transition shadow-md w-full sm:w-auto relative z-20 cursor-pointer text-xs md:text-sm">${btnText}</button>
+                            </div>
+                        </div>
+                        <div class="w-full md:w-2/5 lg:w-1/3 shrink-0 order-1 md:order-2">
+                            <div class="relative w-full aspect-video md:aspect-[3/4] lg:aspect-video rounded-[1.5rem] md:rounded-[2rem] overflow-hidden border-4 border-white shadow-md cursor-pointer group" onclick="window.bukaMateri('${materi.id}')">
+                                <img id="thumb-${materi.id}" src="${materi.gambar}" alt="${materi.judul}" class="absolute inset-0 w-full h-full object-cover group-hover:scale-105 transition transform duration-300">
+                            </div>
+                        </div>
+                    </article>
+                `;
+                materiContainer.innerHTML += articleHTML;
+
+                const navLink = document.getElementById('nav-' + materi.id);
+                if(navLink) navLink.innerHTML = `${isDone ? '✅ ' : ''} ${materi.id === 'pemahaman-diri' ? '1' : materi.id === 'penerimaan-diri' ? '2' : materi.id === 'harga-diri' ? '3' : '4'}. ${materi.judul.split(' (')[0]}`;
+            });
+
+            if (allCompleted && currentUser) {
+                const bannerCompletion = document.getElementById('banner-completion');
+                const navSertifikat = document.getElementById('nav-sertifikat');
+                if(bannerCompletion) bannerCompletion.classList.remove('hidden');
+                if(navSertifikat) navSertifikat.classList.remove('hidden');
+            }
+        }
+        window.renderDaftarMateri = renderDaftarMateri;
+
+        function updateUIWithUser() {
+            if(!currentUser) return;
+            const displayName = document.getElementById('user-display-name');
+            const welcomeName = document.getElementById('welcome-name');
+            const certInfo = document.getElementById('cert-sekolah-kelas');
+            const mainNav = document.getElementById('main-nav');
+            const mainHeader = document.getElementById('main-header');
+            const mainFooter = document.getElementById('main-footer');
+            
+            if(displayName) displayName.innerText = currentUser.nama.split(' ')[0];
+            if(welcomeName) welcomeName.innerText = currentUser.nama.split(' ')[0] + "!";
+            document.querySelectorAll('.nama-siswa-dinamis').forEach(el => el.innerText = currentUser.nama);
+            
+            if(certInfo) certInfo.innerText = `${currentUser.kelas} - ${currentUser.sekolah}`;
+
+            if(mainNav) {
+                mainNav.classList.remove('hidden');
+                mainNav.classList.add('flex');
+            }
+            if(mainHeader) mainHeader.classList.remove('hidden');
+            if(mainFooter) mainFooter.classList.remove('hidden');
+            
+            window.renderDaftarMateri();
+        }
+        window.updateUIWithUser = updateUIWithUser;
+
+        // INIT APP SAAT LOAD
+        function initApp() {
+            window.renderAngket(); 
+            const savedUser = localStorage.getItem('safezone_user');
+            const savedProgress = localStorage.getItem('safezone_progress');
+            
+            if (savedUser) {
+                currentUser = JSON.parse(savedUser);
+                if(savedProgress) userProgress = JSON.parse(savedProgress);
+                window.updateUIWithUser();
+                window.switchTab('beranda');
+            } else {
+                window.switchTab('register'); 
+            }
+        }
+        
+        window.onload = initApp; 
+
+    </script>
+
+    <!-- FIREBASE MODULE -->
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
+        import { getAuth, signInAnonymously, signInWithCustomToken, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
+        import { getFirestore, collection, addDoc, onSnapshot } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
+
+        const firebaseConfig = JSON.parse(typeof __firebase_config !== 'undefined' ? __firebase_config : '{}');
+        const appId = typeof __app_id !== 'undefined' ? __app_id : 'safezone-app';
+        const app = initializeApp(firebaseConfig);
+        const auth = getAuth(app);
+        const db = getFirestore(app);
+
+        let userObj = null;
+
+        // Override the local placeholder functions to save to Cloud
+        window.firebaseSaveAktivitas = async function(data) {
+            if (!userObj) return;
+            try {
+                await addDoc(collection(db, 'artifacts', appId, 'public', 'data', 'student_activities'), data);
+            } catch(e) { console.error(e); }
+        };
+
+        window.firebaseSaveAngket = async function(data) {
+            if (!userObj) return;
+            try {
+                await addDoc(collection(db, 'artifacts', appId, 'public', 'data', 'angket_results'), data);
+            } catch(e) { console.error(e); }
+        };
+
+        // Load Admin Data when Firebase is ready and Panel is open
+        window.loadAdminDataFromDB = function() {
+            if (!userObj) return;
+            
+            onSnapshot(collection(db, 'artifacts', appId, 'public', 'data', 'angket_results'), (snapshot) => {
+                let data = [];
+                snapshot.forEach(doc => data.push(doc.data()));
+                
+                // Tambahkan data dari local storage agar backup lokal juga tampil
+                let localAngkets = JSON.parse(localStorage.getItem('admin_local_angkets') || '[]');
+                data = data.concat(localAngkets);
+                
+                // Hapus duplikat berdasarkan timestamp
+                data = data.filter((v,i,a) => a.findIndex(t => (t.timestamp === v.timestamp)) === i);
+                data.sort((a,b) => b.timestamp - a.timestamp);
+                
+                window.dataAngketTersimpan = data; 
+                const angketCount = document.getElementById('admin-angket-count');
+                if(angketCount) angketCount.innerText = data.length + " Siswa Mengisi";
+                
+                let tBody = '';
+                data.forEach((d, idx) => {
+                    const date = new Date(d.timestamp).toLocaleString('id-ID', {day:'numeric', month:'short', hour:'2-digit', minute:'2-digit'});
+                    const btnDetail = d.itemDetails ? `<button onclick="window.tampilkanDetailSkor(${idx})" class="text-[10px] md:text-xs bg-teal-500 hover:bg-teal-600 text-white px-2 md:px-3 py-1 md:py-1.5 rounded transition whitespace-nowrap">Lihat Skor</button>` : `<span class="text-xs text-gray-400">-</span>`;
+                    tBody += `
+                        <tr class="border-b hover:bg-gray-50 transition">
+                            <td class="p-2 md:p-3 text-[10px] md:text-xs text-gray-500 whitespace-nowrap">${date}</td>
+                            <td class="p-2 md:p-3 font-bold text-teal-800 text-xs md:text-sm truncate max-w-[100px] md:max-w-none">${d.nama}</td>
+                            <td class="p-2 md:p-3 text-[10px] md:text-xs truncate max-w-[100px] md:max-w-none">${d.kelas} <br> ${d.sekolah}</td>
+                            <td class="p-2 md:p-3 text-center font-extrabold text-sm md:text-lg">${d.totalScore}</td>
+                            <td class="p-2 md:p-3 text-center"><span class="bg-gray-200 px-2 py-1 rounded text-[10px] md:text-xs font-bold">${d.status}</span></td>
+                            <td class="p-2 md:p-3 text-[10px] md:text-xs text-pink-600 font-bold whitespace-nowrap">${d.dimensiTerendah || '-'}</td>
+                            <td class="p-2 md:p-3 text-center">${btnDetail}</td>
+                        </tr>
+                    `;
+                });
+                const tableAngket = document.getElementById('admin-table-angket');
+                if(tableAngket) tableAngket.innerHTML = tBody || `<tr><td colspan="7" class="p-4 md:p-6 text-center text-gray-400">Belum ada data masuk.</td></tr>`;
+            }, (error) => console.error("Error fetching angket:", error));
+
+            onSnapshot(collection(db, 'artifacts', appId, 'public', 'data', 'student_activities'), (snapshot) => {
+                let data = [];
+                snapshot.forEach(doc => data.push(doc.data()));
+                
+                // Tambahkan data dari local storage agar backup lokal juga tampil
+                let localActivities = JSON.parse(localStorage.getItem('admin_local_activities') || '[]');
+                data = data.concat(localActivities);
+                
+                // Hapus duplikat berdasarkan timestamp
+                data = data.filter((v,i,a) => a.findIndex(t => (t.timestamp === v.timestamp)) === i);
+                data.sort((a,b) => b.timestamp - a.timestamp);
+                
+                const activityCount = document.getElementById('admin-activity-count');
+                if(activityCount) activityCount.innerText = data.length + " Log Terekam";
+                
+                let tBody = '';
+                data.forEach(d => {
+                    const date = new Date(d.timestamp).toLocaleString('id-ID', {day:'numeric', month:'short', hour:'2-digit', minute:'2-digit'});
+                    tBody += `
+                        <tr class="border-b hover:bg-gray-50 transition">
+                            <td class="p-2 md:p-3 text-[10px] md:text-xs text-gray-500 whitespace-nowrap">${date}</td>
+                            <td class="p-2 md:p-3 font-bold text-teal-800 text-xs md:text-sm truncate max-w-[100px] md:max-w-none">${d.nama} <br><span class="text-[10px] md:text-xs text-gray-400 font-normal">${d.kelas}</span></td>
+                            <td class="p-2 md:p-3"><span class="text-[10px] md:text-xs font-bold text-pink-500 bg-pink-50 px-2 py-1 rounded block mb-1 truncate max-w-[150px] md:max-w-none">${d.modul}</span><span class="text-[10px] md:text-xs text-gray-600 font-bold border border-gray-300 rounded px-1 truncate max-w-[150px] md:max-w-none inline-block">${d.latihan}</span></td>
+                            <td class="p-2 md:p-3 text-xs md:text-sm text-gray-700 italic border-l border-gray-100 min-w-[200px]">"${d.jawaban}"</td>
+                        </tr>
+                    `;
+                });
+                const tableAktivitas = document.getElementById('admin-table-aktivitas');
+                if(tableAktivitas) tableAktivitas.innerHTML = tBody || `<tr><td colspan="4" class="p-4 md:p-6 text-center text-gray-400">Belum ada data masuk.</td></tr>`;
+            }, (error) => console.error("Error fetching aktivitas:", error));
+        };
+
+        const initAuth = async () => {
+            try {
+                if (typeof __initial_auth_token !== 'undefined' && __initial_auth_token) {
+                    await signInWithCustomToken(auth, __initial_auth_token);
+                } else {
+                    await signInAnonymously(auth);
+                }
+            } catch(e) { console.error("Auth error:", e); }
+        };
+
+        initAuth();
+
+        onAuthStateChanged(auth, (u) => {
+            userObj = u;
+            if(u && !document.getElementById('view-admin-dashboard').classList.contains('hidden')) {
+                window.loadAdminDataFromDB();
+            }
+        });
+    </script>
+</body>
+</html>
