@@ -38,6 +38,18 @@
         .no-scrollbar::-webkit-scrollbar { display: none; }
         .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
     </style>
+    <script>
+        // --- GLOBAL IMAGE FALLBACK HANDLER ---
+        // Pindah ke head agar didefinisikan sebelum gambar dimuat
+        window.handleImgError = function(img, type) {
+            img.onerror = null; 
+            if (type === 'hero') {
+                img.src = "data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI4MDAiIGhlaWdodD0iNjAwIj48cmVjdCB3aWR0aD0iMTAwJSIgaGVpZ2h0PSIxMDAlIiBmaWxsPSIjMGY3NjZlIi8+PHRleHQgeD0iNTAlIiB5PSI1MCUiIGZvbnQtc2l6ZT0iNDAiIGZpbGw9IndoaXRlIiBmb250LWZhbWlseT0ic2Fucy1zZXJpZiIgdGV4dC1hbmNob3I9Im1pZGRsZSIgZG9taW5hbnQtYmFzZWxpbmU9Im1pZGRsZSI+4pyoIFNhZmV6b25lIEhlcm88L3RleHQ+PC9zdmc+";
+            } else {
+                img.src = "data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI4MDAiIGhlaWdodD0iNjAwIj48cmVjdCB3aWR0aD0iMTAwJSIgaGVpZ2h0PSIxMDAlIiBmaWxsPSIjMGY3NjZlIi8+PHRleHQgeD0iNTAlIiB5PSI1MCUiIGZvbnQtc2l6ZT0iNDAiIGZpbGw9IndoaXRlIiBmb250LWZhbWlseT0ic2Fucy1zZXJpZiIgdGV4dC1hbmNob3I9Im1pZGRsZSIgZG9taW5hbnQtYmFzZWxpbmU9Im1pZGRsZSI+4pyoIFNhZmV6b25lIE1hdGVyaTwvdGV4dD48L3N2Zz4=";
+            }
+        };
+    </script>
 </head>
 <body class="min-h-screen flex flex-col relative">
 
@@ -170,8 +182,7 @@
                     </div>
                     
                     <div class="w-full sm:w-72 md:w-64 lg:w-80 shrink-0 relative aspect-[4/3] lg:aspect-[3/4] mx-auto mt-4 md:mt-8 lg:mt-0 md:sticky md:top-8 bg-teal-100 rounded-[2rem] border-4 border-white shadow-lg overflow-hidden z-10 lg:rotate-3 flex items-center justify-center">
-                        <!-- MENGGUNAKAN NAMA FILE LOKAL: hero.jpg -->
-                        <img src="./hero.jpg" alt="Hero Safezone" class="absolute inset-0 w-full h-full object-cover transition duration-300 hover:scale-105" onerror="this.onerror=null; this.src='data:image/svg+xml;charset=UTF-8,%3Csvg xmlns=\'http://www.w3.org/2000/svg\' width=\'800\' height=\'600\'%3E%3Crect width=\'100%25\' height=\'100%25\' fill=\'%230f766e\'/%3E%3Ctext x=\'50%25\' y=\'50%25\' font-size=\'40\' fill=\'white\' font-family=\'sans-serif\' text-anchor=\'middle\' dominant-baseline=\'middle\'%3E%E2%9C%A8 Safezone Hero%3C/text%3E%3C/svg%3E';">
+                        <img src="https://images.unsplash.com/photo-1585036156171-384164a8c675?auto=format&fit=crop&w=800&q=80" alt="Hero Safezone" class="absolute inset-0 w-full h-full object-cover transition duration-300 hover:scale-105" onerror="window.handleImgError(this, 'hero');">
                     </div>
                 </div>
             </div>
@@ -209,7 +220,7 @@
         
         <article class="bg-white rounded-[2rem] shadow-xl border border-gray-100 overflow-hidden">
             <div class="relative w-full aspect-video md:h-80 bg-teal-100 flex items-center justify-center">
-                <img id="detail-gambar" src="" alt="Cover Materi" class="absolute inset-0 w-full h-full object-cover object-top" onerror="this.onerror=null; this.src='data:image/svg+xml;charset=UTF-8,%3Csvg xmlns=\'http://www.w3.org/2000/svg\' width=\'800\' height=\'600\'%3E%3Crect width=\'100%25\' height=\'100%25\' fill=\'%230f766e\'/%3E%3Ctext x=\'50%25\' y=\'50%25\' font-size=\'40\' fill=\'white\' font-family=\'sans-serif\' text-anchor=\'middle\' dominant-baseline=\'middle\'%3E%E2%9C%A8 Safezone Materi%3C/text%3E%3C/svg%3E';">
+                <img id="detail-gambar" src="" alt="Cover Materi" class="absolute inset-0 w-full h-full object-cover object-top" onerror="window.handleImgError(this, 'materi');">
             </div>
             <div class="p-5 sm:p-8 md:p-10 lg:p-12">
                 <div class="flex flex-wrap justify-between items-center mb-3 gap-2">
@@ -334,7 +345,6 @@
                 <h1 class="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-serif font-extrabold text-brand-teal mb-4 md:mb-8 leading-tight">E-Safezone <br><span class="text-brand-pink font-handwriting font-normal text-4xl sm:text-5xl md:text-6xl lg:text-7xl capitalize">Achievement</span></h1>
                 
                 <p class="text-gray-600 text-sm sm:text-base md:text-lg mb-2 md:mb-4 italic">Dengan bangga diberikan kepada:</p>
-                <!-- Menghapus break-all agar nama tidak terpotong huruf per huruf -->
                 <h2 class="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-extrabold text-gray-800 mb-2 border-b-2 border-gray-300 pb-2 md:pb-4 inline-block px-4 md:px-8 border-dashed w-full break-words whitespace-normal"><span class="nama-siswa-dinamis">Nama Siswa</span></h2>
                 <p class="text-gray-500 font-bold mb-6 md:mb-8 uppercase tracking-widest text-xs md:text-sm" id="cert-sekolah-kelas">Kelas - Sekolah</p>
 
@@ -588,10 +598,7 @@
                 const contentEl = document.getElementById('detail-konten');
                 
                 if (imgEl) {
-                    imgEl.onerror = function() {
-                        this.onerror = null;
-                        this.style.display = 'none';
-                    };
+                    imgEl.onerror = function() { window.handleImgError(this, 'materi'); };
                     imgEl.style.display = 'block';
                     imgEl.src = materi.gambar;
                 }
@@ -967,7 +974,7 @@
                 kategori: "DIMENSI 1",
                 judul: "Pemahaman Diri (Self-Image)",
                 kutipan: "Mengenali siapa diri kita sebenarnya, mulai dari kelebihan, hingga potensi yang Allah titipkan kepada kita. Kenali dirimu, maka kamu akan mengenali Tuhanmu.",
-                gambar: "./modul1.jpg",
+                gambar: "https://images.unsplash.com/photo-1518531933037-91b2f5f229cc?auto=format&fit=crop&w=800&q=80",
                 konten: `
                     <!-- AKTIVITAS -->
                     <div class="bg-blue-50 p-5 md:p-8 rounded-3xl border border-blue-100 relative shadow-sm">
@@ -1100,7 +1107,7 @@
                 kategori: "DIMENSI 2",
                 judul: "Berdamai dengan Diri (Self-Acceptance)",
                 kutipan: "Fokus Diagnostik: Self-Acceptance. Integrasi Akhlak: Qana'ah (Rela) & Syukur.",
-                gambar: "./modul2.jpg",
+                gambar: "https://images.unsplash.com/photo-1584041419732-c672b100bb50?auto=format&fit=crop&w=800&q=80",
                 konten: `
                     <!-- AKTIVITAS -->
                     <div class="bg-blue-50 p-5 md:p-8 rounded-3xl border border-blue-100 relative shadow-sm">
@@ -1287,7 +1294,7 @@
                 kategori: "DIMENSI 3",
                 judul: "Aku Berharga Tanpa Tapi (Self-Worth)",
                 kutipan: "Fokus Diagnostik: Self-Worth. Integrasi Akhlak: Iffah (Kehormatan), Ikhlas, & Adab Bermedsos. Mari bangun harga dirimu dari dalam.",
-                gambar: "./modul3.jpg",
+                gambar: "https://images.unsplash.com/photo-15150bc2cc629-9e0176d655d8?auto=format&fit=crop&w=800&q=80",
                 konten: `
                     <!-- AKTIVITAS -->
                     <div class="bg-blue-50 p-5 md:p-8 rounded-3xl border border-blue-100 relative shadow-sm">
@@ -1468,7 +1475,7 @@
                 kategori: "DIMENSI 4",
                 judul: "Meraih Mimpi Langit (Ideal-Self)",
                 kutipan: "Fokus Diagnostik: Ideal Self. Integrasi Akhlak: Ikhtiar, Tawakkal, & Husnuzhan. Bangun masa depanmu tanpa dihantui overthinking.",
-                gambar: "./modul4.jpg",
+                gambar: "https://images.unsplash.com/photo-1519817914152-2a341b539c3e?auto=format&fit=crop&w=800&q=80",
                 konten: `
                     <!-- AKTIVITAS -->
                     <div class="bg-blue-50 p-5 md:p-8 rounded-3xl border border-blue-100 relative shadow-sm">
@@ -1713,7 +1720,7 @@
                         </div>
                         <div class="w-full sm:w-3/4 md:w-1/2 lg:w-2/5 shrink-0 order-1 md:order-2 flex justify-center mx-auto">
                             <div class="relative w-full max-w-sm aspect-[4/3] md:aspect-[3/4] lg:aspect-video rounded-[1.5rem] md:rounded-[2rem] overflow-hidden border-4 border-white shadow-md cursor-pointer group bg-teal-100" onclick="window.bukaMateri('${materi.id}')">
-                                <img id="thumb-${materi.id}" src="${materi.gambar}" alt="${materi.judul}" class="absolute inset-0 w-full h-full object-cover group-hover:scale-105 transition transform duration-300" onerror="this.style.display='none';">
+                                <img id="thumb-${materi.id}" src="${materi.gambar}" alt="${materi.judul}" class="absolute inset-0 w-full h-full object-cover group-hover:scale-105 transition transform duration-300" onerror="window.handleImgError(this, 'materi');">
                             </div>
                         </div>
                     </article>
