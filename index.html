@@ -43,7 +43,6 @@
 
     <div class="h-2 w-full bg-brand-pink relative z-50"></div>
 
-    <!-- Navigation -->
     <nav id="main-nav" class="hidden bg-white shadow-sm container mx-auto px-4 py-4 flex flex-col md:flex-row justify-between items-center text-sm font-bold tracking-wider text-teal-700 relative z-40 gap-4 md:gap-0">
         <div class="flex flex-wrap justify-center gap-3 sm:gap-4 md:gap-6 mb-2 md:mb-0 w-full md:w-auto">
             <a href="javascript:void(0)" onclick="window.switchTab('beranda')" class="hover:text-pink-500 transition px-3 py-2 bg-teal-50 md:bg-transparent rounded-lg md:rounded-none text-center">BERANDA</a>
@@ -84,7 +83,6 @@
         </div>
     </header>
 
-    <!-- CUSTOM MODAL (Pengganti Alert/Confirm) -->
     <div id="custom-modal" class="hidden fixed inset-0 bg-black/60 z-[300] flex items-center justify-center p-4">
         <div class="bg-white rounded-3xl shadow-2xl max-w-sm w-full p-6 md:p-8 text-center transform transition-all scale-95 opacity-0" id="custom-modal-content">
             <div class="text-4xl md:text-5xl mb-4" id="custom-modal-icon">⚠️</div>
@@ -97,7 +95,6 @@
         </div>
     </div>
 
-    <!-- HALAMAN 0: REGISTRASI SISWA -->
     <div id="view-register" class="hidden w-full flex-1 flex flex-col justify-center items-center p-4 md:p-8">
         <div class="max-w-md w-full bg-white rounded-[2rem] shadow-2xl border-4 border-teal-100 p-6 md:p-10 relative overflow-hidden">
             <div class="absolute -top-10 -right-10 w-32 h-32 bg-pink-100 rounded-full opacity-50 blur-2xl"></div>
@@ -135,7 +132,6 @@
         </div>
     </div>
 
-    <!-- BAGIAN 1: HALAMAN BERANDA -->
     <div id="view-beranda" class="hidden w-full bg-white pb-12">
         <section class="container mx-auto px-4 py-6 md:py-8 max-w-5xl">
             <div class="bg-teal-50/50 rounded-[2rem] p-6 md:p-10 lg:p-12 border-2 border-teal-100 relative shadow-sm overflow-hidden">
@@ -169,15 +165,14 @@
                         </div>
                     </div>
                     
-                    <div class="w-full sm:w-80 md:w-72 lg:w-80 shrink-0 relative aspect-[4/3] lg:aspect-[3/4] mx-auto mt-4 md:mt-8 lg:mt-0 md:sticky md:top-8 bg-teal-100 rounded-[2rem] border-4 border-white shadow-lg overflow-hidden z-10 lg:rotate-3 flex items-center justify-center">
-                        <img src="./hero.jpg" alt="Hero Safezone" class="absolute inset-0 w-full h-full object-cover transition duration-300 hover:scale-105" onerror="this.onerror=null; this.src='https://images.unsplash.com/photo-1584551246679-0daf3d275d0f?q=80&w=800&auto=format&fit=crop';">
+                    <div class="w-full sm:w-72 md:w-64 lg:w-80 shrink-0 relative aspect-[4/3] lg:aspect-[3/4] mx-auto mt-4 md:mt-8 lg:mt-0 lg:sticky lg:top-8 bg-teal-100 rounded-[2rem] border-4 border-white shadow-lg overflow-hidden z-10 lg:rotate-3 flex items-center justify-center">
+                        <img src="./hero.jpg" alt="Hero Safezone" class="absolute inset-0 w-full h-full object-cover transition duration-300 hover:scale-105" onerror="this.onerror=null; this.src='data:image/svg+xml;charset=UTF-8,%3Csvg xmlns=\'http://www.w3.org/2000/svg\' width=\'800\' height=\'600\'%3E%3Crect width=\'100%25\' height=\'100%25\' fill=\'%230f766e\'/%3E%3Ctext x=\'50%25\' y=\'50%25\' font-size=\'40\' fill=\'white\' font-family=\'sans-serif\' text-anchor=\'middle\' dominant-baseline=\'middle\'%3E%E2%9C%A8 Gambar Gagal Dimuat%3C/text%3E%3C/svg%3E';">
                     </div>
                 </div>
             </div>
         </section>
     </div>
 
-    <!-- BAGIAN 2: HALAMAN DAFTAR MATERI -->
     <div id="view-daftar-materi" class="hidden w-full bg-white pb-12">
         <main class="container mx-auto px-4 py-8 flex-1">
             <div class="text-center mb-8 md:mb-12">
@@ -200,7 +195,6 @@
         </main>
     </div>
 
-    <!-- BAGIAN 3: HALAMAN BACA MATERI DETAIL -->
     <div id="view-baca-materi" class="hidden container mx-auto px-4 py-6 md:py-8 flex-1 max-w-4xl bg-white pb-12">
         <button onclick="window.goToMateri()" class="mb-4 md:mb-6 inline-flex items-center text-teal-600 font-bold hover:text-teal-800 transition bg-teal-50 px-4 md:px-6 py-2 md:py-3 rounded-full shadow-sm relative z-20 cursor-pointer text-sm md:text-base">
             &larr; Kembali ke Daftar Materi
@@ -208,7 +202,7 @@
         
         <article class="bg-white rounded-[2rem] shadow-xl border border-gray-100 overflow-hidden">
             <div class="relative w-full aspect-video md:h-80 bg-teal-100 flex items-center justify-center">
-                <img id="detail-gambar" src="" alt="Cover Materi" class="absolute inset-0 w-full h-full object-cover object-top">
+                <img id="detail-gambar" src="" alt="Cover Materi" class="absolute inset-0 w-full h-full object-cover object-top" onerror="this.onerror=null; this.src='data:image/svg+xml;charset=UTF-8,%3Csvg xmlns=\'http://www.w3.org/2000/svg\' width=\'800\' height=\'600\'%3E%3Crect width=\'100%25\' height=\'100%25\' fill=\'%230f766e\'/%3E%3Ctext x=\'50%25\' y=\'50%25\' font-size=\'40\' fill=\'white\' font-family=\'sans-serif\' text-anchor=\'middle\' dominant-baseline=\'middle\'%3E%E2%9C%A8 Gambar Gagal Dimuat%3C/text%3E%3C/svg%3E';">
             </div>
             <div class="p-5 sm:p-8 md:p-10 lg:p-12">
                 <div class="flex flex-wrap justify-between items-center mb-3 gap-2">
@@ -232,7 +226,6 @@
         </article>
     </div>
 
-    <!-- BAGIAN 4: HALAMAN ASESMEN (ANGKET) -->
     <div id="view-asesmen" class="hidden container mx-auto px-4 py-6 md:py-8 flex-1 max-w-4xl bg-white pb-12">
         <div class="bg-white rounded-[2rem] shadow-xl border-4 border-teal-100 p-5 sm:p-8 md:p-12 mb-8 md:mb-12 relative overflow-hidden">
             <div class="absolute -top-10 -right-10 w-20 h-20 md:w-40 md:h-40 bg-teal-50 rounded-full opacity-50 blur-3xl"></div>
@@ -263,7 +256,6 @@
                         <p class="text-xs md:text-sm text-gray-500">Pilih salah satu jawaban yang paling sesuai dengan kondisimu saat ini.</p>
                     </div>
 
-                    <!-- WADAH PERTANYAAN ANGKET -->
                     <div id="angket-form-container"></div>
 
                     <div class="text-center mt-8 md:mt-10 bg-gray-50 p-5 md:p-6 rounded-3xl border border-gray-200">
@@ -319,13 +311,11 @@
         </div>
     </div>
 
-    <!-- BAGIAN 5: HALAMAN SERTIFIKAT -->
     <div id="view-sertifikat" class="hidden w-full flex-1 flex flex-col justify-center items-center p-4 md:p-8 bg-gray-50 pb-12">
         <button onclick="window.goToMateri()" class="mb-4 md:mb-6 inline-flex items-center text-teal-600 font-bold hover:text-teal-800 transition bg-white px-5 md:px-6 py-2 md:py-3 rounded-full shadow-sm relative z-20 text-sm md:text-base w-full sm:w-auto justify-center">
             &larr; Kembali ke Daftar Materi
         </button>
 
-        <!-- SERTIFIKAT UI -->
         <div class="max-w-4xl w-full bg-certificate p-3 sm:p-4 md:p-8 rounded-[2rem] shadow-2xl relative mb-8 md:mb-10 overflow-x-auto">
             <div class="border-4 md:border-8 border-double border-teal-700 p-6 sm:p-8 md:p-14 bg-white/95 rounded-2xl text-center relative overflow-hidden backdrop-blur-sm min-w-[300px]">
                 <div class="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 text-7xl md:text-9xl opacity-5">🏆</div>
@@ -353,7 +343,6 @@
             </div>
         </div>
 
-        <!-- UKUR ULANG SECTION -->
         <div class="text-center max-w-xl mx-auto bg-white p-5 md:p-8 rounded-3xl shadow-md border border-teal-100 mb-6 w-full">
             <h4 class="font-bold text-teal-800 text-lg md:text-xl mb-2 md:mb-3">Apa Selanjutnya? 🚀</h4>
             <p class="text-gray-600 mb-5 md:mb-6 text-sm md:text-base">Sahabat Safezone, yuk kita lihat seberapa jauh perkembangan konsep dirimu sekarang! Mari isi kembali angket asesmen untuk melihat peningkatannya.</p>
@@ -362,7 +351,6 @@
             </button>
         </div>
 
-        <!-- KONSELING INDIVIDUAL CTA -->
         <div class="text-center max-w-xl mx-auto bg-pink-50 p-5 md:p-8 rounded-3xl shadow-md border border-pink-200 w-full">
             <h4 class="font-bold text-pink-800 text-lg md:text-xl mb-2 md:mb-3">Masih Butuh Teman Bercerita? 🫂</h4>
             <p class="text-gray-700 mb-5 md:mb-6 text-sm md:text-base">Jika kamu masih merasa bingung, punya beban pikiran yang belum terurai, atau membutuhkan layanan <strong>Konseling Individual</strong> yang lebih intensif, jangan ragu untuk menghubungi Guru BK/Konselor. Kami siap mendengarkanmu tanpa menghakimi!</p>
@@ -373,7 +361,6 @@
         </div>
     </div>
 
-    <!-- BAGIAN ADMIN -->
     <div id="view-admin-login" class="hidden w-full flex-1 flex flex-col justify-center items-center p-4">
         <div class="max-w-sm w-full bg-white rounded-2xl shadow-xl border-t-8 border-teal-800 p-6 md:p-8 text-center">
             <span class="text-4xl block mb-4">🔐</span>
@@ -396,13 +383,11 @@
         </div>
 
         <div class="container mx-auto px-4 max-w-6xl">
-            <!-- Scrollable Tabs for Mobile -->
             <div class="flex overflow-x-auto gap-2 mb-6 border-b border-gray-300 pb-2 no-scrollbar">
                 <button onclick="window.switchAdminTab('angket')" id="btn-tab-angket" class="px-4 md:px-6 py-2 bg-teal-600 text-white font-bold rounded-t-lg whitespace-nowrap text-sm md:text-base">Data Angket Konsep Diri</button>
                 <button onclick="window.switchAdminTab('aktivitas')" id="btn-tab-aktivitas" class="px-4 md:px-6 py-2 bg-gray-200 text-gray-600 font-bold rounded-t-lg hover:bg-gray-300 whitespace-nowrap text-sm md:text-base">Log Aktivitas & Refleksi Siswa</button>
             </div>
 
-            <!-- TABEL ANGKET -->
             <div id="admin-tab-angket" class="bg-white rounded-xl shadow-md border border-gray-200 overflow-hidden">
                 <div class="p-4 bg-gray-50 border-b border-gray-200 flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
                     <div class="flex flex-wrap items-center gap-2 md:gap-4 w-full sm:w-auto">
@@ -414,7 +399,6 @@
                         <span>Unduh Data (CSV)</span>
                     </button>
                 </div>
-                <!-- Wraper tabel agar bisa geser kanan-kiri di HP -->
                 <div class="overflow-x-auto w-full">
                     <table class="w-full text-left border-collapse text-xs md:text-sm min-w-[700px]">
                         <thead>
@@ -448,7 +432,6 @@
                 </div>
             </div>
 
-            <!-- TABEL AKTIVITAS -->
             <div id="admin-tab-aktivitas" class="hidden bg-white rounded-xl shadow-md border border-gray-200 overflow-hidden">
                 <div class="p-4 bg-gray-50 border-b border-gray-200 flex flex-col sm:flex-row justify-between items-start sm:items-center gap-2">
                     <h3 class="font-bold text-gray-700 text-sm md:text-base">Jurnal Refleksi & Jawaban Latihan Siswa</h3>
@@ -473,15 +456,11 @@
         </div>
     </div>
 
-    <!-- Footer -->
     <footer id="main-footer" class="hidden bg-white border-t border-gray-200 mt-auto py-6 text-center text-xs md:text-sm text-gray-500 w-full">
         &copy; <span id="current-year"></span> Safezone Counselling. All rights reserved. 
         <a href="javascript:void(0)" onclick="window.bukaAdmin()" class="text-gray-300 ml-2 hover:text-teal-600 transition block sm:inline mt-2 sm:mt-0">Admin Panel 🔒</a>
     </footer>
 
-    <!-- ========================================== -->
-    <!-- KODE JAVASCRIPT: LOGIKA & TAMPILAN UTAMA   -->
-    <!-- ========================================== -->
     <script>
         // --- VARIABEL GLOBAL ---
         let currentUser = null;
@@ -558,13 +537,17 @@
             ];
             views.forEach(v => {
                 const el = document.getElementById(v);
-                if (el) el.classList.add('hidden');
+                if (el) {
+                    el.classList.add('hidden');
+                }
             });
             
             const activeView = document.getElementById('view-' + tab);
-            if (activeView) activeView.classList.remove('hidden');
+            if (activeView) {
+                activeView.classList.remove('hidden');
+            }
             window.scrollTo(0, 0); 
-        }
+        };
 
         function switchTab(tab) { window.switchTab(tab); }
 
@@ -582,6 +565,11 @@
                 const contentEl = document.getElementById('detail-konten');
                 
                 if (imgEl) {
+                    imgEl.onerror = function() {
+                        this.onerror = null;
+                        this.style.display = 'none';
+                    };
+                    imgEl.style.display = 'block';
                     imgEl.src = materi.gambar;
                 }
                 if (catEl) catEl.innerText = materi.kategori;
@@ -904,6 +892,7 @@
             let status = totalScore >= 96 ? 'Tinggi' : totalScore >= 72 ? 'Sedang' : 'Rendah';
             let color = totalScore >= 96 ? 'text-green-600' : totalScore >= 72 ? 'text-yellow-500' : 'text-red-500';
 
+            // Kirim ke Database (Akan dieksekusi jika Script Firebase jalan)
             if (currentUser) {
                 const dataAngket = {
                     nama: currentUser.nama, email: currentUser.email, kelas: currentUser.kelas, sekolah: currentUser.sekolah,
@@ -955,9 +944,8 @@
                 kategori: "DIMENSI 1",
                 judul: "Pemahaman Diri (Self-Image)",
                 kutipan: "Mengenali siapa diri kita sebenarnya, mulai dari kelebihan, hingga potensi yang Allah titipkan kepada kita. Kenali dirimu, maka kamu akan mengenali Tuhanmu.",
-                gambar: "modul1.jpg",
+                gambar: "Self concept with esteem, image and ideal characteristics outline diagram - VectorMine.jpg",
                 konten: `
-                    <!-- AKTIVITAS -->
                     <div class="bg-blue-50 p-5 md:p-8 rounded-3xl border border-blue-100 relative shadow-sm">
                         <div class="absolute -top-4 -left-3 md:-top-5 md:-left-4 text-4xl md:text-5xl">🪞</div>
                         <h3 class="text-xl md:text-2xl font-bold text-blue-800 mb-4 ml-6 uppercase tracking-wider">Aktivitas: Cermin Mental</h3>
@@ -971,7 +959,6 @@
                         <button onclick="window.interaksiSelesai(this, 'Aktivitas Selesai ✅', null, 'Ceklis Cermin Diri')" class="bg-blue-600 text-white px-8 py-3 rounded-full font-bold hover:bg-blue-700 transition w-full md:w-auto shadow-md relative z-20">Kunci Jawaban</button>
                     </div>
 
-                    <!-- REFLEKSI -->
                     <div class="bg-yellow-50 p-5 md:p-8 rounded-3xl border border-yellow-200 relative shadow-sm mt-8">
                         <div class="absolute -top-4 -left-3 md:-top-5 md:-left-4 text-4xl md:text-5xl">🤔</div>
                         <h3 class="text-xl md:text-2xl font-bold text-yellow-800 mb-4 ml-6 uppercase tracking-wider">Refleksi</h3>
@@ -980,7 +967,6 @@
                         <button onclick="window.interaksiSelesai(this, 'Refleksi Terkirim ✨', null, 'Jurnal Refleksi')" class="bg-yellow-500 text-white px-8 py-3 rounded-full font-bold hover:bg-yellow-600 transition w-full md:w-auto shadow-md relative z-20">Kirim Refleksi</button>
                     </div>
 
-                    <!-- KONSEPTUAL -->
                     <div class="bg-teal-50 p-5 md:p-8 rounded-3xl border border-teal-200 relative shadow-sm mt-8">
                         <div class="absolute -top-4 -left-3 md:-top-5 md:-left-4 text-4xl md:text-5xl">📚</div>
                         <h3 class="text-xl md:text-2xl font-bold text-teal-800 mb-4 ml-6 uppercase tracking-wider">Konseptual: Memahami Diri Seutuhnya</h3>
@@ -1031,7 +1017,6 @@
                         </div>
                     </div>
 
-                    <!-- APLIKASI -->
                     <div class="bg-pink-50 p-5 md:p-8 rounded-3xl border border-pink-200 relative shadow-sm mt-8">
                         <div class="absolute -top-4 -left-3 md:-top-5 md:-left-4 text-4xl md:text-5xl">🚀</div>
                         <h3 class="text-xl md:text-2xl font-bold text-brand-pink mb-2 ml-6 uppercase tracking-wider">Aplikasi: Aksi Nyata</h3>
@@ -1075,7 +1060,6 @@
                         </div>
                     </div>
 
-                    <!-- TOMBOL SELESAI MODUL -->
                     <div class="mt-12 bg-green-50 rounded-3xl p-8 border-2 border-green-200 text-center shadow-sm relative z-20">
                         <button onclick="window.selesaikanModul('pemahaman-diri')" class="bg-green-500 text-white px-8 py-4 rounded-full font-bold hover:bg-green-600 transition shadow-lg transform hover:-translate-y-1 text-lg w-full sm:w-auto cursor-pointer">
                             ✅ Tandai Modul Selesai
@@ -1088,9 +1072,8 @@
                 kategori: "DIMENSI 2",
                 judul: "Berdamai dengan Diri (Self-Acceptance)",
                 kutipan: "Fokus Diagnostik: Self-Acceptance. Integrasi Akhlak: Qana'ah (Rela) & Syukur.",
-                gambar: "modul2.jpg",
+                gambar: "How to build better work environments for new creatives.jpg",
                 konten: `
-                    <!-- AKTIVITAS -->
                     <div class="bg-blue-50 p-5 md:p-8 rounded-3xl border border-blue-100 relative shadow-sm">
                         <div class="absolute -top-4 -left-3 md:-top-5 md:-left-4 text-4xl md:text-5xl">🎬</div>
                         <h3 class="text-xl md:text-2xl font-bold text-blue-800 mb-2 ml-6 uppercase tracking-wider">Aktivitas: Stimulus & Zona Insecure</h3>
@@ -1133,7 +1116,6 @@
                         </div>
                     </div>
 
-                    <!-- REFLEKSI -->
                     <div class="bg-yellow-50 p-5 md:p-8 rounded-3xl border border-yellow-200 relative shadow-sm mt-8">
                         <div class="absolute -top-4 -left-3 md:-top-5 md:-left-4 text-4xl md:text-5xl">🤔</div>
                         <h3 class="text-xl md:text-2xl font-bold text-yellow-800 mb-2 ml-6 uppercase tracking-wider">Refleksi: Jurnal Digital</h3>
@@ -1151,7 +1133,6 @@
                         </div>
                         <button onclick="window.interaksiSelesai(this, 'Jurnal Refleksi Terkirim ✨', null, 'Jurnal Refleksi')" class="bg-yellow-500 text-white px-8 py-3 rounded-full font-bold hover:bg-yellow-600 transition shadow-md w-full sm:w-auto relative z-20 mb-8">Kirim Refleksi</button>
 
-                        <!-- Jembatan Konseling -->
                         <div class="bg-white p-6 rounded-2xl border-l-4 border-l-yellow-400 shadow-sm relative overflow-hidden">
                             <div class="absolute -right-2 -bottom-4 text-6xl opacity-10">🌉</div>
                             <h4 class="font-bold text-yellow-800 mb-2 font-handwriting text-2xl">Jembatan Konseling:</h4>
@@ -1161,12 +1142,10 @@
                         </div>
                     </div>
 
-                    <!-- KONSEPTUAL -->
                     <div class="bg-teal-50 p-5 md:p-8 rounded-3xl border border-teal-200 relative shadow-sm mt-8">
                         <div class="absolute -top-4 -left-3 md:-top-5 md:-left-4 text-4xl md:text-5xl">📚</div>
                         <h3 class="text-xl md:text-2xl font-bold text-teal-800 mb-2 ml-6 uppercase tracking-wider">Konseptual: Jebakan Otak & Qana'ah</h3>
                         
-                        <!-- SUDUT PANDANG SAINS -->
                         <h4 class="font-bold text-teal-900 mt-8 mb-4 flex items-center gap-2 text-xl border-b border-teal-100 pb-2"><span class="text-2xl">🧠</span> A. Sudut Pandang Sains: "Jebakan Otak & Hormon Bahagia"</h4>
                         <div class="space-y-4">
                             <div class="bg-white p-5 rounded-2xl border border-teal-100 shadow-sm">
@@ -1182,7 +1161,6 @@
                             </div>
                         </div>
 
-                        <!-- SUDUT PANDANG AKHLAK -->
                         <h4 class="font-bold text-teal-900 mt-10 mb-4 flex items-center gap-2 text-xl border-b border-teal-100 pb-2"><span class="text-2xl">🕌</span> B. Sudut Pandang Akhlak: "Qana'ah & Matematika Langit"</h4>
                         <div class="space-y-4">
                             <div class="bg-white p-5 rounded-2xl border border-teal-100 shadow-sm">
@@ -1230,7 +1208,6 @@
                         </div>
                     </div>
 
-                    <!-- APLIKASI -->
                     <div class="bg-pink-50 p-5 md:p-8 rounded-3xl border border-pink-200 relative shadow-sm mt-8">
                         <div class="absolute -top-4 -left-3 md:-top-5 md:-left-4 text-4xl md:text-5xl">🚀</div>
                         <h3 class="text-xl md:text-2xl font-bold text-brand-pink mb-2 ml-6 uppercase tracking-wider">Aplikasi: Aksi Nyata</h3>
@@ -1262,7 +1239,6 @@
                         </div>
                     </div>
 
-                    <!-- TOMBOL SELESAI -->
                     <div class="mt-12 bg-green-50 rounded-3xl p-8 border-2 border-green-200 text-center shadow-sm relative z-20">
                         <button onclick="window.selesaikanModul('penerimaan-diri')" class="bg-green-500 text-white px-8 py-4 rounded-full font-bold hover:bg-green-600 transition shadow-lg transform hover:-translate-y-1 text-lg w-full sm:w-auto cursor-pointer">
                             ✅ Tandai Modul Selesai
@@ -1275,9 +1251,8 @@
                 kategori: "DIMENSI 3",
                 judul: "Aku Berharga Tanpa Tapi (Self-Worth)",
                 kutipan: "Fokus Diagnostik: Self-Worth. Integrasi Akhlak: Iffah (Kehormatan), Ikhlas, & Adab Bermedsos. Mari bangun harga dirimu dari dalam.",
-                gambar: "modul3.jpg",
+                gambar: "Your calm is contagious but so is your chaos — Fast Company.jpg",
                 konten: `
-                    <!-- AKTIVITAS -->
                     <div class="bg-blue-50 p-5 md:p-8 rounded-3xl border border-blue-100 relative shadow-sm">
                         <div class="absolute -top-4 -left-3 md:-top-5 md:-left-4 text-4xl md:text-5xl">📊</div>
                         <h3 class="text-xl md:text-2xl font-bold text-blue-800 mb-2 ml-6 uppercase tracking-wider">Aktivitas: Skala Berharga</h3>
@@ -1295,7 +1270,6 @@
                         </div>
                     </div>
 
-                    <!-- REFLEKSI -->
                     <div class="bg-yellow-50 p-5 md:p-8 rounded-3xl border border-yellow-200 relative shadow-sm mt-8">
                         <div class="absolute -top-4 -left-3 md:-top-5 md:-left-4 text-4xl md:text-5xl">💬</div>
                         <h3 class="text-xl md:text-2xl font-bold text-yellow-800 mb-2 ml-6 uppercase tracking-wider">Refleksi: Jurnal Digital</h3>
@@ -1307,7 +1281,6 @@
                         </div>
                         <button onclick="window.interaksiSelesai(this, 'Jurnal Terkirim ✨', null, 'Jurnal Refleksi')" class="bg-yellow-500 text-white px-8 py-3 rounded-full font-bold hover:bg-yellow-600 transition shadow-md w-full sm:w-auto relative z-20 mb-8">Kirim Refleksi</button>
 
-                        <!-- Jembatan Konseling -->
                         <div class="bg-white p-6 rounded-2xl border-l-4 border-l-yellow-400 shadow-sm relative overflow-hidden">
                             <div class="absolute -right-2 -bottom-4 text-6xl opacity-10">🌉</div>
                             <h4 class="font-bold text-yellow-800 mb-2 font-handwriting text-2xl">Jembatan Konseling (Carl Rogers):</h4>
@@ -1317,12 +1290,10 @@
                         </div>
                     </div>
 
-                    <!-- KONSEPTUAL -->
                     <div class="bg-teal-50 p-5 md:p-8 rounded-3xl border border-teal-200 relative shadow-sm mt-8">
                         <div class="absolute -top-4 -left-3 md:-top-5 md:-left-4 text-4xl md:text-5xl">📚</div>
                         <h3 class="text-xl md:text-2xl font-bold text-teal-800 mb-2 ml-6 uppercase tracking-wider">Konseptual: Berlian vs Batu Kali</h3>
                         
-                        <!-- SUDUT PANDANG SAINS -->
                         <h4 class="font-bold text-teal-900 mt-8 mb-4 flex items-center gap-2 text-xl border-b border-teal-100 pb-2"><span class="text-2xl">🧠</span> A. Sudut Pandang Sains: Jebakan Dopamin & FOMO</h4>
                         <div class="space-y-4 mb-8">
                             <div class="bg-white p-5 rounded-2xl border border-teal-100 shadow-sm">
@@ -1339,7 +1310,6 @@
                             </div>
                         </div>
 
-                        <!-- SUDUT PANDANG AKHLAK -->
                         <h4 class="font-bold text-teal-900 mt-10 mb-4 flex items-center gap-2 text-xl border-b border-teal-100 pb-2"><span class="text-2xl">🕌</span> B. Sudut Pandang Akhlak: Menjadi Berlian</h4>
                         <div class="space-y-4">
                             <div class="bg-white p-5 rounded-2xl border border-teal-100 shadow-sm">
@@ -1374,12 +1344,10 @@
                         </div>
                     </div>
 
-                    <!-- APLIKASI -->
                     <div class="bg-pink-50 p-5 md:p-8 rounded-3xl border border-pink-200 relative shadow-sm mt-8">
                         <div class="absolute -top-4 -left-3 md:-top-5 md:-left-4 text-4xl md:text-5xl">🚀</div>
                         <h3 class="text-xl md:text-2xl font-bold text-brand-pink mb-2 ml-6 uppercase tracking-wider">Aplikasi: Aksi Nyata</h3>
                         
-                        <!-- Latihan 1: Audit Jejak Digital -->
                         <div class="mb-10 mt-6">
                             <h4 class="font-bold text-pink-800 text-xl mb-3 flex items-center gap-2"><span>🧹</span> 1. Aktivitas "Audit Jejak Digital" (The Iffah Filter)</h4>
                             <p class="text-gray-700 mb-4">Buka profil medsos kamu (IG/TikTok) sekarang, lalu lakukan <strong>Audit Mandiri</strong> pada beberapa postingan terakhirmu!</p>
@@ -1419,7 +1387,6 @@
                             <button onclick="window.interaksiSelesai(this, 'Audit Medsos Selesai! 🛡️', null, 'Audit Jejak Digital')" class="bg-pink-600 text-white px-8 py-3 rounded-full font-bold hover:bg-pink-700 transition shadow-md relative z-20">Simpan Hasil Auditku</button>
                         </div>
 
-                        <!-- Latihan 2: 3-Gate Check -->
                         <div class="mb-10 bg-white p-6 rounded-3xl border border-pink-200 shadow-sm">
                             <h4 class="font-bold text-pink-800 text-xl mb-3 flex items-center gap-2"><span>🛡️</span> 2. Tantangan "The 3-Gate Check"</h4>
                             <p class="text-gray-700 mb-4">Mulai hari ini, sebelum memposting apapun, jadikan 3 Gerbang ini sebagai <em>Checklist</em> wajibmu!</p>
@@ -1431,7 +1398,6 @@
                             <button onclick="window.interaksiSelesai(this, 'Janji Ksatria Digital Aktif! ⚔️', null, 'The 3-Gate Check')" class="bg-pink-600 text-white px-8 py-3 rounded-full font-bold hover:bg-pink-700 transition shadow-md w-full sm:w-auto relative z-20">Aku Berjanji Memakai Filter Ini</button>
                         </div>
 
-                        <!-- Latihan 3: Afirmasi -->
                         <div class="mb-6 mt-6">
                             <h4 class="font-bold text-pink-800 text-xl mb-3 flex items-center gap-2"><span>✍️</span> 3. Afirmasi Diri (Self-Worth Statement)</h4>
                             <p class="text-gray-700 mb-4 bg-yellow-50 p-4 rounded-xl shadow-inner border border-yellow-200 font-medium italic">
@@ -1443,7 +1409,6 @@
                         </div>
                     </div>
 
-                    <!-- TOMBOL SELESAI -->
                     <div class="mt-12 bg-green-50 rounded-3xl p-8 border-2 border-green-200 text-center shadow-sm relative z-20">
                         <button onclick="window.selesaikanModul('harga-diri')" class="bg-green-500 text-white px-8 py-4 rounded-full font-bold hover:bg-green-600 transition shadow-lg transform hover:-translate-y-1 text-lg w-full sm:w-auto cursor-pointer">
                             ✅ Tandai Modul Selesai
@@ -1456,9 +1421,8 @@
                 kategori: "DIMENSI 4",
                 judul: "Meraih Mimpi Langit (Ideal-Self)",
                 kutipan: "Fokus Diagnostik: Ideal Self. Integrasi Akhlak: Ikhtiar, Tawakkal, & Husnuzhan. Bangun masa depanmu tanpa dihantui overthinking.",
-                gambar: "modul4.jpg",
+                gambar: "Leading For The Future_ Disorder, Trauma, Growth.jpg",
                 konten: `
-                    <!-- AKTIVITAS -->
                     <div class="bg-blue-50 p-5 md:p-8 rounded-3xl border border-blue-100 relative shadow-sm">
                         <div class="absolute -top-4 -left-3 md:-top-5 md:-left-4 text-4xl md:text-5xl">🎒</div>
                         <h3 class="text-xl md:text-2xl font-bold text-blue-800 mb-2 ml-6 uppercase tracking-wider">Aktivitas: Ransel Masa Depan</h3>
@@ -1489,7 +1453,6 @@
                         </div>
                     </div>
 
-                    <!-- REFLEKSI -->
                     <div class="bg-yellow-50 p-5 md:p-8 rounded-3xl border border-yellow-200 relative shadow-sm mt-8">
                         <div class="absolute -top-4 -left-3 md:-top-5 md:-left-4 text-4xl md:text-5xl">💬</div>
                         <h3 class="text-xl md:text-2xl font-bold text-yellow-800 mb-2 ml-6 uppercase tracking-wider">Refleksi: Jurnal Digital</h3>
@@ -1508,7 +1471,6 @@
                         </div>
                         <button onclick="window.interaksiSelesai(this, 'Jurnal Terkirim ✨', null, 'Jurnal Refleksi')" class="bg-yellow-500 text-white px-8 py-3 rounded-full font-bold hover:bg-yellow-600 transition shadow-md mb-8 w-full sm:w-auto relative z-20">Kirim Refleksi</button>
 
-                        <!-- Jembatan Konseling -->
                         <div class="bg-white p-6 rounded-2xl border-l-4 border-l-yellow-400 shadow-sm relative overflow-hidden">
                             <div class="absolute -right-2 -bottom-4 text-6xl opacity-10">🌉</div>
                             <h4 class="font-bold text-yellow-800 mb-2 font-handwriting text-2xl">Jembatan Konseling:</h4>
@@ -1518,12 +1480,10 @@
                         </div>
                     </div>
 
-                    <!-- KONSEPTUAL -->
                     <div class="bg-teal-50 p-5 md:p-8 rounded-3xl border border-teal-200 relative shadow-sm mt-8">
                         <div class="absolute -top-4 -left-3 md:-top-5 md:-left-4 text-4xl md:text-5xl">📚</div>
                         <h3 class="text-xl md:text-2xl font-bold text-teal-800 mb-2 ml-6 uppercase tracking-wider">Konseptual: Rumus Anti-Galau</h3>
                         
-                        <!-- SUDUT PANDANG SAINS -->
                         <h4 class="font-bold text-teal-900 mt-8 mb-4 flex items-center gap-2 text-xl border-b border-teal-100 pb-2"><span class="text-2xl">🧠</span> A. Sudut Pandang Sains: "Lingkaran Kendali"</h4>
                         <div class="space-y-4 mb-8">
                             <div class="bg-white p-5 rounded-2xl border border-teal-100 shadow-sm">
@@ -1540,7 +1500,6 @@
                             </div>
                         </div>
 
-                        <!-- SUDUT PANDANG AKHLAK -->
                         <h4 class="font-bold text-teal-900 mt-10 mb-4 flex items-center gap-2 text-xl border-b border-teal-100 pb-2"><span class="text-2xl">🕌</span> B. Sudut Pandang Akhlak: "Rumus Anti-Galau"</h4>
                         <div class="space-y-4">
                             <div class="bg-white p-5 rounded-2xl border border-teal-100 shadow-sm">
@@ -1579,12 +1538,10 @@
                         </div>
                     </div>
 
-                    <!-- APLIKASI -->
                     <div class="bg-pink-50 p-5 md:p-8 rounded-3xl border border-pink-200 relative shadow-sm mt-8">
                         <div class="absolute -top-4 -left-3 md:-top-5 md:-left-4 text-4xl md:text-5xl">🚀</div>
                         <h3 class="text-xl md:text-2xl font-bold text-brand-pink mb-2 ml-6 uppercase tracking-wider">Aplikasi: Aksi Nyata</h3>
                         
-                        <!-- Latihan 1: Sorting Task -->
                         <div class="mb-10 mt-6">
                             <h4 class="font-bold text-pink-800 text-xl mb-3 flex items-center gap-2"><span>🗂️</span> 1. Latihan "Pemisahan Tugas"</h4>
                             <p class="text-gray-700 mb-4 bg-white p-4 rounded-xl shadow-sm">Mari belajar memisahkan mana yang "Tugasku" dan mana yang "Urusan Allah". Ubah kotak pilihan di bawah ini dengan jawaban yang benar!</p>
@@ -1624,7 +1581,6 @@
                             <button onclick="window.interaksiSelesai(this, 'Pemisahan Tugas Berhasil! 🛡️', null, 'Latihan Pemisahan Tugas')" class="bg-pink-600 text-white px-8 py-3 rounded-full font-bold hover:bg-pink-700 transition shadow-md w-full sm:w-auto relative z-20">Simpan Klasifikasi</button>
                         </div>
 
-                        <!-- Latihan 2: Proposal Masa Depan -->
                         <div class="mb-6">
                             <h4 class="font-bold text-pink-800 text-xl mb-3 flex items-center gap-2"><span>📝</span> 2. "Proposal Masa Depan" (Dream Map)</h4>
                             <p class="text-gray-700 mb-4">Buatlah rencana singkat untuk <strong>1 cita-citamu</strong> menggunakan format Islami di bawah ini:</p>
@@ -1651,7 +1607,6 @@
                             <button onclick="window.interaksiSelesai(this, 'Proposal Diterima Langit! ☁️', null, 'Proposal Masa Depan')" class="bg-brand-pink text-white px-8 py-3 rounded-full font-extrabold hover:bg-pink-700 transition shadow-md w-full sm:w-auto relative z-20">Kirim Proposal Masa Depanku</button>
                         </div>
 
-                        <!-- Closing Statement -->
                         <div class="bg-gradient-to-r from-blue-900 to-indigo-900 p-6 md:p-10 rounded-3xl shadow-xl text-center relative overflow-hidden mt-12">
                             <div class="absolute -right-4 -bottom-4 text-7xl opacity-20">🚀</div>
                             <p class="text-lg md:text-xl font-serif text-blue-50 leading-relaxed mb-6 italic relative z-10">
@@ -1661,7 +1616,6 @@
                         </div>
                     </div>
 
-                    <!-- TOMBOL SELESAI MODUL -->
                     <div class="mt-12 bg-green-50 rounded-3xl p-8 border-2 border-green-200 text-center shadow-sm relative z-20">
                         <button onclick="window.selesaikanModul('diri-ideal')" class="bg-green-500 text-white px-8 py-4 rounded-full font-bold hover:bg-green-600 transition shadow-lg transform hover:-translate-y-1 text-lg w-full sm:w-auto cursor-pointer">
                             ✅ Tandai Modul Selesai
@@ -1767,7 +1721,6 @@
 
     </script>
 
-    <!-- FIREBASE MODULE -->
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
         import { getAuth, signInAnonymously, signInWithCustomToken, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
