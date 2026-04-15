@@ -38,18 +38,6 @@
         .no-scrollbar::-webkit-scrollbar { display: none; }
         .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
     </style>
-    <script>
-        // --- GLOBAL IMAGE FALLBACK HANDLER ---
-        // Pindah ke head agar didefinisikan sebelum gambar dimuat
-        window.handleImgError = function(img, type) {
-            img.onerror = null; 
-            if (type === 'hero') {
-                img.src = "data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI4MDAiIGhlaWdodD0iNjAwIj48cmVjdCB3aWR0aD0iMTAwJSIgaGVpZ2h0PSIxMDAlIiBmaWxsPSIjMGY3NjZlIi8+PHRleHQgeD0iNTAlIiB5PSI1MCUiIGZvbnQtc2l6ZT0iNDAiIGZpbGw9IndoaXRlIiBmb250LWZhbWlseT0ic2Fucy1zZXJpZiIgdGV4dC1hbmNob3I9Im1pZGRsZSIgZG9taW5hbnQtYmFzZWxpbmU9Im1pZGRsZSI+4pyoIFNhZmV6b25lIEhlcm88L3RleHQ+PC9zdmc+";
-            } else {
-                img.src = "data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI4MDAiIGhlaWdodD0iNjAwIj48cmVjdCB3aWR0aD0iMTAwJSIgaGVpZ2h0PSIxMDAlIiBmaWxsPSIjMGY3NjZlIi8+PHRleHQgeD0iNTAlIiB5PSI1MCUiIGZvbnQtc2l6ZT0iNDAiIGZpbGw9IndoaXRlIiBmb250LWZhbWlseT0ic2Fucy1zZXJpZiIgdGV4dC1hbmNob3I9Im1pZGRsZSIgZG9taW5hbnQtYmFzZWxpbmU9Im1pZGRsZSI+4pyoIFNhZmV6b25lIE1hdGVyaTwvdGV4dD48L3N2Zz4=";
-            }
-        };
-    </script>
 </head>
 <body class="min-h-screen flex flex-col relative">
 
@@ -182,7 +170,8 @@
                     </div>
                     
                     <div class="w-full sm:w-72 md:w-64 lg:w-80 shrink-0 relative aspect-[4/3] lg:aspect-[3/4] mx-auto mt-4 md:mt-8 lg:mt-0 md:sticky md:top-8 bg-teal-100 rounded-[2rem] border-4 border-white shadow-lg overflow-hidden z-10 lg:rotate-3 flex items-center justify-center">
-                        <img src="https://images.unsplash.com/photo-1585036156171-384164a8c675?auto=format&fit=crop&w=800&q=80" alt="Hero Safezone" class="absolute inset-0 w-full h-full object-cover transition duration-300 hover:scale-105" onerror="window.handleImgError(this, 'hero');">
+                        <!-- MENGGUNAKAN NAMA FILE LOKAL: hero.jpg -->
+                        <img src="./hero.jpg" alt="Hero Safezone" class="absolute inset-0 w-full h-full object-cover transition duration-300 hover:scale-105" onerror="this.onerror=null; this.src='data:image/svg+xml;charset=UTF-8,%3Csvg xmlns=\'http://www.w3.org/2000/svg\' width=\'800\' height=\'600\'%3E%3Crect width=\'100%25\' height=\'100%25\' fill=\'%230f766e\'/%3E%3Ctext x=\'50%25\' y=\'50%25\' font-size=\'40\' fill=\'white\' font-family=\'sans-serif\' text-anchor=\'middle\' dominant-baseline=\'middle\'%3E%E2%9C%A8 Safezone Hero%3C/text%3E%3C/svg%3E';">
                     </div>
                 </div>
             </div>
@@ -220,7 +209,7 @@
         
         <article class="bg-white rounded-[2rem] shadow-xl border border-gray-100 overflow-hidden">
             <div class="relative w-full aspect-video md:h-80 bg-teal-100 flex items-center justify-center">
-                <img id="detail-gambar" src="" alt="Cover Materi" class="absolute inset-0 w-full h-full object-cover object-top" onerror="window.handleImgError(this, 'materi');">
+                <img id="detail-gambar" src="" alt="Cover Materi" class="absolute inset-0 w-full h-full object-cover object-top" onerror="this.onerror=null; this.src='data:image/svg+xml;charset=UTF-8,%3Csvg xmlns=\'http://www.w3.org/2000/svg\' width=\'800\' height=\'600\'%3E%3Crect width=\'100%25\' height=\'100%25\' fill=\'%230f766e\'/%3E%3Ctext x=\'50%25\' y=\'50%25\' font-size=\'40\' fill=\'white\' font-family=\'sans-serif\' text-anchor=\'middle\' dominant-baseline=\'middle\'%3E%E2%9C%A8 Safezone Materi%3C/text%3E%3C/svg%3E';">
             </div>
             <div class="p-5 sm:p-8 md:p-10 lg:p-12">
                 <div class="flex flex-wrap justify-between items-center mb-3 gap-2">
@@ -345,6 +334,7 @@
                 <h1 class="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-serif font-extrabold text-brand-teal mb-4 md:mb-8 leading-tight">E-Safezone <br><span class="text-brand-pink font-handwriting font-normal text-4xl sm:text-5xl md:text-6xl lg:text-7xl capitalize">Achievement</span></h1>
                 
                 <p class="text-gray-600 text-sm sm:text-base md:text-lg mb-2 md:mb-4 italic">Dengan bangga diberikan kepada:</p>
+                <!-- Menghapus break-all agar nama tidak terpotong huruf per huruf -->
                 <h2 class="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-extrabold text-gray-800 mb-2 border-b-2 border-gray-300 pb-2 md:pb-4 inline-block px-4 md:px-8 border-dashed w-full break-words whitespace-normal"><span class="nama-siswa-dinamis">Nama Siswa</span></h2>
                 <p class="text-gray-500 font-bold mb-6 md:mb-8 uppercase tracking-widest text-xs md:text-sm" id="cert-sekolah-kelas">Kelas - Sekolah</p>
 
@@ -598,7 +588,10 @@
                 const contentEl = document.getElementById('detail-konten');
                 
                 if (imgEl) {
-                    imgEl.onerror = function() { window.handleImgError(this, 'materi'); };
+                    imgEl.onerror = function() {
+                        this.onerror = null;
+                        this.style.display = 'none';
+                    };
                     imgEl.style.display = 'block';
                     imgEl.src = materi.gambar;
                 }
@@ -974,29 +967,52 @@
                 kategori: "DIMENSI 1",
                 judul: "Pemahaman Diri (Self-Image)",
                 kutipan: "Mengenali siapa diri kita sebenarnya, mulai dari kelebihan, hingga potensi yang Allah titipkan kepada kita. Kenali dirimu, maka kamu akan mengenali Tuhanmu.",
-                gambar: "https://images.unsplash.com/photo-1518531933037-91b2f5f229cc?auto=format&fit=crop&w=800&q=80",
+                gambar: "Self concept with esteem, image and ideal characteristics outline diagram - VectorMine.jpg",
                 konten: `
-                    <!-- AKTIVITAS -->
+                    <!-- AKTIVITAS BARU YANG LEBIH MENDALAM -->
                     <div class="bg-blue-50 p-5 md:p-8 rounded-3xl border border-blue-100 relative shadow-sm">
-                        <div class="absolute -top-4 -left-3 md:-top-5 md:-left-4 text-4xl md:text-5xl">🪞</div>
-                        <h3 class="text-xl md:text-2xl font-bold text-blue-800 mb-4 ml-6 uppercase tracking-wider">Aktivitas: Cermin Mental</h3>
-                        <p class="mb-4 text-blue-900">Pernah dengar analogi <strong>"Kucing ngaca, tapi pantulannya Singa"</strong>? Sama seperti gambar ilustrasi di atas, apa yang kamu lihat di cermin mental sangat bergantung pada <em>mindset</em>-mu. Yuk pemanasan! Centang pernyataan yang paling sesuai dengan kondisimu saat ini:</p>
-                        <div class="space-y-3 mb-6 bg-white p-5 rounded-xl border border-blue-100 text-sm md:text-base">
-                            <label class="flex items-start gap-3 cursor-pointer"><input type="checkbox" class="w-4 h-4 md:w-5 md:h-5 accent-blue-600 mt-1 shrink-0"> <span>Aku tahu persis apa bakatku.</span></label>
-                            <label class="flex items-start gap-3 cursor-pointer"><input type="checkbox" class="w-4 h-4 md:w-5 md:h-5 accent-blue-600 mt-1 shrink-0"> <span>Aku sering bingung kalau ditanya "Apa kelebihanmu?".</span></label>
-                            <label class="flex items-start gap-3 cursor-pointer"><input type="checkbox" class="w-4 h-4 md:w-5 md:h-5 accent-blue-600 mt-1 shrink-0"> <span>Aku merasa orang lain lebih pintar dari aku.</span></label>
-                            <label class="flex items-start gap-3 cursor-pointer"><input type="checkbox" class="w-4 h-4 md:w-5 md:h-5 accent-blue-600 mt-1 shrink-0"> <span>Aku sadar, selain kekurangan, aku pasti punya potensi untuk berbuat baik.</span></label>
+                        <div class="absolute -top-4 -left-3 md:-top-5 md:-left-4 text-4xl md:text-5xl">🕵️‍♀️</div>
+                        <h3 class="text-xl md:text-2xl font-bold text-blue-800 mb-4 ml-6 uppercase tracking-wider">Aktivitas: Audit Label Diri</h3>
+                        <p class="mb-4 text-blue-900 text-sm md:text-base">Setiap hari, kita secara tidak sadar menempelkan "label" atau cap pada diri sendiri. Ada label yang membuat kita terbang, ada juga yang membuat kita jatuh. Yuk, kita jadi detektif untuk diri kita sendiri! Bongkar isi pikiranmu dengan jujur di bawah ini:</p>
+                        
+                        <div class="space-y-4 mb-6">
+                            <div class="bg-white p-4 md:p-5 rounded-xl border border-blue-100 shadow-inner">
+                                <label class="block font-bold text-teal-700 mb-2 text-sm md:text-base">🌟 1. Sebutkan 2 (dua) "Label Positif" atau kelebihan yang kamu sadari ada dalam dirimu:</label>
+                                <input type="text" class="w-full p-3 rounded-lg border border-gray-200 focus:ring-2 focus:ring-teal-400 text-sm md:text-base mb-2" placeholder="Contoh: Saya pendengar yang baik, saya jago merangkai kata...">
+                            </div>
+                            <div class="bg-white p-4 md:p-5 rounded-xl border border-blue-100 shadow-inner">
+                                <label class="block font-bold text-pink-700 mb-2 text-sm md:text-base">🌑 2. Sebutkan 1 (satu) "Label Negatif" atau kekurangan yang selalu kamu tutupi/takut diketahui orang lain:</label>
+                                <input type="text" class="w-full p-3 rounded-lg border border-gray-200 focus:ring-2 focus:ring-pink-400 text-sm md:text-base mb-2" placeholder="Contoh: Saya lambat belajar, saya punya bekas luka, saya pernah gagal...">
+                            </div>
+                            <div class="bg-white p-4 md:p-5 rounded-xl border border-blue-100 shadow-inner">
+                                <label class="block font-bold text-blue-800 mb-3 text-sm md:text-base">💭 3. Jika "Label Negatif" nomor 2 tadi terbongkar dan dilihat oleh teman-temanmu, apa yang paling kamu takutkan? (Pilih satu)</label>
+                                <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 text-sm md:text-base text-gray-700">
+                                    <label class="flex items-center gap-3 cursor-pointer bg-blue-50/50 p-3 rounded-xl border border-blue-100 hover:bg-blue-100 transition"><input type="radio" name="takut_label" value="Dijauhi/Tidak ditemani" class="w-4 h-4 md:w-5 md:h-5 accent-blue-600 shrink-0"> <span>Dijauhi atau tidak ditemani lagi.</span></label>
+                                    <label class="flex items-center gap-3 cursor-pointer bg-blue-50/50 p-3 rounded-xl border border-blue-100 hover:bg-blue-100 transition"><input type="radio" name="takut_label" value="Ditertawakan/Dihakimi" class="w-4 h-4 md:w-5 md:h-5 accent-blue-600 shrink-0"> <span>Ditertawakan atau dihakimi.</span></label>
+                                    <label class="flex items-center gap-3 cursor-pointer bg-blue-50/50 p-3 rounded-xl border border-blue-100 hover:bg-blue-100 transition"><input type="radio" name="takut_label" value="Merasa bodoh/gagal" class="w-4 h-4 md:w-5 md:h-5 accent-blue-600 shrink-0"> <span>Merasa bodoh dan gagal total.</span></label>
+                                    <label class="flex items-center gap-3 cursor-pointer bg-blue-50/50 p-3 rounded-xl border border-blue-100 hover:bg-blue-100 transition"><input type="radio" name="takut_label" value="Biasa saja, wajar" class="w-4 h-4 md:w-5 md:h-5 accent-blue-600 shrink-0"> <span>Biasa saja, namanya juga manusia.</span></label>
+                                </div>
+                            </div>
                         </div>
-                        <button onclick="window.interaksiSelesai(this, 'Aktivitas Selesai ✅', null, 'Ceklis Cermin Diri')" class="bg-blue-600 text-white px-8 py-3 rounded-full font-bold hover:bg-blue-700 transition w-full md:w-auto shadow-md relative z-20">Kunci Jawaban</button>
+                        <button onclick="window.interaksiSelesai(this, 'Audit Label Selesai ✅', 'Wah, kamu sudah sangat jujur pada dirimu sendiri. Ketakutan yang kamu rasakan itu sangat manusiawi lho. Yuk lanjut ke Refleksi!', 'Audit Label Diri')" class="bg-blue-600 text-white px-8 py-3 rounded-full font-bold hover:bg-blue-700 transition w-full md:w-auto shadow-md relative z-20 text-sm md:text-base">Kunci Jawaban</button>
                     </div>
 
-                    <!-- REFLEKSI -->
+                    <!-- REFLEKSI BARU -->
                     <div class="bg-yellow-50 p-5 md:p-8 rounded-3xl border border-yellow-200 relative shadow-sm mt-8">
                         <div class="absolute -top-4 -left-3 md:-top-5 md:-left-4 text-4xl md:text-5xl">🤔</div>
-                        <h3 class="text-xl md:text-2xl font-bold text-yellow-800 mb-4 ml-6 uppercase tracking-wider">Refleksi</h3>
-                        <p class="mb-4 text-yellow-900 font-medium">Dari ceklis di atas, kamu lebih banyak mencentang bagian positif atau yang bingung? Apa perasaanmu waktu menyadari hal itu?</p>
-                        <textarea class="w-full p-4 rounded-xl border border-yellow-300 focus:outline-none focus:ring-2 focus:ring-yellow-500 mb-4" rows="3" placeholder="Tuliskan perasaan atau kebingunganmu di sini..."></textarea>
-                        <button onclick="window.interaksiSelesai(this, 'Refleksi Terkirim ✨', null, 'Jurnal Refleksi')" class="bg-yellow-500 text-white px-8 py-3 rounded-full font-bold hover:bg-yellow-600 transition w-full md:w-auto shadow-md relative z-20">Kirim Refleksi</button>
+                        <h3 class="text-xl md:text-2xl font-bold text-yellow-800 mb-4 ml-6 uppercase tracking-wider">Refleksi: Dialog Batin</h3>
+                        <p class="mb-4 text-yellow-900 font-medium text-sm md:text-base">Coba perhatikan "Label Negatif" yang baru saja kamu tulis di atas. Apakah kelemahan tersebut seringkali membuatmu merasa <strong>seluruh dirimu buruk</strong> dan melupakan 2 "Label Positif" yang kamu miliki? Ceritakan pengalamanmu saat terlalu <em>overthinking</em> memikirkan kekuranganmu tersebut!</p>
+                        <textarea class="w-full p-4 rounded-xl border border-yellow-300 focus:outline-none focus:ring-2 focus:ring-yellow-500 mb-4 text-sm md:text-base" rows="4" placeholder="Tuliskan renungan dan pengalamanmu di sini..."></textarea>
+                        <button onclick="window.interaksiSelesai(this, 'Refleksi Terkirim ✨', null, 'Jurnal Refleksi')" class="bg-yellow-500 text-white px-8 py-3 rounded-full font-bold hover:bg-yellow-600 transition w-full md:w-auto shadow-md relative z-20 text-sm md:text-base">Kirim Refleksi</button>
+
+                        <!-- Jembatan Konseling -->
+                        <div class="bg-white p-4 md:p-6 rounded-2xl border-l-4 border-l-yellow-400 shadow-sm relative overflow-hidden mt-6">
+                            <div class="absolute -right-2 -bottom-4 text-5xl md:text-6xl opacity-10">🌉</div>
+                            <h4 class="font-bold text-yellow-800 mb-2 font-handwriting text-xl md:text-2xl">Jembatan Konseling:</h4>
+                            <p class="text-gray-600 italic font-medium leading-relaxed text-sm md:text-base">
+                                "Ketakutan terbesarmu saat kekuranganmu dilihat orang lain sebenarnya punya penjelasan ilmiah lho! Dan ingat, manusia pertama (Nabi Adam) juga punya 'label negatif' berupa kesalahan di masa lalu. Yuk kita bongkar rahasianya di materi Konseptual!"
+                            </p>
+                        </div>
                     </div>
 
                     <!-- KONSEPTUAL -->
@@ -1107,7 +1123,7 @@
                 kategori: "DIMENSI 2",
                 judul: "Berdamai dengan Diri (Self-Acceptance)",
                 kutipan: "Fokus Diagnostik: Self-Acceptance. Integrasi Akhlak: Qana'ah (Rela) & Syukur.",
-                gambar: "https://images.unsplash.com/photo-1584041419732-c672b100bb50?auto=format&fit=crop&w=800&q=80",
+                gambar: "./modul2.jpg",
                 konten: `
                     <!-- AKTIVITAS -->
                     <div class="bg-blue-50 p-5 md:p-8 rounded-3xl border border-blue-100 relative shadow-sm">
@@ -1294,7 +1310,7 @@
                 kategori: "DIMENSI 3",
                 judul: "Aku Berharga Tanpa Tapi (Self-Worth)",
                 kutipan: "Fokus Diagnostik: Self-Worth. Integrasi Akhlak: Iffah (Kehormatan), Ikhlas, & Adab Bermedsos. Mari bangun harga dirimu dari dalam.",
-                gambar: "https://images.unsplash.com/photo-15150bc2cc629-9e0176d655d8?auto=format&fit=crop&w=800&q=80",
+                gambar: "./modul3.jpg",
                 konten: `
                     <!-- AKTIVITAS -->
                     <div class="bg-blue-50 p-5 md:p-8 rounded-3xl border border-blue-100 relative shadow-sm">
@@ -1475,7 +1491,7 @@
                 kategori: "DIMENSI 4",
                 judul: "Meraih Mimpi Langit (Ideal-Self)",
                 kutipan: "Fokus Diagnostik: Ideal Self. Integrasi Akhlak: Ikhtiar, Tawakkal, & Husnuzhan. Bangun masa depanmu tanpa dihantui overthinking.",
-                gambar: "https://images.unsplash.com/photo-1519817914152-2a341b539c3e?auto=format&fit=crop&w=800&q=80",
+                gambar: "./modul4.jpg",
                 konten: `
                     <!-- AKTIVITAS -->
                     <div class="bg-blue-50 p-5 md:p-8 rounded-3xl border border-blue-100 relative shadow-sm">
@@ -1720,7 +1736,7 @@
                         </div>
                         <div class="w-full sm:w-3/4 md:w-1/2 lg:w-2/5 shrink-0 order-1 md:order-2 flex justify-center mx-auto">
                             <div class="relative w-full max-w-sm aspect-[4/3] md:aspect-[3/4] lg:aspect-video rounded-[1.5rem] md:rounded-[2rem] overflow-hidden border-4 border-white shadow-md cursor-pointer group bg-teal-100" onclick="window.bukaMateri('${materi.id}')">
-                                <img id="thumb-${materi.id}" src="${materi.gambar}" alt="${materi.judul}" class="absolute inset-0 w-full h-full object-cover group-hover:scale-105 transition transform duration-300" onerror="window.handleImgError(this, 'materi');">
+                                <img id="thumb-${materi.id}" src="${materi.gambar}" alt="${materi.judul}" class="absolute inset-0 w-full h-full object-cover group-hover:scale-105 transition transform duration-300" onerror="this.style.display='none';">
                             </div>
                         </div>
                     </article>
